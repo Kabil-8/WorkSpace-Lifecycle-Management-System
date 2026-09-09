@@ -8,7 +8,7 @@ const savedAccent = (typeof window !== 'undefined' ? localStorage.getItem('edusp
 const initialState: UIState = {
   sidebarOpen: true,
   sidebarCollapsed: false,
-  theme: 'dark',
+  theme: savedTheme,
   accentColor: savedAccent,
   commandPaletteOpen: false,
   notificationDrawerOpen: false,

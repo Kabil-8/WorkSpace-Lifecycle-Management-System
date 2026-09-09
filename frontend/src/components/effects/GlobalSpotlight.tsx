@@ -169,6 +169,7 @@ export const GlobalSpotlight: React.FC<GlobalSpotlightProps> = ({
           style={{
             width: '750px',
             height: '750px',
+            ['--glow-rgb' as any]: glowColor,
             background: `radial-gradient(circle,
               rgba(var(--glow-rgb, 168, 85, 247), 0.12) 0%,
               rgba(var(--glow-rgb, 168, 85, 247), 0.06) 20%,
