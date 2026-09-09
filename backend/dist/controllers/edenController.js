@@ -204,6 +204,18 @@ export class EdenController {
             return res.status(500).json({ success: false, error: err.message });
         }
     }
+    static async getProactiveIntervention(req, res) {
+        try {
+            const uId = req.user._id.toString();
+            const { ProactiveInterventionEngine } = await import('../ai/ProactiveInterventionEngine.js');
+            const plan = await ProactiveInterventionEngine.analyzeAndIntervene(uId);
+            return res.json({ success: true, data: plan });
+        }
+        catch (err) {
+            logger.error({ err: err.message }, '[EDEN] Proactive intervention error');
+            return res.status(500).json({ success: false, error: err.message });
+        }
+    }
     static async digitalTwin(req, res) {
         try {
             const uId = req.params?.userId || req.user?._id?.toString();

@@ -54,13 +54,35 @@ export class EdenLLMService {
             };
         }
         catch (error) {
-            logger.warn({ err: error.message, model, host: process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434' }, '[EdenLLMService] Local Ollama LLM call encountered error, activating resilient fallback');
-            return {
-                content: '',
-                model,
-                provider: 'fallback',
-                error: error.message,
-            };
+            logger.warn({ err: error.message, model, host: process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434' }, '[EdenLLMService] Local Ollama LLM unreachable or errored, delegating to LLMProviderFactory');
+            try {
+                const { LLMProviderFactory } = await import('../ai/providers/LLMProviderFactory.js');
+                const provider = LLMProviderFactory.getProvider();
+                const history = conversationHistory.map(m => ({
+                    role: (m.role === 'user' ? 'user' : 'assistant'),
+                    content: m.content
+                }));
+                const res = await provider.chat({
+                    systemPrompt,
+                    userQuery: userMessage,
+                    history,
+                    temperature,
+                });
+                return {
+                    content: res.content || '',
+                    model: provider.name,
+                    provider: 'fallback',
+                };
+            }
+            catch (fallbackErr) {
+                logger.error({ fallbackErr: fallbackErr.message }, '[EdenLLMService] Fallback provider also encountered error');
+                return {
+                    content: '',
+                    model,
+                    provider: 'fallback',
+                    error: error.message,
+                };
+            }
         }
     }
 }

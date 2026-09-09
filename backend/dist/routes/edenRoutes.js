@@ -44,6 +44,8 @@ router.post('/recommend', verifyToken, EdenController.recommend);
 router.get('/recommend', verifyToken, EdenController.recommend);
 router.get('/digital-twin', verifyToken, EdenController.digitalTwin);
 router.post('/digital-twin', verifyToken, EdenController.digitalTwin);
+router.get('/proactive-intervention', verifyToken, EdenController.getProactiveIntervention);
+router.post('/proactive-intervention', verifyToken, EdenController.getProactiveIntervention);
 // Memory & Sessions
 router.get('/memory', verifyToken, EdenController.getMemory);
 router.delete('/memory', verifyToken, EdenController.clearMemory);

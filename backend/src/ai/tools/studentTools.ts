@@ -139,4 +139,21 @@ export const studentTools = [
       }
     },
   },
+  {
+    name: 'get_my_proactive_intervention',
+    description: 'Fetch the latest closed-loop AI proactive intervention plan, tracking Learning DNA velocity, prerequisite gaps via CS Knowledge Graph, and scheduled SM-2 active recall reviews.',
+    requiresAuth: true,
+    execute: async (_args: any, userContext: any) => {
+      try {
+        const { ProactiveInterventionEngine } = await import('../ProactiveInterventionEngine.js')
+        const plan = await ProactiveInterventionEngine.analyzeAndIntervene(userContext.userId)
+        return {
+          hasData: true,
+          plan,
+        }
+      } catch (err: any) {
+        return { hasData: false, status: 'INSUFFICIENT_DATA', message: 'Unable to compute proactive intervention plan.' }
+      }
+    },
+  },
 ]
