@@ -11,6 +11,7 @@ import {
   Plus, Trash2, Upload, Sparkles, Zap,
   StopCircle, AlertTriangle, CheckCircle2, ArrowRight, Clock,
   ChevronDown, ChevronUp, Layers, Activity,
+  LayoutDashboard, MessageSquare,
 } from 'lucide-react'
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
 import {
@@ -19,6 +20,7 @@ import {
   ChatMessage, ChatSession,
 } from '../../store/edenSlice'
 import { api } from '../../services/api'
+import { StudentIntelligenceDashboard } from '../../components/ai/StudentIntelligenceDashboard'
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const API_BASE = 'http://localhost:5000/api/eden'
@@ -476,9 +478,25 @@ export default function AICopilotPage() {
     }
   }
 
+  // ─── Student AI Intelligence Dashboard State ──────────────────────────────
+  const [activeTab, setActiveTab] = useState<'chat' | 'dashboard'>('chat')
+  const [twinData, setTwinData] = useState<any | null>(null)
+
+  const fetchTwinData = async () => {
+    try {
+      const res: any = await api.get('/eden/digital-twin')
+      if (res?.data) {
+        setTwinData(res.data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch digital twin:', err)
+    }
+  }
+
   useEffect(() => {
     fetchMemoryAndSessions()
     fetchInterventionPlan()
+    fetchTwinData()
   }, [])
 
   // Send message handler
@@ -667,7 +685,29 @@ export default function AICopilotPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
+            {/* Mode Switcher */}
+            <div className="flex items-center p-0.5 rounded-xl border gap-0.5" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
+              <button
+                onClick={() => setActiveTab('chat')}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-3xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'chat' ? 'text-white shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                }`}
+                style={activeTab === 'chat' ? { background: 'linear-gradient(135deg, var(--indigo), #4F46E5)' } : {}}
+              >
+                <MessageSquare size={12} /> AI Copilot
+              </button>
+              <button
+                onClick={() => setActiveTab('dashboard')}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-3xs font-bold transition-all cursor-pointer ${
+                  activeTab === 'dashboard' ? 'text-white shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                }`}
+                style={activeTab === 'dashboard' ? { background: 'linear-gradient(135deg, var(--indigo), #4F46E5)' } : {}}
+              >
+                <LayoutDashboard size={12} /> Intelligence Dashboard
+              </button>
+            </div>
+
             <button
               onClick={() => setIsSpeechMuted(!isSpeechMuted)}
               className="p-2 rounded-xl border transition-all cursor-pointer"
@@ -687,8 +727,26 @@ export default function AICopilotPage() {
           </div>
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+        {activeTab === 'dashboard' ? (
+          <StudentIntelligenceDashboard
+            interventionPlan={interventionPlan}
+            twinData={twinData}
+            user={user}
+            onCompleteIntervention={handleCompleteIntervention}
+            isCompletingIntervention={isCompletingIntervention}
+            onAskEden={(q) => {
+              setActiveTab('chat')
+              handleSend(q)
+            }}
+            onRefresh={() => {
+              fetchInterventionPlan()
+              fetchTwinData()
+            }}
+          />
+        ) : (
+          <>
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
           {/* ── Proactive Closed-Loop Intervention Engine (XAI) ── */}
           {interventionPlan && (() => {
             const planStatus = interventionPlan.status || interventionPlan.overallStatus || 'OPTIMAL'
@@ -1031,6 +1089,8 @@ export default function AICopilotPage() {
             )}
           </div>
         </div>
+        </>
+      )}
       </div>
     </div>
   )
