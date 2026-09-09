@@ -39,13 +39,35 @@ export class GeminiProvider implements LLMProvider {
 
     contents.push({ role: 'user', parts: [{ text: request.userQuery }] })
 
+function normalizeSchema(schema: any): any {
+  if (!schema || typeof schema !== 'object') {
+    return { type: 'OBJECT', properties: {} }
+  }
+  const res: any = { ...schema }
+  if (res.type && typeof res.type === 'string') {
+    res.type = res.type.toUpperCase()
+  } else {
+    res.type = 'OBJECT'
+  }
+  if (!res.properties) {
+    res.properties = {}
+  } else {
+    const newProps: any = {}
+    for (const [k, v] of Object.entries(res.properties)) {
+      newProps[k] = normalizeSchema(v)
+    }
+    res.properties = newProps
+  }
+  return res
+}
+
     const tools = request.tools && request.tools.length > 0
       ? [
           {
             functionDeclarations: request.tools.map(t => ({
               name: t.name,
               description: t.description,
-              parameters: t.parameters || { type: 'OBJECT', properties: {} },
+              parameters: normalizeSchema(t.parameters),
             })),
           },
         ]
@@ -74,15 +96,43 @@ export class GeminiProvider implements LLMProvider {
           if (!candidate) continue
 
           const toolCalls: LLMToolCall[] = []
-          const functionCall = candidate.content?.parts?.find((p: any) => p.functionCall)?.functionCall
-          if (functionCall) {
-            toolCalls.push({
-              name: functionCall.name,
-              args: functionCall.args || {},
-            })
+          const parts = candidate.content?.parts || []
+          for (const p of parts) {
+            if (p.functionCall) {
+              toolCalls.push({
+                name: p.functionCall.name,
+                args: p.functionCall.args || {},
+              })
+            }
           }
 
-          const text = candidate.content?.parts?.find((p: any) => p.text)?.text || ''
+          let text = parts.map((p: any) => p.text || '').filter(Boolean).join('\n')
+
+          // Extract text-based tool calls if model formatted code blocks instead of structured functionCalls
+          if (toolCalls.length === 0 && text) {
+            const toolBlockRegex = /```(?:tool_code|tool_call|tool)?\s*\n?([\s\S]*?)```/gi
+            let match
+            while ((match = toolBlockRegex.exec(text)) !== null) {
+              const raw = match[1].trim()
+              if (!raw) continue
+              const fnMatch = raw.match(/^([a-zA-Z0-9_]+)(?:\(([\s\S]*?)\))?$/)
+              if (fnMatch) {
+                const toolName = fnMatch[1]
+                let args = {}
+                if (fnMatch[2]?.trim()) {
+                  try { args = JSON.parse(fnMatch[2].trim()) } catch {}
+                }
+                toolCalls.push({ name: toolName, args })
+              } else {
+                try {
+                  const parsed = JSON.parse(raw)
+                  const name = parsed.name || parsed.tool || parsed.function
+                  const args = parsed.args || parsed.arguments || {}
+                  if (name) toolCalls.push({ name, args })
+                } catch {}
+              }
+            }
+          }
 
           return {
             content: text,

@@ -79,10 +79,27 @@ export class EdenOrchestrator {
             let finalContent = llmRes.content || '';
             let lastAction = null;
             let lastTarget = null;
-            // 7. Execute ALL Tool Calls if LLM requested tools (not just first)
-            if (llmRes.toolCalls && llmRes.toolCalls.length > 0) {
+            // 7. Detect and Execute ALL Tool Calls (Structured + Text Code Blocks)
+            const toolCallsToExecute = [...(llmRes.toolCalls || [])];
+            // If no structured toolCalls, scan finalContent for markdown tool blocks (e.g. ```tool_code\nget_my_attendance\n```)
+            if (toolCallsToExecute.length === 0 && finalContent) {
+                const textToolRegex = /```(?:tool_code|tool_call|tool)?\s*\n?([a-zA-Z0-9_]+)(?:\(([\s\S]*?)\))?\s*```/gi;
+                let match;
+                while ((match = textToolRegex.exec(finalContent)) !== null) {
+                    const toolName = match[1];
+                    let args = {};
+                    if (match[2]?.trim()) {
+                        try {
+                            args = JSON.parse(match[2].trim());
+                        }
+                        catch { }
+                    }
+                    toolCallsToExecute.push({ name: toolName, args });
+                }
+            }
+            if (toolCallsToExecute.length > 0) {
                 let combinedToolOutputs = '';
-                for (const tc of llmRes.toolCalls) {
+                for (const tc of toolCallsToExecute) {
                     logger.info({ tool: tc.name, args: tc.args }, '[EdenOrchestrator] LLM-requested tool executing');
                     // If LLM itself called web_search, run the enhanced multi-query research
                     if (tc.name === 'web_search' && tc.args?.query) {
@@ -105,7 +122,7 @@ export class EdenOrchestrator {
                     combinedToolOutputs += `\n[Tool Output — ${tc.name}]: ${JSON.stringify(toolResult.data || toolResult.error)}`;
                 }
                 // 8. Second LLM Turn — synthesize final answer from tool outputs + evidence
-                const followUpQuery = `${promptWithEvidence}\n\n[System: Tool execution completed. Use the following real data to form your response]:${combinedToolOutputs}`;
+                const followUpQuery = `${promptWithEvidence}\n\n[System: Tool execution completed. Use the following real verified database records to form your complete, helpful, natural language answer. NEVER show raw tool codes to the user]:${combinedToolOutputs}`;
                 const secondLlmRes = await provider.chat({
                     systemPrompt: systemInstruction,
                     userQuery: followUpQuery,

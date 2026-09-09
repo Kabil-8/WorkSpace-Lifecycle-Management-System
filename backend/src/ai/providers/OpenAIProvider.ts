@@ -14,13 +14,19 @@ export class OpenAIProvider implements LLMProvider {
   }
 
   async chat(request: LLMRequest): Promise<LLMResponse> {
-    const key = request.activeKey || process.env.OPENAI_API_KEY || process.env.LLM_API_KEY
+    const key = request.activeKey || process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY || process.env.LLM_API_KEY
     if (!key || key.trim().length < 10) {
-      throw new Error('OPENAI_API_KEY is missing or unconfigured.')
+      throw new Error('API key (OPENROUTER_API_KEY or OPENAI_API_KEY) is missing or unconfigured.')
     }
 
-    const model = request.model || process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'gpt-4o-mini'
-    const baseUrl = request.baseUrl || process.env.LLM_BASE_URL || 'https://api.openai.com/v1'
+    const isOpenRouter = key.startsWith('sk-or-') ||
+      (process.env.EDEN_LLM_PROVIDER || '').toLowerCase() === 'openrouter' ||
+      (process.env.LLM_BASE_URL || '').includes('openrouter.ai')
+
+    const model = request.model || process.env.LLM_MODEL || process.env.OPENAI_MODEL ||
+      (isOpenRouter ? 'meta-llama/llama-3.2-3b-instruct:free' : 'gpt-4o-mini')
+    const baseUrl = request.baseUrl || process.env.LLM_BASE_URL ||
+      (isOpenRouter ? 'https://openrouter.ai/api/v1' : 'https://api.openai.com/v1')
 
     const messages: any[] = []
 
@@ -75,6 +81,10 @@ export class OpenAIProvider implements LLMProvider {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${key.trim()}`,
+          ...(isOpenRouter ? {
+            'HTTP-Referer': 'https://edusphere.ai',
+            'X-Title': 'EduSphere AI',
+          } : {})
         },
         body: JSON.stringify(body),
       })
@@ -82,7 +92,7 @@ export class OpenAIProvider implements LLMProvider {
       if (!res.ok) {
         const errText = await res.text()
         logger.warn({ status: res.status, errText }, '[OpenAIProvider] API request failed')
-        throw new Error(`OpenAI API returned status ${res.status}: ${errText}`)
+        throw new Error(`OpenAI/OpenRouter API returned status ${res.status}: ${errText}`)
       }
 
       const data: any = await res.json()

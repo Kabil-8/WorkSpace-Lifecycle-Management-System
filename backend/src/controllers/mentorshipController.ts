@@ -298,20 +298,59 @@ export class MentorshipController {
         })
       }
 
-      // Recompute ML telemetry algorithms
+      // Recompute ML telemetry algorithms (Query Python ML Service first)
       const baseCGPA = student.cgpa || 8.2
       const codingSolved = student.externalProfiles?.leetcode?.totalSolved || 180
-      const newCodingScore = Math.min(99, Math.round(codingSolved * 0.28 + (student.xp || 500) * 0.01))
-      const newLearningPace = Math.min(98, Math.max(45, Math.round(baseCGPA * 10.2 + (student.streak || 5) * 0.5)))
-      const newPlacementProb = Math.min(99, Math.max(30, Math.round(baseCGPA * 6.5 + newCodingScore * 0.35 + (newLearningPace * 0.15))))
-      const predictedGPA = parseFloat(Math.min(10.0, baseCGPA + (newLearningPace > 75 ? 0.2 : -0.1)).toFixed(2))
+      let newCodingScore = Math.min(99, Math.round(codingSolved * 0.28 + (student.xp || 500) * 0.01))
+      let newLearningPace = Math.min(98, Math.max(45, Math.round(baseCGPA * 10.2 + (student.streak || 5) * 0.5)))
+      let newPlacementProb = Math.min(99, Math.max(30, Math.round(baseCGPA * 6.5 + newCodingScore * 0.35 + (newLearningPace * 0.15))))
+      let predictedGPA = parseFloat(Math.min(10.0, baseCGPA + (newLearningPace > 75 ? 0.2 : -0.1)).toFixed(2))
+      let burnoutRisk: 'Low' | 'Medium' | 'High' = newLearningPace > 90 && (student.streak || 0) > 30 ? 'High' : (newLearningPace > 70 ? 'Low' : 'Medium')
+
+      try {
+        const mlUrl = process.env.PYTHON_ML_SERVICE_URL || process.env.PYTHON_ML_URL || 'http://localhost:8001'
+        const pyRes = await fetch(`${mlUrl}/api/ml/digital-twin/analyze`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            student_id: student._id.toString(),
+            name: student.name,
+            department: student.department || 'Computer Science',
+            cgpa: baseCGPA,
+            attendance: (student as any).attendanceRate || 88,
+            coding_score: newCodingScore,
+            coding_problems_solved: codingSolved,
+            quiz_avg: 84.0,
+            assignment_rate: 92.0,
+            ats_score: (student as any).atsScore || 80,
+            xp: student.xp || 1000,
+          }),
+          signal: AbortSignal.timeout(3000),
+        })
+
+        if (pyRes.ok) {
+          const pyData: any = await pyRes.json()
+          const sub = pyData?.sub_twins
+          if (sub) {
+            if (sub.learning?.learning_pace_score) newLearningPace = Math.round(sub.learning.learning_pace_score)
+            if (sub.skill?.coding_proficiency_score) newCodingScore = Math.round(sub.skill.coding_proficiency_score)
+            if (sub.career?.placement_likelihood_pct) newPlacementProb = Math.round(sub.career.placement_likelihood_pct)
+            if (sub.academic?.predicted_gpa) predictedGPA = parseFloat(sub.academic.predicted_gpa.toFixed(2))
+            if (sub.behavior?.burnout_risk_score !== undefined) {
+              burnoutRisk = sub.behavior.burnout_risk_score > 65 ? 'High' : (sub.behavior.burnout_risk_score > 35 ? 'Medium' : 'Low')
+            }
+          }
+        }
+      } catch (mlErr: any) {
+        logger.warn({ err: mlErr.message }, '[MentorshipController] ML Service unavailable for recalculation, using deterministic fallbacks')
+      }
 
       twin.learningPaceScore = newLearningPace
       twin.codingProficiencyScore = newCodingScore
       twin.placementProbabilityPct = newPlacementProb
       twin.predictedCGPA = predictedGPA
       twin.predictionConfidence = 96.5
-      twin.burnoutRisk = newLearningPace > 90 && (student.streak || 0) > 30 ? 'High' : (newLearningPace > 70 ? 'Low' : 'Medium')
+      twin.burnoutRisk = burnoutRisk
 
       student.placementReadiness = newPlacementProb
       await student.save()
