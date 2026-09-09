@@ -22,6 +22,12 @@ export type LearningEventType =
   | 'RECALL_SESSION'
   | 'XP_AWARDED'
   | 'FORUM_POST'
+  | 'CODE_SUBMITTED'
+  | 'CODE_FAILED'
+  | 'TOPIC_MASTERED'
+  | 'TOPIC_FAILED'
+  | 'INTERVENTION_COMPLETED'
+  | 'RESOURCE_COMPLETED'
 
 export interface ILearningEvent extends Document {
   userId: mongoose.Types.ObjectId
@@ -46,6 +52,8 @@ const LearningEventSchema = new Schema<ILearningEvent>({
       'ATTENDANCE_MARKED', 'EXAM_STARTED', 'EXAM_COMPLETED',
       'INTERVIEW_COMPLETED', 'RESUME_UPDATED', 'ACHIEVEMENT_UNLOCKED',
       'RECALL_SESSION', 'XP_AWARDED', 'FORUM_POST',
+      'CODE_SUBMITTED', 'CODE_FAILED', 'TOPIC_MASTERED', 'TOPIC_FAILED',
+      'INTERVENTION_COMPLETED', 'RESOURCE_COMPLETED',
     ],
     required: true,
     index: true,

@@ -216,6 +216,81 @@ export class EdenController {
             return res.status(500).json({ success: false, error: err.message });
         }
     }
+    /**
+     * POST /api/eden/telemetry
+     * Ingests a live student learning event and updates the telemetry pipeline
+     */
+    static async recordTelemetry(req, res) {
+        try {
+            const uId = req.user._id;
+            const { eventType, topicId, subject, score, duration, metadata } = req.body;
+            if (!eventType) {
+                return res.status(400).json({ success: false, error: 'eventType is required' });
+            }
+            const { LearningEvent } = await import('../models/LearningEvent.js');
+            const event = await LearningEvent.create({
+                userId: uId,
+                eventType,
+                topicId,
+                subject,
+                score,
+                duration: duration || 0,
+                metadata: metadata || {},
+                timestamp: new Date(),
+            });
+            // Asynchronously trigger Digital Twin sync on significant events
+            if (['QUIZ_COMPLETED', 'TOPIC_FAILED', 'TOPIC_MASTERED', 'INTERVENTION_COMPLETED'].includes(eventType)) {
+                DigitalTwinEngine.syncStudentTwin(uId.toString()).catch(() => { });
+            }
+            return res.json({ success: true, message: 'Telemetry event recorded', data: event });
+        }
+        catch (err) {
+            logger.error({ err: err.message }, '[EDEN] Telemetry ingestion error');
+            return res.status(500).json({ success: false, error: err.message });
+        }
+    }
+    /**
+     * POST /api/eden/intervention/complete
+     * Closes the loop: records INTERVENTION_COMPLETED, updates SM-2, and recalculates intervention state
+     */
+    static async completeIntervention(req, res) {
+        try {
+            const uId = req.user._id.toString();
+            const { topic, rating = 5 } = req.body;
+            if (!topic) {
+                return res.status(400).json({ success: false, error: 'Topic is required to complete intervention' });
+            }
+            const { LearningEvent } = await import('../models/LearningEvent.js');
+            const { CognitiveLearningEngine } = await import('../ai/CognitiveLearningEngine.js');
+            const { ProactiveInterventionEngine } = await import('../ai/ProactiveInterventionEngine.js');
+            // 1. Record Learning Event
+            await LearningEvent.create({
+                userId: req.user._id,
+                eventType: 'INTERVENTION_COMPLETED',
+                topicId: topic,
+                score: rating === 5 ? 100 : 70,
+                duration: 600, // 10 minutes practice
+                metadata: { completedVia: 'EDEN_COPILOT_UI', qualityRating: rating },
+                timestamp: new Date(),
+            });
+            // 2. Update SM-2 Spaced Repetition schedule
+            const sm2Result = await CognitiveLearningEngine.evaluateRecallPerformance(uId, topic, rating);
+            // 3. Sync Cognitive Digital Twin
+            await DigitalTwinEngine.syncStudentTwin(uId);
+            // 4. Re-calculate new closed-loop intervention plan
+            const newPlan = await ProactiveInterventionEngine.analyzeAndIntervene(uId);
+            return res.json({
+                success: true,
+                message: `Intervention for "${topic}" completed successfully! Next review in ${sm2Result.nextReviewDays} day(s).`,
+                sm2: sm2Result,
+                updatedPlan: newPlan,
+            });
+        }
+        catch (err) {
+            logger.error({ err: err.message }, '[EDEN] Complete intervention error');
+            return res.status(500).json({ success: false, error: err.message });
+        }
+    }
     static async digitalTwin(req, res) {
         try {
             const uId = req.params?.userId || req.user?._id?.toString();

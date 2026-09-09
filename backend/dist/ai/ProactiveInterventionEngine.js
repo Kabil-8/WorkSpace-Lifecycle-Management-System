@@ -50,9 +50,16 @@ export class ProactiveInterventionEngine {
             : dnaProfile.learningVelocity === 'slowing' || weakTopics.length > 2
                 ? 'ATTENTION_NEEDED'
                 : 'OPTIMAL';
+        const decisionTrace = [
+            `1. Weakness identified in [${weakTopics.slice(0, 2).join(', ')}] from real-time Learning DNA and telemetry.`,
+            `2. Knowledge Graph traversed: Inferred missing foundational prerequisite chain -> [${kgResult.inferredPrerequisites.slice(0, 3).join(', ')}].`,
+            `3. SM-2 Spaced Repetition engine scheduled active recall for "${scheduledInterventions[0]?.topic || 'Recursion'}" (review due in ${scheduledInterventions[0]?.sm2NextReviewDays || 1} day).`,
+            `4. Intervention action synthesized: "${scheduledInterventions[0]?.actionableResource || 'Interactive Practice & Active Recall'}".`,
+        ];
         return {
             userId,
             userName,
+            status: overallStatus,
             overallStatus,
             learningVelocity: dnaProfile.learningVelocity,
             attendanceHealth: {
@@ -71,6 +78,7 @@ export class ProactiveInterventionEngine {
                 recommendedStudyPath: kgResult.recommendedPath,
             },
             scheduledInterventions,
+            decisionTrace,
             timestamp: new Date(),
         };
     }

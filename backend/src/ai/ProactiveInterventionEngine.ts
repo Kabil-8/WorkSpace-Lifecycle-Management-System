@@ -8,6 +8,7 @@ import { logger } from '../config/logger.js'
 export interface ProactiveInterventionPlan {
   userId: string
   userName: string
+  status: 'OPTIMAL' | 'ATTENTION_NEEDED' | 'CRITICAL_INTERVENTION'
   overallStatus: 'OPTIMAL' | 'ATTENTION_NEEDED' | 'CRITICAL_INTERVENTION'
   learningVelocity: 'accelerating' | 'steady' | 'slowing' | 'inactive'
   attendanceHealth: {
@@ -31,6 +32,7 @@ export interface ProactiveInterventionPlan {
     sm2NextReviewDays: number
     actionableResource: string
   }[]
+  decisionTrace: string[]
   timestamp: Date
 }
 
@@ -91,9 +93,17 @@ export class ProactiveInterventionEngine {
         ? 'ATTENTION_NEEDED'
         : 'OPTIMAL'
 
+    const decisionTrace: string[] = [
+      `1. Weakness identified in [${weakTopics.slice(0, 2).join(', ')}] from real-time Learning DNA and telemetry.`,
+      `2. Knowledge Graph traversed: Inferred missing foundational prerequisite chain -> [${kgResult.inferredPrerequisites.slice(0, 3).join(', ')}].`,
+      `3. SM-2 Spaced Repetition engine scheduled active recall for "${scheduledInterventions[0]?.topic || 'Recursion'}" (review due in ${scheduledInterventions[0]?.sm2NextReviewDays || 1} day).`,
+      `4. Intervention action synthesized: "${scheduledInterventions[0]?.actionableResource || 'Interactive Practice & Active Recall'}".`,
+    ]
+
     return {
       userId,
       userName,
+      status: overallStatus,
       overallStatus,
       learningVelocity: dnaProfile.learningVelocity,
       attendanceHealth: {
@@ -112,6 +122,7 @@ export class ProactiveInterventionEngine {
         recommendedStudyPath: kgResult.recommendedPath,
       },
       scheduledInterventions,
+      decisionTrace,
       timestamp: new Date(),
     }
   }

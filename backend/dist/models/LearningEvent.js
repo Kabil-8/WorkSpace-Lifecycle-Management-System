@@ -10,6 +10,8 @@ const LearningEventSchema = new Schema({
             'ATTENDANCE_MARKED', 'EXAM_STARTED', 'EXAM_COMPLETED',
             'INTERVIEW_COMPLETED', 'RESUME_UPDATED', 'ACHIEVEMENT_UNLOCKED',
             'RECALL_SESSION', 'XP_AWARDED', 'FORUM_POST',
+            'CODE_SUBMITTED', 'CODE_FAILED', 'TOPIC_MASTERED', 'TOPIC_FAILED',
+            'INTERVENTION_COMPLETED', 'RESOURCE_COMPLETED',
         ],
         required: true,
         index: true,

@@ -9,7 +9,8 @@ import {
   Brain, Send, Mic, MicOff, Volume2, VolumeX,
   Copy, Check, RefreshCw, Shield,
   Plus, Trash2, Upload, Sparkles, Zap,
-  StopCircle,
+  StopCircle, AlertTriangle, CheckCircle2, ArrowRight, Clock,
+  ChevronDown, ChevronUp, Layers, Activity,
 } from 'lucide-react'
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
 import {
@@ -434,8 +435,50 @@ export default function AICopilotPage() {
     }
   }
 
+  // ─── Proactive Closed-Loop Intervention Engine ──────────────────────────────
+  const [interventionPlan, setInterventionPlan] = useState<any | null>(null)
+  const [isLoadingIntervention, setIsLoadingIntervention] = useState(false)
+  const [isCompletingIntervention, setIsCompletingIntervention] = useState(false)
+  const [interventionFeedback, setInterventionFeedback] = useState<string | null>(null)
+  const [isInterventionExpanded, setIsInterventionExpanded] = useState(true)
+
+  const fetchInterventionPlan = async () => {
+    setIsLoadingIntervention(true)
+    try {
+      const res: any = await api.get('/eden/proactive-intervention')
+      if (res?.data) {
+        setInterventionPlan(res.data)
+      }
+    } catch (err) {
+      console.error('Failed to fetch proactive intervention:', err)
+    } finally {
+      setIsLoadingIntervention(false)
+    }
+  }
+
+  const handleCompleteIntervention = async (topic: string) => {
+    setIsCompletingIntervention(true)
+    setInterventionFeedback(null)
+    try {
+      const res: any = await api.post('/eden/intervention/complete', { topic, rating: 5 })
+      if (res?.success) {
+        setInterventionFeedback(res.message || `Intervention for "${topic}" recorded! SM-2 schedule updated.`)
+        if (res.updatedPlan) {
+          setInterventionPlan(res.updatedPlan)
+        } else {
+          fetchInterventionPlan()
+        }
+      }
+    } catch (err: any) {
+      setInterventionFeedback(`Failed to complete review: ${err.message || 'Error'}`)
+    } finally {
+      setIsCompletingIntervention(false)
+    }
+  }
+
   useEffect(() => {
     fetchMemoryAndSessions()
+    fetchInterventionPlan()
   }, [])
 
   // Send message handler
@@ -646,6 +689,233 @@ export default function AICopilotPage() {
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+          {/* ── Proactive Closed-Loop Intervention Engine (XAI) ── */}
+          {interventionPlan && (() => {
+            const planStatus = interventionPlan.status || interventionPlan.overallStatus || 'OPTIMAL'
+            const weakTopics = interventionPlan.knowledgeGaps?.weakTopics || interventionPlan.weakTopics || []
+            const prereqs = interventionPlan.knowledgeGaps?.prerequisiteWeaknesses || (interventionPlan.prerequisites?.[0]?.missingPrerequisites) || []
+            const scheduledList = interventionPlan.scheduledInterventions || interventionPlan.recommendedActions || []
+            const topAction = scheduledList[0] || null
+            const targetTopic = topAction?.topic || weakTopics[0] || 'Recursion'
+            const traces: string[] = interventionPlan.decisionTrace || []
+            const velocity = interventionPlan.learningVelocity || 'accelerating'
+
+            return (
+              <div
+                className="rounded-2xl border transition-all duration-300 overflow-hidden shadow-sm"
+                style={{
+                  background:
+                    planStatus === 'CRITICAL_INTERVENTION'
+                      ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.02))'
+                      : planStatus === 'ATTENTION_NEEDED'
+                      ? 'linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02))'
+                      : 'linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.02))',
+                  borderColor:
+                    planStatus === 'CRITICAL_INTERVENTION'
+                      ? 'rgba(239, 68, 68, 0.35)'
+                      : planStatus === 'ATTENTION_NEEDED'
+                      ? 'rgba(245, 158, 11, 0.35)'
+                      : 'rgba(16, 185, 129, 0.35)',
+                }}
+              >
+                {/* Card Header */}
+                <div
+                  className="p-3.5 px-4 flex items-center justify-between border-b"
+                  style={{
+                    borderColor:
+                      planStatus === 'CRITICAL_INTERVENTION'
+                        ? 'rgba(239, 68, 68, 0.15)'
+                        : planStatus === 'ATTENTION_NEEDED'
+                        ? 'rgba(245, 158, 11, 0.15)'
+                        : 'rgba(16, 185, 129, 0.15)',
+                  }}
+                >
+                  <div className="flex items-center gap-2.5">
+                    {planStatus === 'CRITICAL_INTERVENTION' ? (
+                      <AlertTriangle className="text-rose-500 animate-pulse flex-shrink-0" size={18} />
+                    ) : planStatus === 'ATTENTION_NEEDED' ? (
+                      <Zap className="text-amber-500 flex-shrink-0" size={18} />
+                    ) : (
+                      <CheckCircle2 className="text-emerald-500 flex-shrink-0" size={18} />
+                    )}
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black tracking-wide uppercase" style={{ color: 'var(--foreground)' }}>
+                          🧠 EDEN Closed-Loop Intervention Engine
+                        </span>
+                        <span
+                          className="text-3xs font-black px-2 py-0.5 rounded-full uppercase font-mono"
+                          style={{
+                            background:
+                              planStatus === 'CRITICAL_INTERVENTION'
+                                ? 'rgba(239, 68, 68, 0.15)'
+                                : planStatus === 'ATTENTION_NEEDED'
+                                ? 'rgba(245, 158, 11, 0.15)'
+                                : 'rgba(16, 185, 129, 0.15)',
+                            color:
+                              planStatus === 'CRITICAL_INTERVENTION'
+                                ? '#EF4444'
+                                : planStatus === 'ATTENTION_NEEDED'
+                                ? '#F59E0B'
+                                : '#10B981',
+                          }}
+                        >
+                          {planStatus.replace('_', ' ')}
+                        </span>
+                      </div>
+                      <p className="text-3xs" style={{ color: 'var(--muted-foreground)' }}>
+                        Continuous Telemetry Monitoring · Knowledge Graph Pre-reqs · SM-2 Memory Spacing
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => fetchInterventionPlan()}
+                      disabled={isLoadingIntervention}
+                      className="p-1.5 rounded-lg border text-xs transition-all cursor-pointer"
+                      style={{ background: 'var(--card)', borderColor: 'var(--border)', color: 'var(--muted-foreground)' }}
+                      title="Refresh cognitive diagnostics"
+                    >
+                      <RefreshCw size={12} className={isLoadingIntervention ? 'animate-spin' : ''} />
+                    </button>
+                    <button
+                      onClick={() => setIsInterventionExpanded(!isInterventionExpanded)}
+                      className="p-1.5 rounded-lg border text-xs transition-all cursor-pointer"
+                      style={{ background: 'var(--card)', borderColor: 'var(--border)', color: 'var(--muted-foreground)' }}
+                    >
+                      {isInterventionExpanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Expandable Body */}
+                {isInterventionExpanded && (
+                  <div className="p-4 space-y-3 text-xs">
+                    {/* Intervention Feedback Notification */}
+                    {interventionFeedback && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-2.5 rounded-xl text-3xs font-semibold flex items-center justify-between border"
+                        style={{ background: 'var(--success-muted)', borderColor: 'var(--success)', color: 'var(--success)' }}
+                      >
+                        <span>🎉 {interventionFeedback}</span>
+                        <button onClick={() => setInterventionFeedback(null)} className="text-xs ml-2 cursor-pointer font-bold">×</button>
+                      </motion.div>
+                    )}
+
+                    {/* Diagnostics & Weakness Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {/* Diagnostic Insights */}
+                      <div className="p-3 rounded-xl border space-y-1.5" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
+                        <div className="flex items-center justify-between">
+                          <span className="text-3xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--muted-foreground)' }}>
+                            <Activity size={12} style={{ color: 'var(--indigo)' }} /> Retention Risk Target
+                          </span>
+                          <span className="text-3xs font-mono font-bold" style={{ color: 'var(--indigo)' }}>
+                            Velocity: {typeof velocity === 'number' ? velocity.toFixed(2) + 'x' : velocity}
+                          </span>
+                        </div>
+                        {weakTopics.length > 0 ? (
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2 font-bold text-xs" style={{ color: 'var(--foreground)' }}>
+                              <span className="px-2 py-0.5 rounded-md font-mono text-rose-500" style={{ background: 'rgba(239, 68, 68, 0.1)' }}>
+                                {weakTopics[0]}
+                              </span>
+                              {interventionPlan.retentionRiskTopics?.[0]?.recallProbability !== undefined && (
+                                <span className="text-3xs font-medium text-rose-500">
+                                  ({Math.round(interventionPlan.retentionRiskTopics[0].recallProbability * 100)}% recall prob)
+                                </span>
+                              )}
+                            </div>
+                            {prereqs.length > 0 && (
+                              <div className="text-3xs flex flex-wrap items-center gap-1 mt-1" style={{ color: 'var(--muted-foreground)' }}>
+                                <span className="font-semibold">Prerequisite Chain:</span>
+                                {prereqs.slice(0, 3).map((p: string) => (
+                                  <span key={p} className="px-1.5 py-0.5 rounded font-mono font-medium" style={{ background: 'rgba(99, 102, 241, 0.1)', color: 'var(--indigo)' }}>
+                                    {p}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-3xs font-medium" style={{ color: 'var(--success)' }}>
+                            No acute retention risks detected. Memory retention is optimal across recent modules!
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Recommended Micro-Intervention Action */}
+                      <div className="p-3 rounded-xl border flex flex-col justify-between" style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
+                        <div className="space-y-1">
+                          <span className="text-3xs font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--muted-foreground)' }}>
+                            <Clock size={12} className="text-amber-500" /> Active Recommended Action
+                          </span>
+                          {topAction ? (
+                            <div>
+                              <p className="font-bold text-xs" style={{ color: 'var(--foreground)' }}>
+                                Practice prerequisite: <span className="font-mono" style={{ color: 'var(--indigo)' }}>{targetTopic}</span>
+                              </p>
+                              <p className="text-3xs" style={{ color: 'var(--muted-foreground)' }}>
+                                {topAction.reason || topAction.actionableResource || 'Foundational prerequisite practice'}
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="text-3xs" style={{ color: 'var(--muted-foreground)' }}>Continue with standard syllabus pacing.</p>
+                          )}
+                        </div>
+
+                        {topAction && (
+                          <div className="flex items-center gap-2 mt-2 pt-2 border-t" style={{ borderColor: 'var(--border)' }}>
+                            <button
+                              onClick={() => handleCompleteIntervention(targetTopic)}
+                              disabled={isCompletingIntervention}
+                              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-3xs font-bold text-white transition-all cursor-pointer shadow-sm disabled:opacity-50"
+                              style={{ background: 'linear-gradient(135deg, var(--indigo), #4F46E5)' }}
+                            >
+                              {isCompletingIntervention ? (
+                                <><RefreshCw size={12} className="animate-spin" /> Recording...</>
+                              ) : (
+                                <><CheckCircle2 size={12} /> Complete 10-Min Review</>
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleSend(`Quiz me on ${targetTopic} to reinforce my prerequisites`)}
+                              className="px-2.5 py-1.5 rounded-lg text-3xs font-bold border transition-all cursor-pointer"
+                              style={{ borderColor: 'var(--indigo)', color: 'var(--indigo)', background: 'transparent' }}
+                              title="Ask EDEN to test you on this topic"
+                            >
+                              Ask EDEN
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* XAI Decision Trace */}
+                    {traces.length > 0 && (
+                      <div className="p-2.5 rounded-xl border space-y-1 font-mono text-3xs" style={{ background: 'var(--elevated)', borderColor: 'var(--border)' }}>
+                        <span className="font-sans font-bold uppercase tracking-wider text-3xs flex items-center gap-1" style={{ color: 'var(--muted-foreground)' }}>
+                          <Layers size={11} style={{ color: 'var(--indigo)' }} /> Explainable AI (XAI) Decision Trace:
+                        </span>
+                        <div className="space-y-0.5" style={{ color: 'var(--muted-foreground)' }}>
+                          {traces.map((trace: string, i: number) => (
+                            <div key={i} className="flex items-start gap-1.5">
+                              <ArrowRight size={10} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--indigo)' }} />
+                              <span className="leading-tight">{trace}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )
+          })()}
+
           {messages.length === 0 && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
