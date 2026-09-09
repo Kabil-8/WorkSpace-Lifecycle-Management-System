@@ -1,0 +1,1751 @@
+You are a team of world-class Software Architects, Senior Full Stack Engineers, UI/UX Designers, DevOps Engineers, AI Engineers, ML Engineers, Cybersecurity Experts, Product Designers, and Cloud Architects.
+
+Your objective is to build a COMPLETE PRODUCTION-READY SOFTWARE PRODUCT.
+
+This is NOT a college project.
+This is NOT a prototype.
+This is NOT a demo.
+
+Develop an enterprise-grade SaaS application with clean architecture, scalable code, reusable components, professional UI/UX, and production-quality implementation.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROJECT NAME
+
+EduSphere
+AI-Powered Student Lifecycle Management Ecosystem
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROJECT DESCRIPTION
+
+Keep the following project description EXACTLY AS PROVIDED.
+
+[Paste the complete problem statement here without changing anything.]
+
+Do not modify the business logic.
+
+Implement every module exactly as described.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+APPLICATION TYPE
+
+Enterprise SaaS Platform
+
+Cloud Native
+
+AI Powered
+
+Multi Tenant Architecture
+
+Microservice Ready
+
+Production Ready
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TECH STACK
+
+Frontend
+
+React 19
+TypeScript
+Vite
+TailwindCSS
+ShadCN UI
+Framer Motion
+React Query
+Redux Toolkit
+React Hook Form
+Zod
+React Router
+Socket.IO Client
+
+Backend
+
+Node.js
+Express.js
+TypeScript
+Socket.IO
+REST APIs
+GraphQL Ready
+JWT Authentication
+Passport OAuth
+Bcrypt
+Multer
+Cloudinary
+Nodemailer
+
+Database
+
+MongoDB
+
+Mongoose
+
+Redis Cache
+
+Search
+
+ElasticSearch
+
+Storage
+
+Cloudinary
+
+AWS S3 Compatible
+
+AI
+
+OpenAI Integration
+
+RAG Architecture
+
+PDF Intelligence
+
+OCR
+
+Whisper
+
+Embedding Search
+
+Vector Database Ready
+
+Machine Learning
+
+Recommendation Engine
+
+Performance Prediction
+
+Placement Prediction
+
+Student Risk Prediction
+
+Analytics
+
+Python Services Integration
+
+Security
+
+JWT
+
+OAuth
+
+RBAC
+
+Helmet
+
+Rate Limiting
+
+CSRF
+
+XSS Protection
+
+AES Encryption
+
+HTTPS
+
+Audit Logs
+
+DevOps
+
+Docker
+
+Docker Compose
+
+GitHub Actions
+
+CI/CD
+
+Kubernetes Ready
+
+Nginx
+
+Deployment Ready
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SOFTWARE QUALITY
+
+Every feature must be fully functional.
+
+No placeholders.
+
+No dummy buttons.
+
+No fake APIs.
+
+No incomplete pages.
+
+No Lorem Ipsum.
+
+Everything should work.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THEME
+
+Create a premium UI similar to:
+
+Linear
+
+Notion
+
+Vercel Dashboard
+
+GitHub
+
+Stripe Dashboard
+
+Framer
+
+Figma
+
+ClickUp
+
+Use glassmorphism carefully.
+
+Use neumorphism only where appropriate.
+
+Minimalistic.
+
+Elegant.
+
+Modern.
+
+Premium.
+
+Professional.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COLOR PALETTE
+
+Primary
+
+#2563EB
+
+Secondary
+
+#6366F1
+
+Accent
+
+#8B5CF6
+
+Success
+
+#10B981
+
+Warning
+
+#F59E0B
+
+Danger
+
+#EF4444
+
+Background
+
+Dark Theme
+
+#09090B
+
+Cards
+
+#18181B
+
+Text
+
+#FFFFFF
+
+Light Theme
+
+Pure White
+
+Soft Gray
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+THEMES
+
+Implement
+
+Dark Theme
+
+Light Theme
+
+System Theme
+
+Dynamic Accent Colors
+
+User Custom Themes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ANIMATIONS
+
+Framer Motion
+
+Smooth Page Transition
+
+Hover Animations
+
+Micro Interactions
+
+Loading Skeletons
+
+Animated Charts
+
+Animated Sidebar
+
+Animated Cards
+
+Animated Notifications
+
+Beautiful Modals
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RESPONSIVE DESIGN
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Ultra Wide
+
+Everything responsive.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DASHBOARD
+
+Premium Analytics Dashboard
+
+Real-time Widgets
+
+Charts
+
+Graphs
+
+Heatmaps
+
+Notifications
+
+Activity Timeline
+
+Productivity Score
+
+AI Insights
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MODULES
+
+Implement every module from the project description.
+
+Each module must include
+
+Database
+
+REST APIs
+
+Frontend
+
+Validation
+
+Authentication
+
+Authorization
+
+Loading State
+
+Error Handling
+
+Pagination
+
+Filtering
+
+Searching
+
+Sorting
+
+Export
+
+Import
+
+Notifications
+
+Audit Logs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REAL TIME
+
+Socket.IO
+
+Live Notifications
+
+Live Chat
+
+Live Collaboration
+
+Online Users
+
+Presence
+
+Typing Indicator
+
+Task Updates
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILES
+
+PDF Viewer
+
+Video Player
+
+Image Viewer
+
+Office Documents
+
+Cloud Upload
+
+Version Control
+
+Preview
+
+Download
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AI
+
+AI Assistant
+
+Chat
+
+Document Summary
+
+Video Summary
+
+Resume Review
+
+Assignment Help
+
+Coding Assistant
+
+Study Planner
+
+Quiz Generator
+
+Flashcards
+
+Career Advisor
+
+Interview Coach
+
+Recommendation Engine
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ADMIN PANEL
+
+Complete Enterprise Admin Dashboard
+
+User Management
+
+Role Management
+
+Department Management
+
+Permissions
+
+Analytics
+
+Security
+
+Logs
+
+Backups
+
+Settings
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ANALYTICS
+
+Beautiful dashboards
+
+ApexCharts
+
+Recharts
+
+Live Statistics
+
+ML Predictions
+
+Performance Reports
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SEARCH
+
+Global Search
+
+Instant Search
+
+Filters
+
+Recent Searches
+
+AI Search
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROFILE
+
+Premium User Profile
+
+Achievements
+
+Certificates
+
+Timeline
+
+Activity
+
+Projects
+
+Skills
+
+Portfolio
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTIFICATIONS
+
+Real Time
+
+Email
+
+Push
+
+In App
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PERFORMANCE
+
+Lazy Loading
+
+Code Splitting
+
+Caching
+
+Image Optimization
+
+Virtualization
+
+Memoization
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ACCESSIBILITY
+
+WCAG
+
+Keyboard Navigation
+
+Screen Reader
+
+High Contrast
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OUTPUT
+
+Generate a COMPLETE WORKING SOFTWARE PRODUCT.
+
+Provide:
+
+Complete Folder Structure
+
+Frontend
+
+Backend
+
+Database Models
+
+Controllers
+
+Routes
+
+Middlewares
+
+Services
+
+Utilities
+
+Hooks
+
+Contexts
+
+Components
+
+Pages
+
+Admin Panel
+
+Student Panel
+
+Faculty Panel
+
+Mentor Panel
+
+Authentication
+
+APIs
+
+Database Schema
+
+README
+
+Docker Files
+
+Environment Files
+
+Deployment Guide
+
+Testing
+
+Seed Data
+
+CI/CD
+
+Everything required to clone, install, run, build, and deploy the software.
+
+The generated code should follow enterprise coding standards, SOLID principles, clean architecture, reusable components, modular folder structure, scalable APIs, optimized database queries, secure authentication, and production-ready best practices.
+
+The final result should look and feel like a commercial SaaS product that could be sold to universities worldwide.━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WORLD-CLASS UI/UX REQUIREMENTS
+
+Do NOT create a generic dashboard.
+
+The application must have a premium SaaS interface comparable to products built by companies like:
+
+• Linear
+• Notion
+• Vercel
+• Stripe Dashboard
+• Framer
+• Arc Browser
+• Raycast
+• Clerk
+• GitHub
+• Figma
+• Supabase
+• ClickUp
+• Monday.com
+
+The interface should immediately feel premium, modern, elegant, and enterprise-ready.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DESIGN SYSTEM
+
+Use
+
+• React 19
+• TypeScript
+• Vite
+• TailwindCSS
+• ReactBits Components
+• ShadCN/UI
+• Radix UI
+• Framer Motion
+• Lucide Icons
+• React Icons
+• Motion One (where appropriate)
+
+Never use Bootstrap.
+
+Never use Material UI.
+
+Never use plain HTML styling.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REACTBITS
+
+Use ReactBits extensively throughout the application.
+
+Examples include:
+
+• Animated Hero Sections
+• Aurora Backgrounds
+• Gradient Blobs
+• Floating Cards
+• Spotlight Effects
+• Particle Backgrounds
+• Animated Borders
+• Infinite Moving Cards
+• Marquee Components
+• Bento Grids
+• Animated Buttons
+• Interactive Hover Cards
+• Glass Cards
+• Scroll Reveal Effects
+• Mouse Follow Effects
+• Tilt Cards
+• Animated Loaders
+• Animated Tabs
+• Modern Timeline
+• Floating Dock
+• Dynamic Sidebars
+• Animated Statistics
+• Premium Hero Components
+
+Use ReactBits wherever it improves user experience.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VISUAL STYLE
+
+Theme
+
+Ultra Modern SaaS
+
+Minimal
+
+Glassmorphism
+
+Soft Shadows
+
+Rounded Corners (16px–24px)
+
+Floating Panels
+
+Gradient Highlights
+
+Blur Effects
+
+Smooth Motion
+
+Large White Spaces
+
+Premium Typography
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COLOR SYSTEM
+
+Dark Theme
+
+Background
+
+#09090B
+
+Cards
+
+#111827
+
+Sidebar
+
+#0F172A
+
+Border
+
+rgba(255,255,255,0.08)
+
+Text
+
+#FFFFFF
+
+Secondary Text
+
+#94A3B8
+
+Accent
+
+#3B82F6
+
+Purple
+
+#8B5CF6
+
+Cyan
+
+#06B6D4
+
+Success
+
+#10B981
+
+Warning
+
+#F59E0B
+
+Danger
+
+#EF4444
+
+Use beautiful gradients throughout the application.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TYPOGRAPHY
+
+Use
+
+Inter
+
+Geist
+
+Satoshi
+
+Manrope
+
+Use professional font hierarchy.
+
+Large headings.
+
+Comfortable spacing.
+
+Beautiful readability.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ICONS
+
+Use Lucide React icons.
+
+Every page should have meaningful icons.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ANIMATIONS
+
+Every interaction should feel alive.
+
+Implement
+
+• Page transitions
+• Fade animations
+• Scale animations
+• Slide animations
+• Spring animations
+• Hover lift
+• Ripple effects
+• Magnetic buttons
+• Animated cards
+• Floating widgets
+• Animated sidebar collapse
+• Animated modals
+• Loading skeletons
+• Smooth dropdowns
+• Animated charts
+• Progress animations
+
+All animations should run at 60 FPS.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DASHBOARD DESIGN
+
+Create one of the best dashboard UIs ever built.
+
+Include
+
+• Bento Grid Layout
+• Live Statistics
+• AI Insights
+• Calendar Widget
+• Productivity Score
+• Activity Timeline
+• Performance Charts
+• Quick Actions
+• Recent Activity
+• Notifications
+• Team Status
+• AI Recommendations
+• Upcoming Tasks
+
+Every widget should be interactive.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COMPONENT QUALITY
+
+Every component should be reusable.
+
+Create
+
+/components
+
+/ui
+
+/layout
+
+/cards
+
+/charts
+
+/forms
+
+/modals
+
+/dialogs
+
+/animations
+
+/sidebar
+
+/navbar
+
+/widgets
+
+/tables
+
+/buttons
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+USER EXPERIENCE
+
+Every click should have feedback.
+
+Every page should load beautifully.
+
+Every loading state should have skeleton loaders.
+
+Every error state should be beautifully designed.
+
+Every empty state should include premium illustrations.
+
+Every success action should include subtle animations.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RESPONSIVE DESIGN
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Ultra-wide Monitor
+
+No horizontal scrolling.
+
+No broken layouts.
+
+Perfect responsiveness.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FINAL GOAL
+
+When users first open EduSphere, they should think:
+
+"This looks like software built by Apple, Stripe, Notion, and Linear."
+
+The interface must be so polished that it appears to be a commercial SaaS product worth millions of dollars rather than a college project.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 🚀 EDUSPHERE — The Complete Production-Ready Prompt
+
+---
+
+## 🎯 Your Mission
+
+You are a team of **world-class Software Architects**, **Senior Full Stack Engineers**, **UI/UX Designers**, **DevOps Engineers**, **AI Engineers**, **ML Engineers**, **Cybersecurity Experts**, **Product Designers**, and **Cloud Architects**.
+
+Your objective is to build a **COMPLETE PRODUCTION-READY SOFTWARE PRODUCT**.
+
+This is **NOT** a college project.
+This is **NOT** a prototype.
+This is **NOT** a demo.
+
+Develop an **enterprise-grade SaaS application** with clean architecture, scalable code, reusable components, professional UI/UX, and production-quality implementation.
+
+---
+
+## 📋 PROJECT NAME
+
+# EduSphere
+## AI-Powered Student Lifecycle Management Ecosystem
+
+---
+
+## 📖 PROJECT DESCRIPTION
+
+*Keep the following project description **EXACTLY AS PROVIDED** in the attached PDF. Do not modify the business logic. Implement every module exactly as described.*
+
+**[⬇️ INSERT YOUR COMPLETE EDUSPHERE PROBLEM STATEMENT HERE ⬇️]**
+
+*Paste the full 13-page description covering:*
+- *Overview & Project Flow*
+- *All 4 User Roles (Student, Faculty, Administrator, Industry Mentor)*
+- *All 16 Modules (Dashboard, Course Management, Smart Notes, Assignments, Coding Platform, MCQ Engine, Placement Portal, Mentorship, Team Workspace, Events, Discussion Forum, AI Assistant, ML Engine, Cybersecurity, Cloud, DevOps, Gamification)*
+- *Complete Workflow*
+
+---
+
+## 🏗️ APPLICATION TYPE
+
+| Aspect | Specification |
+|--------|---------------|
+| Type | Enterprise SaaS Platform |
+| Architecture | Cloud Native |
+| Intelligence | AI Powered |
+| Tenancy | Multi-Tenant Ready |
+| Scalability | Microservice Ready |
+| Quality | Production Ready |
+
+---
+
+## 🛠️ TECH STACK
+
+### 🎨 Frontend
+
+| Technology | Purpose |
+|------------|---------|
+| **React 19** | UI Framework |
+| **TypeScript** | Type Safety |
+| **Vite** | Build Tool |
+| **TailwindCSS** | Styling |
+| **ShadCN UI** | Base Component Library |
+| **React Bits** | Animated Components (130+ components) |
+| **Framer Motion** | Custom Animations |
+| **React Query** | Server State |
+| **Redux Toolkit** | Client State |
+| **React Hook Form** | Form Handling |
+| **Zod** | Validation |
+| **React Router** | Navigation |
+| **Socket.IO Client** | Real-time |
+
+### ⚙️ Backend
+
+| Technology | Purpose |
+|------------|---------|
+| **Node.js** | Runtime |
+| **Express.js** | Web Framework |
+| **TypeScript** | Type Safety |
+| **Socket.IO** | Real-time |
+| **REST APIs** | Communication |
+| **GraphQL** | Alternative API Layer |
+| **JWT** | Authentication |
+| **Passport** | OAuth Integration |
+| **Bcrypt** | Password Hashing |
+| **Multer** | File Uploads |
+| **Cloudinary** | Media Management |
+| **Nodemailer** | Email Service |
+
+### 💾 Database
+
+| Technology | Purpose |
+|------------|---------|
+| **MongoDB** | Primary Database |
+| **Mongoose** | ODM |
+| **Redis** | Caching & Queues |
+| **ElasticSearch** | Search Engine |
+
+### 🤖 AI & Machine Learning
+
+| Technology | Purpose |
+|------------|---------|
+| **OpenAI API** | LLM Integration |
+| **RAG Architecture** | Retrieval Augmented Generation |
+| **PDF Intelligence** | Document Processing |
+| **OCR** | Text Extraction |
+| **Whisper** | Audio Transcription |
+| **Embedding Search** | Semantic Search |
+| **Vector Database** | AI Memory |
+| **Python Services** | ML Models |
+| **scikit-learn** | Predictions |
+| **HuggingFace** | Transformers |
+
+### 🔐 Security
+
+| Technology | Purpose |
+|------------|---------|
+| **JWT** | Authentication |
+| **OAuth** | Social Login |
+| **RBAC** | Role-Based Access |
+| **Helmet** | Security Headers |
+| **Rate Limiting** | DDoS Protection |
+| **CSRF** | Cross-Site Protection |
+| **XSS Protection** | Injection Prevention |
+| **AES Encryption** | Data Encryption |
+| **HTTPS** | Secure Transport |
+| **Audit Logs** | Compliance |
+
+### 🚀 DevOps
+
+| Technology | Purpose |
+|------------|---------|
+| **Docker** | Containerization |
+| **Docker Compose** | Orchestration |
+| **GitHub Actions** | CI/CD |
+| **Kubernetes** | Container Orchestration |
+| **Nginx** | Reverse Proxy |
+| **PM2** | Process Management |
+
+---
+
+## 📐 SOFTWARE QUALITY STANDARDS
+
+| Requirement | Specification |
+|-------------|---------------|
+| ✅ Every feature fully functional | No placeholders |
+| ✅ No dummy buttons | Everything works |
+| ✅ No fake APIs | Real endpoints |
+| ✅ No incomplete pages | Full implementation |
+| ✅ No Lorem Ipsum | Real content |
+| ✅ SOLID Principles | Clean Architecture |
+| ✅ Reusable Components | DRY Code |
+| ✅ Scalable APIs | Optimized Queries |
+| ✅ Production Best Practices | Industry Standards |
+
+---
+
+## 🎨 UI/UX REQUIREMENTS
+
+### 🏆 Benchmark
+
+**Do NOT create a generic dashboard.**
+
+The application must have a **premium SaaS interface** comparable to:
+
+| Product | Vibe |
+|---------|------|
+| Linear | Clean & Fast |
+| Notion | Minimal & Flexible |
+| Vercel Dashboard | Modern & Sleek |
+| Stripe Dashboard | Professional & Polished |
+| Framer | Creative & Fluid |
+| Arc Browser | Innovative & Bold |
+| Raycast | Efficient & Smart |
+| Clerk | Elegant & Auth-Focused |
+| GitHub | Developer-First |
+| Figma | Design-Centric |
+| Supabase | Open & Clean |
+| ClickUp | Feature-Rich |
+| Monday.com | Visual & Collaborative |
+
+The interface must immediately feel **premium, modern, elegant, and enterprise-ready**.
+
+---
+
+## 🎯 DESIGN SYSTEM
+
+### Core Libraries
+
+| Library | Purpose |
+|---------|---------|
+| **React 19** | UI Framework |
+| **TypeScript** | Type Safety |
+| **Vite** | Build Tool |
+| **TailwindCSS** | Utility-First Styling |
+| **React Bits** | Animated Components (130+) |
+| **ShadCN/UI** | Base Components |
+| **Radix UI** | Accessible Primitives |
+| **Framer Motion** | Animations |
+| **Lucide Icons** | Icon Library |
+| **React Icons** | Extended Icons |
+
+**⚠️ NEVER use:** Bootstrap, Material UI, or plain HTML styling.
+
+---
+
+## ✨ REACTBITS INTEGRATION
+
+> *"React Bits is the largest & most creative library of animated React components. Stand out with 130+ free, customizable animations for text, backgrounds, and UI."*
+
+### Installation Method
+
+```bash
+# Install components via shadcn CLI (TypeScript + Tailwind)
+npx shadcn@latest add @react-bits/ComponentName-TS-TW
+```
+
+
+### Component Categories
+
+React Bits offers **4 variants per component**:
+- JS + CSS
+- JS + Tailwind
+- TS + CSS
+- TS + Tailwind *(Recommended for EduSphere)*
+
+### 🎭 ReactBits Components to Use
+
+| Category | Component | Use Case in EduSphere |
+|----------|-----------|----------------------|
+| **Text Animations** | `BlurText` | Hero headings, page titles |
+| | `SplitText` | Animated paragraph reveals |
+| | `Typewriter` | AI Study Plan, dynamic status |
+| | `Typography` | Premium text styling |
+| **Backgrounds** | `Aurora` | Nebula effect on all pages |
+| | `GradientBackground` | Deep space gradients |
+| | `Particles` | Interactive particle systems |
+| | `GridPattern` | Card backgrounds |
+| | `ColorBends` | Flowing color animations |
+| **Components** | `TiltCard` | Course/Stat cards with 3D tilt |
+| | `MagneticButton` | Interactive CTAs |
+| | `Spotlight` | Hover spotlight effects |
+| | `TrailCursor` | Magical cursor trail |
+| | `BorderGlow` | Glowing card borders |
+| | `FloatingDock` | Premium navigation |
+| **Animations** | `Bounce` | Notification badges, rewards |
+| | `FadeIn` | Scroll-triggered reveals |
+| | `ScaleIn` | Interactive feedback |
+| | `ClickSpark` | Button click effects |
+| | `Strands` | New animated background |
+
+### 🛠️ Creative Tools
+
+React Bits also offers free creative tools:
+
+| Tool | Purpose |
+|------|---------|
+| **Background Studio** | Create animated backgrounds, export as video/image/code |
+| **Shape Magic** | Create inner rounded corners, export as SVG/React code |
+| **Texture Lab** | Apply 20+ effects (noise, dithering, ASCII) to images/videos |
+
+---
+
+## 🎨 VISUAL STYLE GUIDE
+
+### Theme: Ultra Modern SaaS
+
+| Element | Specification |
+|---------|---------------|
+| Style | Minimal, Glassmorphism, Soft Shadows |
+| Corner Radius | 16px – 24px |
+| Effects | Floating Panels, Gradient Highlights, Blur Effects |
+| Motion | Smooth, 60 FPS |
+| Spacing | Large White Spaces |
+| Typography | Premium, Clean |
+
+### 🌑 Dark Theme (Default)
+
+| Element | Color |
+|---------|-------|
+| Background | `#09090B` |
+| Cards | `#111827` |
+| Sidebar | `#0F172A` |
+| Border | `rgba(255,255,255,0.08)` |
+| Primary Text | `#FFFFFF` |
+| Secondary Text | `#94A3B8` |
+| **Primary** | `#2563EB` |
+| **Secondary** | `#6366F1` |
+| **Accent** | `#8B5CF6` |
+| **Success** | `#10B981` |
+| **Warning** | `#F59E0B` |
+| **Danger** | `#EF4444` |
+
+### ☀️ Light Theme
+
+- Pure White backgrounds
+- Soft Gray cards
+- Dark text for readability
+
+### 🌈 Theme Support
+
+- ✅ Dark Theme
+- ✅ Light Theme
+- ✅ System Theme
+- ✅ Dynamic Accent Colors
+- ✅ User Custom Themes
+
+---
+
+## 📝 TYPOGRAPHY
+
+| Font | Usage |
+|------|-------|
+| **Inter** | Primary UI |
+| **Geist** | Headings |
+| **Satoshi** | Accent Text |
+| **Manrope** | Alternative |
+
+**Principles:**
+- Large headings
+- Comfortable spacing
+- Beautiful readability
+- Professional hierarchy
+
+---
+
+## 🎭 ANIMATIONS
+
+Every interaction should feel alive.
+
+| Animation Type | Implementation |
+|----------------|----------------|
+| Page Transitions | Framer Motion |
+| Fade Animations | React Bits + Framer |
+| Scale Animations | React Bits |
+| Slide Animations | Framer Motion |
+| Spring Animations | Framer Motion |
+| Hover Lift | React Bits TiltCard |
+| Ripple Effects | React Bits ClickSpark |
+| Magnetic Buttons | React Bits MagneticButton |
+| Animated Cards | React Bits + Framer |
+| Floating Widgets | React Bits |
+| Animated Sidebar | Framer Motion |
+| Animated Modals | Framer Motion |
+| Loading Skeletons | ShadCN UI |
+| Smooth Dropdowns | Framer Motion |
+| Animated Charts | ApexCharts + Framer |
+| Progress Animations | Framer Motion |
+
+**All animations must run at 60 FPS.**
+
+---
+
+## 🖥️ DASHBOARD REQUIREMENTS
+
+Create **one of the best dashboard UIs ever built.**
+
+### Widgets
+
+| Widget | Description |
+|--------|-------------|
+| Bento Grid Layout | Premium, organized |
+| Live Statistics | Real-time numbers |
+| AI Insights | Smart recommendations |
+| Calendar Widget | Upcoming events |
+| Productivity Score | Gamified metric |
+| Activity Timeline | Recent actions |
+| Performance Charts | Visual analytics |
+| Quick Actions | One-click tasks |
+| Recent Activity | Live feed |
+| Notifications | Real-time alerts |
+| Team Status | Online/offline |
+| AI Recommendations | Personalized |
+| Upcoming Tasks | Priority list |
+
+**Every widget must be interactive.**
+
+---
+
+## 🧩 COMPONENT ARCHITECTURE
+
+Every component should be **reusable**.
+
+### Folder Structure
+
+```
+/components
+  /ui          # ShadCN base components
+  /layout      # Layout components
+  /cards       # Card variations
+  /charts      # Chart components
+  /forms       # Form components
+  /modals      # Modal components
+  /dialogs     # Dialog components
+  /animations  # React Bits animations
+  /sidebar     # Sidebar components
+  /navbar      # Navigation components
+  /widgets     # Dashboard widgets
+  /tables      # Data tables
+  /buttons     # Button variations
+```
+
+---
+
+## 🎯 USER EXPERIENCE PRINCIPLES
+
+| Principle | Implementation |
+|-----------|----------------|
+| Every click has feedback | Visual/audio response |
+| Every page loads beautifully | Smooth transitions |
+| Loading states | Skeleton loaders |
+| Error states | Beautiful error pages |
+| Empty states | Premium illustrations |
+| Success actions | Subtle animations |
+| Responsive | All devices |
+| Accessible | WCAG compliant |
+
+---
+
+## 📱 RESPONSIVE DESIGN
+
+| Device | Breakpoint |
+|--------|------------|
+| Desktop | 1440px+ |
+| Laptop | 1024px+ |
+| Tablet | 768px+ |
+| Mobile | 375px+ |
+| Ultra Wide | 1920px+ |
+
+**Requirements:**
+- ✅ No horizontal scrolling
+- ✅ No broken layouts
+- ✅ Perfect responsiveness
+- ✅ Touch-friendly interactions
+
+---
+
+## 🏗️ MODULES TO IMPLEMENT
+
+*Implement every module from the project description.*
+
+### Each Module Must Include:
+
+| Component | Requirement |
+|-----------|-------------|
+| Database | Mongoose Models |
+| REST APIs | Full CRUD |
+| Frontend | React Components |
+| Validation | Zod schemas |
+| Authentication | JWT protected |
+| Authorization | RBAC |
+| Loading State | Skeletons |
+| Error Handling | Error boundaries |
+| Pagination | Infinite scroll |
+| Filtering | Dynamic filters |
+| Searching | Global search |
+| Sorting | Column sorting |
+| Export | CSV/PDF |
+| Import | Bulk upload |
+| Notifications | Real-time |
+| Audit Logs | Track changes |
+
+### 📋 Module List
+
+1. **Dashboard** — Analytics, widgets, AI insights
+2. **Course Management** — Upload, view, track progress
+3. **Smart Notes** — Rich text, OCR, AI summarization
+4. **Assignment Management** — Submit, grade, plagiarism check
+5. **Coding Platform** — Online compiler, contests, AI review
+6. **MCQ Engine** — Quizzes, adaptive difficulty
+7. **Placement Portal** — Resume builder, ATS analyzer
+8. **Mentorship** — Bookings, performance reviews
+9. **Team Workspace** — Kanban, chat, GitHub integration
+10. **Events** — Hackathons, workshops, registration
+11. **Discussion Forum** — Q&A, AI recommendations
+12. **AI Assistant** — Chat, summaries, study planner
+13. **ML Engine** — Predictions, recommendations
+14. **Cybersecurity** — Auth, encryption, logging
+15. **DevOps** — CI/CD, Docker, Kubernetes
+16. **Gamification** — XP, badges, leaderboards
+
+---
+
+## 🔄 REAL-TIME FEATURES
+
+### Socket.IO Implementation
+
+| Feature | Description |
+|---------|-------------|
+| Live Notifications | Instant alerts |
+| Live Chat | Real-time messaging |
+| Live Collaboration | Multi-user editing |
+| Online Users | Presence indicators |
+| Typing Indicator | Real-time feedback |
+| Task Updates | Instant sync |
+
+---
+
+## 📁 FILE HANDLING
+
+| Feature | Support |
+|---------|---------|
+| PDF Viewer | Embedded |
+| Video Player | Streaming |
+| Image Viewer | Gallery |
+| Office Documents | Preview |
+| Cloud Upload | Drag & drop |
+| Version Control | History |
+| Preview | Thumbnails |
+| Download | One-click |
+
+---
+
+## 🤖 AI FEATURES
+
+### AI Assistant Capabilities
+
+| Feature | Description |
+|---------|-------------|
+| Chat | Conversational AI |
+| Document Summary | PDF summarization |
+| Video Summary | Lecture highlights |
+| Resume Review | ATS optimization |
+| Assignment Help | Step-by-step guidance |
+| Coding Assistant | Code review & help |
+| Study Planner | Personalized schedules |
+| Quiz Generator | Auto-generated quizzes |
+| Flashcards | Study aids |
+| Career Advisor | Job recommendations |
+| Interview Coach | Mock interviews |
+| Recommendation Engine | Personalized suggestions |
+
+---
+
+## 🛡️ ADMIN PANEL
+
+Complete Enterprise Admin Dashboard:
+
+| Feature | Description |
+|---------|-------------|
+| User Management | CRUD operations |
+| Role Management | RBAC configuration |
+| Department Management | Organization structure |
+| Permissions | Granular access control |
+| Analytics | Platform insights |
+| Security | Audit logs, monitoring |
+| Logs | System logs |
+| Backups | Data backup management |
+| Settings | Platform configuration |
+
+---
+
+## 📊 ANALYTICS
+
+| Feature | Implementation |
+|---------|----------------|
+| Beautiful Dashboards | ApexCharts, Recharts |
+| Live Statistics | Real-time updates |
+| ML Predictions | AI-powered insights |
+| Performance Reports | Exportable reports |
+
+---
+
+## 🔍 SEARCH
+
+| Feature | Description |
+|---------|-------------|
+| Global Search | Across all modules |
+| Instant Search | Type-ahead |
+| Filters | Advanced filtering |
+| Recent Searches | History |
+| AI Search | Semantic search |
+
+---
+
+## 👤 USER PROFILE
+
+Premium User Profile with:
+
+| Feature | Description |
+|---------|-------------|
+| Achievements | Badges & awards |
+| Certificates | Course completions |
+| Timeline | Activity history |
+| Activity | Recent actions |
+| Projects | Portfolio |
+| Skills | Skill tracking |
+| Portfolio | Showcase work |
+
+---
+
+## 🔔 NOTIFICATIONS
+
+| Type | Implementation |
+|------|----------------|
+| Real-time | Socket.IO |
+| Email | Nodemailer |
+| Push | Web Push API |
+| In-App | Notification center |
+
+---
+
+## ⚡ PERFORMANCE OPTIMIZATION
+
+| Technique | Implementation |
+|-----------|----------------|
+| Lazy Loading | React.lazy |
+| Code Splitting | Vite dynamic imports |
+| Caching | Redis, browser cache |
+| Image Optimization | Cloudinary |
+| Virtualization | React Virtual |
+| Memoization | React.memo, useMemo |
+
+---
+
+## ♿ ACCESSIBILITY
+
+| Standard | Implementation |
+|----------|----------------|
+| WCAG 2.1 AA | Compliance |
+| Keyboard Navigation | Full support |
+| Screen Reader | ARIA labels |
+| High Contrast | Theme support |
+
+---
+
+## 📦 OUTPUT REQUIREMENTS
+
+Generate a **COMPLETE WORKING SOFTWARE PRODUCT**.
+
+### Deliverables
+
+| Item | Description |
+|------|-------------|
+| ✅ Complete Folder Structure | Full organization |
+| ✅ Frontend | All pages & components |
+| ✅ Backend | All APIs & services |
+| ✅ Database Models | Mongoose schemas |
+| ✅ Controllers | Business logic |
+| ✅ Routes | API endpoints |
+| ✅ Middlewares | Auth, logging, etc. |
+| ✅ Services | Business services |
+| ✅ Utilities | Helper functions |
+| ✅ Hooks | Custom React hooks |
+| ✅ Contexts | React contexts |
+| ✅ Components | Reusable UI |
+| ✅ Pages | All views |
+| ✅ Admin Panel | Complete |
+| ✅ Student Panel | Complete |
+| ✅ Faculty Panel | Complete |
+| ✅ Mentor Panel | Complete |
+| ✅ Authentication | Full auth flow |
+| ✅ APIs | REST + GraphQL |
+| ✅ Database Schema | ERD + indexes |
+| ✅ README | Comprehensive |
+| ✅ Docker Files | Dockerfile + compose |
+| ✅ Environment Files | .env.example |
+| ✅ Deployment Guide | Step-by-step |
+| ✅ Testing | Unit + Integration |
+| ✅ Seed Data | Initial data |
+| ✅ CI/CD | GitHub Actions |
+
+---
+
+## 📝 CODE QUALITY STANDARDS
+
+| Principle | Implementation |
+|-----------|----------------|
+| Enterprise Coding Standards | Industry best practices |
+| SOLID Principles | Clean Architecture |
+| Clean Architecture | Separation of concerns |
+| Reusable Components | DRY |
+| Modular Folder Structure | Scalable |
+| Scalable APIs | Optimized |
+| Optimized Database Queries | Indexes, aggregation |
+| Secure Authentication | JWT, OAuth |
+| Production-Ready | All best practices |
+
+---
+
+## 🎯 FINAL GOAL
+
+> When users first open EduSphere, they should think:
+>
+> *"This looks like software built by **Apple**, **Stripe**, **Notion**, and **Linear**."*
+
+The interface must be so polished that it appears to be a **commercial SaaS product worth millions of dollars** — not a college project.
+
+---
+
+## 🚀 EXECUTION INSTRUCTION
+
+Start immediately with:
+
+1. **Phase 1: Architecture & Planning**
+   - Complete folder structure
+   - Database schema (ERD)
+   - API specifications
+   - Component map
+
+2. **Phase 2: Core MVP Implementation**
+   - Authentication (full flow)
+   - Dashboard (premium UI)
+   - Course Management
+   - Smart Notes
+   - ML Prediction Engine
+
+3. **Phase 3: All Modules**
+   - Implement remaining 11 modules
+   - Full CRUD operations
+   - Real-time features
+
+4. **Phase 4: DevOps & Deployment**
+   - Docker configuration
+   - CI/CD pipeline
+   - Deployment guide
+
+---
+
+## 🔗 Quick Reference Links
+
+| Resource | URL |
+|----------|-----|
+| React Bits Docs | https://reactbits.dev |
+| Installation Guide | https://reactbits.dev/get-started/installation |
+| Creative Tools | https://reactbits.dev/tools |
+| GitHub Repository | https://github.com/DavidHDev/react-bits |
+
+---
+
+## 💡 Pro Tips for the AI
+
+1. **Every page must have at least 3 React Bits components** — text animations, backgrounds, or interactive components.
+
+2. **Use the TS-TW variants** — TypeScript + Tailwind for type safety and utility classes.
+
+3. **React Bits + ShadCN/UI work together** — ShadCN for structure, React Bits for magic.
+
+4. **All components are copy-paste ready** — works with any modern React project.
+
+5. **Use Background Studio** — generate custom nebula backgrounds for EduSphere.
+
+6. **Implement light and dark themes** — system theme detection + user preference.
+
+7. **Mobile-first responsive design** — test at 375px, 768px, 1024px, 1440px.
+
+8. **No `console.log()` in production** — use proper logging.
+
+---
+
+**Let's build the future of education. 🎓✨**

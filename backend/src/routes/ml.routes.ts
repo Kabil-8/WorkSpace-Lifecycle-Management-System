@@ -1,0 +1,13 @@
+import { Router } from 'express'
+import { MLController } from '../controllers/ml.controller.js'
+
+const router = Router()
+
+router.post('/resume/ats-score', MLController.calculateATSScore)
+router.post('/interview/questions', MLController.getInterviewQuestions)
+router.post('/interview/evaluate', MLController.evaluateAnswer)
+router.post('/placement/predict', MLController.predictPlacement)
+router.post('/recommendations', MLController.getRecommendations)
+router.post('/digital-twin/5-sub', MLController.get5SubDigitalTwin)
+
+export default router

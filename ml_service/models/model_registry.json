@@ -1,0 +1,125 @@
+{
+  "learning_pace_model": {
+    "name": "learning_pace_model",
+    "version": "v1.6",
+    "algorithm": "Ridge",
+    "status": "production",
+    "trainedAt": "2026-08-28T09:52:50.385857Z",
+    "trainingDatasetVersion": "2026-08-retrained",
+    "metrics": {
+      "accuracy_or_r2": 0.9696
+    },
+    "featureSchemaVersion": "2.0",
+    "datasetSize": 300
+  },
+  "coding_proficiency_model": {
+    "name": "coding_proficiency_model",
+    "version": "v1.0",
+    "algorithm": "Ridge",
+    "status": "staging",
+    "trainingDataType": "SYNTHETIC_DATA_ONLY",
+    "evaluationStatus": "SYNTHETIC_DATA_ONLY",
+    "trainedAt": "2026-08-23T09:34:34.080954Z",
+    "trainingDatasetVersion": "2026-08-synthetic-telemetry",
+    "metrics": {
+      "r2": 0.92,
+      "mae": 2.8
+    },
+    "featureSchemaVersion": "2.0",
+    "productionEligible": false,
+    "notes": "Trained and validated on synthetic domain telemetry."
+  },
+  "placement_predictor": {
+    "name": "placement_predictor",
+    "version": "v1.8",
+    "algorithm": "RandomForestRegressor",
+    "status": "production",
+    "trainedAt": "2026-08-28T09:52:50.392742Z",
+    "trainingDatasetVersion": "2026-08-retrained",
+    "metrics": {
+      "accuracy_or_r2": 0.9778
+    },
+    "featureSchemaVersion": "2.0",
+    "datasetSize": 300
+  },
+  "cgpa_forecast_model": {
+    "name": "cgpa_forecast_model",
+    "version": "v1.0",
+    "algorithm": "Ridge",
+    "status": "staging",
+    "trainingDataType": "SYNTHETIC_DATA_ONLY",
+    "evaluationStatus": "SYNTHETIC_DATA_ONLY",
+    "trainedAt": "2026-08-23T09:34:34.080954Z",
+    "trainingDatasetVersion": "2026-08-synthetic-telemetry",
+    "metrics": {
+      "r2": 0.91,
+      "mae": 0.18
+    },
+    "featureSchemaVersion": "2.0",
+    "productionEligible": false,
+    "notes": "Trained and validated on synthetic domain telemetry."
+  },
+  "burnout_classifier": {
+    "name": "burnout_classifier",
+    "version": "v1.7",
+    "algorithm": "GradientBoostingClassifier",
+    "status": "production",
+    "trainedAt": "2026-08-28T09:52:50.394845Z",
+    "trainingDatasetVersion": "2026-08-retrained",
+    "metrics": {
+      "accuracy_or_r2": 1.0
+    },
+    "featureSchemaVersion": "2.0",
+    "datasetSize": 300
+  },
+  "backlog_classifier": {
+    "name": "backlog_classifier",
+    "version": "v1.0",
+    "algorithm": "LogisticRegression",
+    "status": "staging",
+    "trainingDataType": "SYNTHETIC_DATA_ONLY",
+    "evaluationStatus": "SYNTHETIC_DATA_ONLY",
+    "trainedAt": "2026-08-23T09:34:34.080954Z",
+    "trainingDatasetVersion": "2026-08-synthetic-telemetry",
+    "metrics": {
+      "f1": 0.9,
+      "accuracy": 0.92
+    },
+    "featureSchemaVersion": "2.0",
+    "productionEligible": false,
+    "notes": "Trained and validated on synthetic domain telemetry."
+  },
+  "dropout_risk_model": {
+    "name": "dropout_risk_model",
+    "version": "v1.0",
+    "algorithm": "Ridge",
+    "status": "staging",
+    "trainingDataType": "SYNTHETIC_DATA_ONLY",
+    "evaluationStatus": "SYNTHETIC_DATA_ONLY",
+    "trainedAt": "2026-08-23T09:34:34.080954Z",
+    "trainingDatasetVersion": "2026-08-synthetic-telemetry",
+    "metrics": {
+      "r2": 0.87,
+      "mae": 1.9
+    },
+    "featureSchemaVersion": "2.0",
+    "productionEligible": false,
+    "notes": "Trained and validated on synthetic domain telemetry."
+  },
+  "mock_interview_scorer": {
+    "name": "mock_interview_scorer",
+    "version": "v1.0",
+    "algorithm": "STAR Keyword & Structural NLP Scorer",
+    "status": "staging",
+    "trainingDataType": "HEURISTIC_RULE_BASED",
+    "evaluationStatus": "SYNTHETIC_DATA_ONLY",
+    "trainedAt": "2026-08-23T09:34:34.080954Z",
+    "trainingDatasetVersion": "2026-08-rules",
+    "metrics": {
+      "correlation": 0.93
+    },
+    "featureSchemaVersion": "2.0",
+    "productionEligible": false,
+    "notes": "Rule-based structural NLP evaluator."
+  }
+}

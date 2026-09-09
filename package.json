@@ -1,0 +1,13 @@
+{
+  "name": "edusphere-workspace",
+  "version": "1.0.0",
+  "description": "EduSphere AI-Powered Student Lifecycle Management Ecosystem Workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build && npm --prefix backend run build",
+    "install:all": "npm --prefix frontend install && npm --prefix backend install"
+  }
+}

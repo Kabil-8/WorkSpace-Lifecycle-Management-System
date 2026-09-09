@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { CourseController } from '../../controllers/courseController.js';
+import { verifyToken, requireRole } from '../../middleware/auth.js';
+const router = Router();
+router.get('/', verifyToken, CourseController.getAll);
+router.get('/:id', verifyToken, CourseController.getById);
+router.get('/:id/progress', verifyToken, CourseController.getUserProgress);
+router.post('/:id/progress', verifyToken, CourseController.updateUserProgress);
+router.post('/:id/materials', verifyToken, requireRole('faculty', 'admin', 'hod', 'super_admin'), CourseController.addMaterial);
+router.post('/', verifyToken, requireRole('faculty', 'admin', 'hod', 'super_admin'), CourseController.create);
+router.put('/:id', verifyToken, requireRole('faculty', 'admin', 'hod', 'super_admin'), CourseController.update);
+router.delete('/:id', verifyToken, requireRole('admin', 'super_admin'), CourseController.delete);
+export default router;

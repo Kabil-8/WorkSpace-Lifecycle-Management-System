@@ -1,0 +1,6 @@
+[9/8/2026, 11:10:05 AM] info: Logging was started to file.
+[9/8/2026, 11:10:05 AM] info: Start application inspector initialization
+[9/8/2026, 11:10:05 AM] info: Hide developer mode UI
+[9/8/2026, 11:10:05 AM] info: Minimum required infrastructure version not found
+[9/8/2026, 11:10:09 AM] info: Download analyzer command handled
+[9/8/2026, 11:11:24 AM] error: Error while downloading analyzer: Error: Analyzer download aborted

@@ -1,0 +1,25 @@
+import mongoose, { Schema } from 'mongoose';
+const StudentAttemptSchema = new Schema({
+    examId: { type: Schema.Types.ObjectId, ref: 'Exam', required: true },
+    studentId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    studentName: { type: String, required: true },
+    studentEmail: { type: String, required: true },
+    startTime: { type: Date, default: Date.now },
+    endTime: { type: Date },
+    status: { type: String, enum: ['in_progress', 'completed', 'terminated', 'under_review'], default: 'in_progress' },
+    answers: { type: Map, of: String, default: {} },
+    score: { type: Number, default: 0 },
+    totalQuestions: { type: Number, default: 0 },
+    correctAnswersCount: { type: Number, default: 0 },
+    integrityScore: { type: Number, default: 100 },
+    riskCategory: { type: String, enum: ['Safe', 'Low Risk', 'Moderate Risk', 'Suspicious', 'High Risk'], default: 'Safe' },
+    warningsCount: { type: Number, default: 0 },
+    eyeFocusPercentage: { type: Number, default: 100 },
+    facePresencePercentage: { type: Number, default: 100 },
+    headMovementPercentage: { type: Number, default: 100 },
+    browserViolationsCount: { type: Number, default: 0 },
+    keyboardViolationsCount: { type: Number, default: 0 },
+    facultyRemarks: { type: String, default: '' },
+    reviewedBy: { type: String, default: '' },
+}, { timestamps: true });
+export const StudentAttempt = mongoose.model('StudentAttempt', StudentAttemptSchema);

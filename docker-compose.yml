@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+      - VITE_ML_API_URL=http://localhost:8000/api/ml
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/edusphere
+      - REDIS_URL=redis://redis:6379
+      - ML_SERVICE_URL=http://ml_service:8000/api/ml
+    depends_on:
+      - mongo
+      - redis
+      - ml_service
+    restart: unless-stopped
+
+  ml_service:
+    build: ./ml_service
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
