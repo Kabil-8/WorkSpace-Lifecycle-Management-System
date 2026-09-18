@@ -1,244 +1,191 @@
-import { EdenDocument } from '../models/EdenDocument.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { EdenDocument, IRichChunk } from '../models/EdenDocument.js'
+import { EmbeddingService } from './rag/EmbeddingService.js'
+import { RetrievalService, StudentContext } from './rag/RetrievalService.js'
+import { RerankingService, RerankedChunk } from './rag/RerankingService.js'
+import { ContextBuilder, GroundedContextPayload } from './rag/ContextBuilder.js'
+import { DocumentIngestionService } from './rag/DocumentIngestionService.js'
+import { ChunkingService } from './rag/ChunkingService.js'
 import { logger } from '../config/logger.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export class RAGEngine {
   /**
-   * Generates a 768-dimensional vector embedding for text via Gemini text-embedding-004 API.
+   * Generates a 768-dimensional dense vector embedding for text.
    */
   static async generateEmbedding(text: string): Promise<number[]> {
-    try {
-      const key = process.env.GEMINI_API_KEY || process.env.LLM_API_KEY
-      if (!key || key.trim().length < 15) {
-        return RAGEngine.generateDeterministicVector(text)
-      }
-
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${key.trim()}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'models/text-embedding-004',
-            content: { parts: [{ text: text.slice(0, 2048) }] },
-          }),
-        },
-      )
-
-      if (res.ok) {
-        const data: any = await res.json()
-        if (data?.embedding?.values && Array.isArray(data.embedding.values)) {
-          return data.embedding.values
-        }
-      }
-    } catch (err: any) {
-      logger.warn({ err: err.message }, '[RAGEngine] Embedding API call failed, using vector fallback')
-    }
-
-    return RAGEngine.generateDeterministicVector(text)
+    return EmbeddingService.generateEmbedding(text)
   }
 
   /**
-   * Cosine Similarity calculation between two dense vectors
+   * Cosine Similarity calculation between two dense vectors.
    */
   static cosineSimilarity(vecA: number[], vecB: number[]): number {
-    if (!vecA || !vecB || vecA.length === 0 || vecB.length === 0) return 0
-    const dim = Math.min(vecA.length, vecB.length)
-    let dot = 0
-    let normA = 0
-    let normB = 0
-    for (let i = 0; i < dim; i++) {
-      dot += vecA[i] * vecB[i]
-      normA += vecA[i] * vecA[i]
-      normB += vecB[i] * vecB[i]
-    }
-    if (normA === 0 || normB === 0) return 0
-    return dot / (Math.sqrt(normA) * Math.sqrt(normB))
+    return EmbeddingService.cosineSimilarity(vecA, vecB)
   }
 
   /**
-   * Hybrid Vector Retrieval Engine:
-   * 1. Attempts MongoDB Atlas $vectorSearch pipeline aggregation query if available
-   * 2. Fallbacks to in-memory Cosine Similarity with metadata filtering & keyword term boost
+   * Backward-compatible chunk retrieval method returning formatted string excerpts.
    */
   static async retrieveChunks(query: string, department?: string): Promise<string[]> {
     const q = (query || '').toLowerCase().trim()
     const isGreeting = /^(hi|hello|hey|good morning|good afternoon|good evening|yo|sup)\b/i.test(q)
-    const isCoding = /(code|java|python|javascript|typescript|cpp|c\+\+|html|css|sql|function|script|algorithm|sort)/i.test(q)
+    const isCoding = /(write code|python function|implement in java|c\+\+ script|def solution|public class)/i.test(q)
     const isNavigation = /(open|go to|take me to)\b/i.test(q)
 
-    // Skip RAG for simple greetings, direct coding, or navigation requests to prevent prompt pollution
     if (isGreeting || isCoding || isNavigation) {
       return []
     }
 
     try {
-      const queryVector = await RAGEngine.generateEmbedding(query)
+      const studentContext: StudentContext = { department }
+      const candidates = await RetrievalService.retrieveCandidateChunks(query, studentContext, 8)
+      const reranked = RerankingService.rerank(query, candidates, studentContext, 4)
 
-      // Attempt Atlas $vectorSearch aggregation query
-      try {
-        const atlasResults = await EdenDocument.aggregate([
-          {
-            $vectorSearch: {
-              index: 'vector_index',
-              path: 'embedding',
-              queryVector,
-              numCandidates: 20,
-              limit: 5,
-            },
-          },
-        ])
-
-        if (atlasResults && atlasResults.length > 0) {
-          logger.info({ count: atlasResults.length }, '[Vector RAGEngine] Retrieved via MongoDB Atlas Vector Search')
-          return atlasResults.map(doc => `[Doc: ${doc.title} (${doc.category})]\n${doc.content.slice(0, 1000)}`)
-        }
-      } catch {
-        // Fallback to in-memory Cosine Similarity matching for non-Atlas MongoDB setups
-      }
-
-      const docs = await EdenDocument.find().lean()
-      if (!docs || docs.length === 0) return []
-
-      const scoredChunks: { text: string; score: number; docTitle: string; category: string }[] = []
-
-      for (const doc of docs) {
-        if (department && doc.department && doc.department !== 'All Departments' && doc.department.toLowerCase() !== department.toLowerCase()) {
-          continue
-        }
-
-        let docSimilarity = 0
-        if (doc.embedding && doc.embedding.length > 0) {
-          docSimilarity = RAGEngine.cosineSimilarity(queryVector, doc.embedding)
-        }
-
-        if (doc.chunks && doc.chunks.length > 0) {
-          for (const chunk of doc.chunks) {
-            let chunkSimilarity = docSimilarity
-            if (chunk.embedding && chunk.embedding.length > 0) {
-              chunkSimilarity = RAGEngine.cosineSimilarity(queryVector, chunk.embedding)
-            }
-
-            const queryTerms = query.toLowerCase().split(/\s+/).filter(w => w.length > 3)
-            const textLower = chunk.text.toLowerCase()
-            const matchCount = queryTerms.filter(t => textLower.includes(t)).length
-            const keywordBoost = queryTerms.length > 0 ? (matchCount / queryTerms.length) * 0.2 : 0
-
-            const finalScore = chunkSimilarity + keywordBoost
-
-            if (finalScore > 0.15) {
-              scoredChunks.push({
-                text: chunk.text,
-                score: finalScore,
-                docTitle: doc.title,
-                category: doc.category,
-              })
-            }
-          }
-        } else {
-          scoredChunks.push({
-            text: doc.content.slice(0, 1000),
-            score: docSimilarity || 0.3,
-            docTitle: doc.title,
-            category: doc.category,
-          })
-        }
-      }
-
-      scoredChunks.sort((a, b) => b.score - a.score)
-      const topChunks = scoredChunks.slice(0, 5)
-
-      logger.info({ query, totalMatched: topChunks.length }, '[Vector RAGEngine] In-Memory Cosine Vector Search Complete')
-
-      return topChunks.map(c => `[Doc: ${c.docTitle} (${c.category}) | Relevance: ${(c.score * 100).toFixed(1)}%]\n${c.text}`)
+      return reranked.map(
+        c => `[Doc: ${c.docTitle || c.documentTitle} | Section: ${c.sectionTitle} | Relevance: ${(c.finalScore * 100).toFixed(1)}%]\n${c.text}`
+      )
     } catch (err: any) {
-      logger.error({ err: err.message }, '[Vector RAGEngine] Retrieval failed')
+      logger.error({ err: err.message }, '[RAGEngine] Retrieval failed')
       return []
     }
   }
 
   /**
-   * Chunk document and compute dense vector embeddings
+   * High-level context-aware retrieval returning structured prompt context and citations.
    */
-  static async chunkAndEmbedDocument(title: string, category: any, department: string, content: string, uploadedBy?: any) {
-    const chunkStrings = RAGEngine.splitTextIntoChunks(content, 500, 100)
-    const chunks: { text: string; keywords: string[]; embedding?: number[] }[] = []
+  static async retrieveGroundedContext(
+    query: string,
+    studentContext?: StudentContext
+  ): Promise<GroundedContextPayload> {
+    try {
+      const candidates = await RetrievalService.retrieveCandidateChunks(query, studentContext, 8)
+      const reranked = RerankingService.rerank(query, candidates, studentContext, 4)
+      return ContextBuilder.buildGroundedContext(reranked)
+    } catch (err: any) {
+      logger.error({ err: err.message }, '[RAGEngine] Grounded context retrieval error')
+      return {
+        contextText: '',
+        sourceCitations: [],
+        hasInstitutionalEvidence: false,
+        highestConfidence: 0.0
+      }
+    }
+  }
 
-    for (const str of chunkStrings) {
-      const keywords = str.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(w => w.length > 4).slice(0, 8)
-      const embedding = await RAGEngine.generateEmbedding(str)
-      chunks.push({ text: str, keywords, embedding })
+  /**
+   * Chunks document and computes dense vector embeddings.
+   */
+  static async chunkAndEmbedDocument(
+    title: string,
+    category: any,
+    department: string,
+    content: string,
+    uploadedBy?: any,
+    semester?: number
+  ) {
+    const ingestedDoc = {
+      documentId: `doc-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      title,
+      category: String(category),
+      department,
+      semester,
+      content,
+      fileSize: Buffer.byteLength(content, 'utf-8')
     }
 
-    const docEmbedding = await RAGEngine.generateEmbedding(`${title} ${content.slice(0, 1000)}`)
+    const rawChunks = ChunkingService.chunkDocument(ingestedDoc, 400, 60)
+    const richChunks: IRichChunk[] = []
+
+    for (const chunk of rawChunks) {
+      const embedding = await EmbeddingService.generateEmbedding(chunk.text)
+      richChunks.push({
+        ...chunk,
+        embedding
+      })
+    }
+
+    const docEmbedding = await EmbeddingService.generateEmbedding(`${title} ${content.slice(0, 1000)}`)
 
     const newDoc = await EdenDocument.create({
+      documentId: ingestedDoc.documentId,
       title,
-      category,
+      category: String(category),
       department,
+      semester,
       content,
       embedding: docEmbedding,
-      chunks,
+      chunks: richChunks,
       uploadedBy,
     })
 
     return newDoc
   }
 
-  private static splitTextIntoChunks(text: string, chunkSize: number = 500, overlap: number = 100): string[] {
-    const words = text.split(/\s+/)
-    if (words.length <= chunkSize) return [text]
-
-    const chunks: string[] = []
-    let i = 0
-    while (i < words.length) {
-      const chunk = words.slice(i, i + chunkSize).join(' ')
-      chunks.push(chunk)
-      i += chunkSize - overlap
-    }
-    return chunks
-  }
-
-  private static generateDeterministicVector(text: string): number[] {
-    const vector = new Array(768).fill(0)
-    const cleanText = text.toLowerCase()
-    for (let i = 0; i < cleanText.length; i++) {
-      const code = cleanText.charCodeAt(i)
-      const idx = (code * 31 + i) % 768
-      vector[idx] += 0.01
-    }
-    const mag = Math.sqrt(vector.reduce((sum, val) => sum + val * val, 0)) || 1
-    return vector.map(v => v / mag)
-  }
-
+  /**
+   * Seeds institutional knowledge base from rag_documents/ directory.
+   */
   static async seedDefaultKnowledge() {
     try {
       const count = await EdenDocument.countDocuments()
-      if (count > 0) return
+      if (count >= 5) {
+        logger.info({ count }, '[RAGEngine] Institutional knowledge base already populated')
+        return
+      }
 
-      await RAGEngine.chunkAndEmbedDocument(
-        'EduSphere Academic & Attendance Regulations 2026',
-        'university_rules',
-        'All Departments',
-        'Attendance Rule 75%: Students must maintain a minimum of 75% attendance in each subject to be eligible for end-semester examinations. Medical leave requests must be submitted within 3 days of absence. A maximum of 10% condonation is allowed upon HoD approval.',
-      )
+      // Root of repository containing rag_documents/
+      const workspaceRoot = path.resolve(__dirname, '../../..')
+      const docsDir = path.join(workspaceRoot, 'rag_documents')
 
-      await RAGEngine.chunkAndEmbedDocument(
-        'Computer Science & Engineering Syllabus 2026',
-        'syllabus',
-        'Computer Science & Engineering',
-        'CSE Core Modules: Data Structures & Algorithms (Java/C), Database Management Systems (MongoDB/PostgreSQL), Systems Programming (C/POSIX), Web Engineering (React/Node.js), Machine Learning & AI.',
-      )
+      const ingestedDocs = await DocumentIngestionService.ingestDirectory(docsDir)
+      if (ingestedDocs.length === 0) {
+        logger.warn('[RAGEngine] No files found in rag_documents, seeding baseline rules')
+        await RAGEngine.chunkAndEmbedDocument(
+          'EduSphere Academic & Attendance Regulations 2026',
+          'attendance_policy',
+          'All Departments',
+          'Section 1. Mandatory Attendance: 75% minimum attendance required. Section 2. Medical Condonation: Shortage between 65% and 75% may be condoned on medical grounds with HoD approval within 3 working days.',
+          null
+        )
+        return
+      }
 
-      await RAGEngine.chunkAndEmbedDocument(
-        'Campus Placement & Internship Policy 2026',
-        'placement_policy',
-        'Career & Placement',
-        'Placement Eligibility: Minimum 6.5 CGPA with zero active backlogs. Students can hold up to 1 Dream Offer (> ₹10 LPA). ATS resume verification is mandatory prior to campus interviews.',
-      )
+      for (const doc of ingestedDocs) {
+        // Avoid duplicate by title
+        const existing = await EdenDocument.findOne({ title: doc.title })
+        if (existing) continue
 
-      logger.info('[Vector RAGEngine] Institutional knowledge base seeded with vector embeddings')
+        const rawChunks = ChunkingService.chunkDocument(doc, 400, 60)
+        const richChunks: IRichChunk[] = []
+
+        for (const chunk of rawChunks) {
+          const emb = await EmbeddingService.generateEmbedding(chunk.text)
+          richChunks.push({ ...chunk, embedding: emb })
+        }
+
+        const docEmb = await EmbeddingService.generateEmbedding(`${doc.title} ${doc.content.slice(0, 1000)}`)
+
+        await EdenDocument.create({
+          documentId: doc.documentId,
+          title: doc.title,
+          category: doc.category,
+          department: doc.department,
+          semester: doc.semester,
+          content: doc.content,
+          embedding: docEmb,
+          chunks: richChunks,
+          fileSize: doc.fileSize,
+          metadata: doc.metadata
+        })
+        logger.info({ title: doc.title, chunks: richChunks.length }, '[RAGEngine] Indexed institutional document')
+      }
+
+      logger.info('[RAGEngine] Institutional knowledge base successfully seeded and indexed')
     } catch (err: any) {
-      logger.warn({ err: err.message }, '[Vector RAGEngine] Knowledge base seeding skipped')
+      logger.warn({ err: err.message }, '[RAGEngine] Knowledge base seeding skipped')
     }
   }
 }

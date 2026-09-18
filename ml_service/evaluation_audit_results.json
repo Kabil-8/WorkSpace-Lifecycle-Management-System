@@ -1,0 +1,214 @@
+{
+  "audit_version": "2.0",
+  "evaluation_standard": "HELD_OUT_TEST_EVALUATION",
+  "timestamp": "2026-09-18T04:48:18.292032Z",
+  "reproducibility_seed": 42,
+  "dataset": {
+    "total_samples": 10000,
+    "train_samples": 8000,
+    "held_out_test_samples": 2000,
+    "split_ratio": "80/20",
+    "provenance": "Calibrated against Indian Tier-1/Tier-2 Engineering Distributions (VTU / Anna University)"
+  },
+  "models": {
+    "placement_predictor": {
+      "model_name": "placement_predictor",
+      "algorithm": "RandomForestRegressor(n=100, max_depth=12)",
+      "task_type": "regression",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "mae": 1.714,
+        "rmse": 2.1699,
+        "r2": 0.9695,
+        "mape": 2.48
+      },
+      "target_variable": "placement_probability_pct"
+    },
+    "coding_proficiency": {
+      "model_name": "coding_proficiency",
+      "algorithm": "Ridge(alpha=1.0)",
+      "task_type": "regression",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "mae": 1.9401,
+        "rmse": 2.4106,
+        "r2": 0.9841,
+        "mape": 4.69
+      },
+      "target_variable": "coding_proficiency_score"
+    },
+    "cgpa_forecast": {
+      "model_name": "cgpa_forecast",
+      "algorithm": "Ridge(alpha=0.5)",
+      "task_type": "regression",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "mae": 0.11,
+        "rmse": 0.1389,
+        "r2": 0.9921,
+        "mape": 1.62
+      },
+      "target_variable": "projected_next_term_cgpa"
+    },
+    "learning_pace": {
+      "model_name": "learning_pace",
+      "algorithm": "Ridge(alpha=1.0)",
+      "task_type": "regression",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "mae": 2.5197,
+        "rmse": 3.1691,
+        "r2": 0.8956,
+        "mape": 3.43
+      },
+      "target_variable": "learning_velocity_index"
+    },
+    "dropout_risk": {
+      "model_name": "dropout_risk",
+      "algorithm": "Ridge(alpha=1.0)",
+      "task_type": "regression",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "mae": 2.0206,
+        "rmse": 2.5878,
+        "r2": 0.9293,
+        "mape": 30.82
+      },
+      "target_variable": "dropout_risk_pct"
+    },
+    "backlog_classifier": {
+      "model_name": "backlog_classifier",
+      "algorithm": "LogisticRegression(C=1.0)",
+      "task_type": "classification_binary",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "accuracy": 0.9955,
+        "precision": 0.9954,
+        "recall": 0.9955,
+        "f1": 0.9954,
+        "confusion_matrix": [
+          [
+            1932,
+            2
+          ],
+          [
+            7,
+            59
+          ]
+        ],
+        "roc_auc": 0.9998
+      },
+      "target_variable": "backlog_risk_flag"
+    },
+    "burnout_classifier": {
+      "model_name": "burnout_classifier",
+      "algorithm": "GradientBoostingClassifier(n=80, max_depth=4)",
+      "task_type": "classification_multiclass",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "accuracy": 0.893,
+        "precision": 0.8922,
+        "recall": 0.893,
+        "f1": 0.8925,
+        "confusion_matrix": [
+          [
+            529,
+            45,
+            0
+          ],
+          [
+            51,
+            480,
+            65
+          ],
+          [
+            0,
+            53,
+            777
+          ]
+        ]
+      },
+      "target_variable": "burnout_tier_level"
+    },
+    "interview_scorer": {
+      "model_name": "interview_scorer",
+      "algorithm": "Ridge(alpha=1.0)",
+      "task_type": "regression",
+      "train_size": 8000,
+      "test_size": 2000,
+      "metrics": {
+        "mae": 2.5942,
+        "rmse": 3.283,
+        "r2": 0.9333,
+        "mape": 4.74,
+        "pearson_correlation": 0.9661
+      },
+      "target_variable": "interview_readiness_score"
+    }
+  },
+  "summary_table": [
+    {
+      "model": "Placement Predictor",
+      "algorithm": "RandomForestRegressor",
+      "primary_metric": "R\u00b2 = 0.9695",
+      "error_margin": "MAE = 1.714%",
+      "status": "PASSED"
+    },
+    {
+      "model": "Coding Proficiency",
+      "algorithm": "Ridge",
+      "primary_metric": "R\u00b2 = 0.9841",
+      "error_margin": "MAE = 1.9401 pts",
+      "status": "PASSED"
+    },
+    {
+      "model": "CGPA Forecast",
+      "algorithm": "Ridge",
+      "primary_metric": "R\u00b2 = 0.9921",
+      "error_margin": "MAE = 0.11 CGPA",
+      "status": "PASSED"
+    },
+    {
+      "model": "Learning Pace",
+      "algorithm": "Ridge",
+      "primary_metric": "R\u00b2 = 0.8956",
+      "error_margin": "MAE = 2.5197 pts",
+      "status": "PASSED"
+    },
+    {
+      "model": "Dropout Risk",
+      "algorithm": "Ridge",
+      "primary_metric": "R\u00b2 = 0.9293",
+      "error_margin": "MAE = 2.0206%",
+      "status": "PASSED"
+    },
+    {
+      "model": "Backlog Classifier",
+      "algorithm": "LogisticRegression",
+      "primary_metric": "Accuracy = 99.6%",
+      "error_margin": "F1 = 0.9954",
+      "status": "PASSED"
+    },
+    {
+      "model": "Burnout Classifier",
+      "algorithm": "GradientBoostingClassifier",
+      "primary_metric": "Accuracy = 89.3%",
+      "error_margin": "F1 = 0.8925",
+      "status": "PASSED"
+    },
+    {
+      "model": "Mock Interview Scorer",
+      "algorithm": "Ridge + Pearson NLP",
+      "primary_metric": "Pearson \u03c1 = 0.9661",
+      "error_margin": "MAE = 2.5942 pts",
+      "status": "PASSED"
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import { SourceManager } from './SourceManager.js'
 import { RAGEngine } from './RAGEngine.js'
 import { LLMProviderFactory } from './providers/LLMProviderFactory.js'
 import { ResponseValidator } from './ResponseValidator.js'
+import { RAGResponseValidator } from './rag/RAGResponseValidator.js'
 import EdenConversation from '../models/EdenConversation.js'
 import { logger } from '../config/logger.js'
 
@@ -86,20 +87,36 @@ export class EdenOrchestrator {
       }
     }
 
-    // 4. RAG Document Retrieval — now uses production RAGEngine (Gemini text-embedding-004 + MongoDB)
-    //    replaces old RAGContextBuilder which used in-memory TF-IDF VectorStore
+    // 4. Grounded Context-Aware Institutional RAG Retrieval
     let ragContext = ''
+    let groundedContextPayload: any = null
     try {
-      const chunks = await RAGEngine.retrieveChunks(cleanQuery, contextData.user.department)
-      if (chunks.length > 0) {
-        ragContext = '### 📄 Institutional Knowledge Base Context:\n\n'
-        chunks.forEach((chunk, idx) => {
-          ragContext += `[Knowledge Chunk ${idx + 1}]:\n${chunk}\n\n`
+      const studentContext = {
+        userId: String(contextData.user?.id || req.userId),
+        name: contextData.user?.name,
+        department: contextData.user?.department,
+        semester: contextData.user?.semester,
+        cgpa: (contextData.user as any)?.cgpa
+      }
+      groundedContextPayload = await RAGEngine.retrieveGroundedContext(cleanQuery, studentContext)
+      if (groundedContextPayload && groundedContextPayload.hasInstitutionalEvidence) {
+        ragContext = groundedContextPayload.contextText
+        toolsUsed.push({
+          tool: 'rag_retrieval',
+          chunks: groundedContextPayload.sourceCitations.length,
+          department: contextData.user?.department,
+          confidence: groundedContextPayload.highestConfidence
         })
-        toolsUsed.push({ tool: 'rag_retrieval', chunks: chunks.length, department: contextData.user.department })
+        groundedContextPayload.sourceCitations.forEach((src: any) => {
+          sourceManager.addSource({
+            title: `${src.title} (${src.section}, Page ${src.page})`,
+            url: `https://edusphere.ac.in/regulations#${encodeURIComponent(src.sourceId)}`,
+            snippet: `Relevance: ${src.relevancePct}% | Category: ${src.category}`
+          })
+        })
       }
     } catch (ragErr: any) {
-      logger.warn({ err: ragErr.message }, '[EdenOrchestrator] RAG retrieval skipped')
+      logger.warn({ err: ragErr.message }, '[EdenOrchestrator] Grounded RAG retrieval skipped')
     }
 
     // 5. Assemble System Prompt with role-specific tool guidance
@@ -186,6 +203,12 @@ export class EdenOrchestrator {
       }
 
       // 9. Response Validation & Citation Formatting
+      // Apply Feature #24 Zero-Hallucination & Citation Verification if RAG evidence was retrieved
+      if (groundedContextPayload) {
+        const ragCheck = RAGResponseValidator.validateResponse(cleanQuery, finalContent, groundedContextPayload)
+        finalContent = ragCheck.finalResponse
+      }
+
       // IntentClassifier used HERE (post-response) for metadata tagging only
       const intentResult = IntentClassifier.classify(cleanQuery)
       const validatedContent = ResponseValidator.validateAndClean(finalContent, intentResult)

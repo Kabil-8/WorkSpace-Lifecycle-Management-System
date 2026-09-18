@@ -7,7 +7,7 @@ export class Retriever {
    */
   static retrieveRelevantChunks(query: string, authenticatedUserId: string, topK: number = 3): IndexedChunk[] {
     const store = VectorStore.getStore()
-    const queryVector = EmbeddingService.generateEmbedding(query)
+    const queryVector = EmbeddingService.generateTfIdfVector(query)
 
     const scored = store
       .filter(chunk => chunk.ownerId === authenticatedUserId || chunk.ownerId === 'public' || chunk.ownerId === 'system')
