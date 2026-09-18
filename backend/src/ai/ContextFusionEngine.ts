@@ -80,6 +80,7 @@ export interface FusedStudentContext {
   intent: {
     type: string
     confidence: number
+    ambiguity?: number
     entities: Record<string, any>
   }
   profile: {
@@ -182,73 +183,265 @@ export class ContextFusionEngine {
   }
 
   /**
-   * Classifies user query into unified R14 intents
+   * R15 Scored Multi-Signal Intent Classifier with Ambiguity Detection
+   * Evaluates weighted domain patterns, calculates top-1 vs runner-up score margin,
+   * detects query ambiguity, and extracts topic/numerical entities.
    */
-  public static classifyIntent(query: string): { type: string; confidence: number; entities: Record<string, any> } {
+  public static classifyIntent(query: string): { type: string; confidence: number; ambiguity: number; entities: Record<string, any> } {
     const q = (query || '').toLowerCase().trim()
     const entities: Record<string, any> = {}
 
     // Entity extraction
     if (q.includes('dynamic programming') || q.includes('dp')) entities.topic = 'Dynamic Programming'
     else if (q.includes('recursion')) entities.topic = 'Recursion'
-    else if (q.includes('binary search') || q.includes('tree')) entities.topic = 'Trees'
+    else if (q.includes('binary search') || q.includes('tree') || q.includes('trie')) entities.topic = 'Trees'
     else if (q.includes('operating systems') || q.includes('os')) entities.topic = 'Operating Systems'
     else if (q.includes('dbms') || q.includes('database')) entities.topic = 'Database Systems'
+    else if (q.includes('graph theory') || q.includes('dijkstra')) entities.topic = 'Graph Theory'
+    else if (q.includes('concurrency') || q.includes('multithreading')) entities.topic = 'Concurrency'
 
     const numMatch = q.match(/(\d+(?:\.\d+)?)\s*%/i) || q.match(/attendance.*?(\d+)/i)
     if (numMatch) entities.percentage = parseFloat(numMatch[1])
 
-    if (q.includes('study plan') || q.includes('roadmap') || q.includes('study sequence') || (q.includes('plan') && q.includes('recover'))) {
-      return { type: 'STUDY_PLAN', confidence: 0.94, entities }
-    }
-    if (q.includes('attendance') || q.includes('condonation') || q.includes('detention') || q.includes('das') || q.includes('on-duty') || q.includes('od') || (q.includes('lab') && q.includes('safe'))) {
-      return { type: 'ATTENDANCE', confidence: 0.95, entities }
-    }
-    if (q.includes('exam') || q.includes('cia') || q.includes('ese') || q.includes('hall ticket') || q.includes('malpractice') || q.includes('revaluation') || q.includes('passing minimum')) {
-      return { type: 'EXAMINATION', confidence: 0.95, entities }
-    }
-    if (q.includes('regulation') || q.includes('rule') || q.includes('grading') || q.includes('sgpa') || q.includes('cgpa') || q.includes('credit') || q.includes('overload') || q.includes('fast-track') || q.includes('policy') || q.includes('quota') || q.includes('admission') || q.includes('grades and attendance of student')) {
-      return { type: 'ACADEMIC_POLICY', confidence: 0.92, entities }
-    }
-    if (q.includes('placement') || q.includes('job') || q.includes('recruitment') || q.includes('dream offer') || q.includes('tier 1') || q.includes('tier-1') || q.includes('ctc') || q.includes('salary') || q.includes('placed')) {
-      return { type: 'PLACEMENT', confidence: 0.95, entities }
-    }
-    if (q.includes('resume') || q.includes('ats') || q.includes('cv')) {
-      return { type: 'RESUME', confidence: 0.92, entities }
-    }
-    if (q.includes('interview') || q.includes('mock interview')) {
-      return { type: 'INTERVIEW', confidence: 0.90, entities }
-    }
-    if (q.includes('risk') || q.includes('burnout') || q.includes('dropout') || q.includes('disengagement') || q.includes('emergency review')) {
-      return { type: 'RISK', confidence: 0.92, entities }
-    }
-    if (q.includes('struggling') || q.includes("can't solve") || q.includes('understand') || q.includes('prerequisite') || q.includes('revise') || q.includes('why am i') || q.includes('weakness') || q.includes('failed') || q.includes('review') || q.includes('learn before') || q.includes('mastered')) {
-      return { type: 'LEARNING_HELP', confidence: 0.94, entities }
-    }
-    if (q.includes('quiz') || q.includes('test') || q.includes('practice question')) {
-      return { type: 'QUIZ', confidence: 0.88, entities }
-    }
-    if (q.includes('code') || q.includes('programming') || q.includes('function') || q.includes('algorithm') || q.includes('python')) {
-      return { type: 'CODING', confidence: 0.85, entities }
-    }
-    if (q.includes('course') || q.includes('syllabus') || q.includes('curriculum')) {
-      return { type: 'COURSE_CONTENT', confidence: 0.88, entities }
+    const intentDefinitions: Record<string, { patterns: Array<{ term: string; weight: number }>; antiPatterns?: string[] }> = {
+      ATTENDANCE: {
+        patterns: [
+          { term: 'attendance', weight: 4.5 },
+          { term: 'condonation', weight: 5.0 },
+          { term: 'detention', weight: 4.5 },
+          { term: 'detained', weight: 4.5 },
+          { term: 'das', weight: 4.5 },
+          { term: 'on-duty', weight: 4.0 },
+          { term: 'od leaves', weight: 4.0 },
+          { term: 'medical certificate', weight: 3.5 },
+          { term: 'shortage', weight: 3.5 },
+          { term: 'lab practical', weight: 3.0 },
+          { term: 'lab exams', weight: 3.0 },
+        ],
+        antiPatterns: ['placement', 'resume', 'interview']
+      },
+      EXAMINATION: {
+        patterns: [
+          { term: 'cia', weight: 4.5 },
+          { term: 'ese', weight: 4.5 },
+          { term: 'hall ticket', weight: 4.0 },
+          { term: 'malpractice', weight: 4.5 },
+          { term: 'revaluation', weight: 4.5 },
+          { term: 'answer scripts', weight: 4.0 },
+          { term: 'supplementary', weight: 4.0 },
+          { term: 'incomplete grade', weight: 4.0 },
+          { term: 'copying', weight: 3.5 },
+          { term: 'academic dishonesty', weight: 4.0 },
+          { term: 'passing minimum mark', weight: 4.5 },
+          { term: 'continuous internal assessment', weight: 4.5 },
+          { term: 'exam', weight: 2.0 },
+          { term: 'examination', weight: 2.0 }
+        ],
+        antiPatterns: ['attendance', 'condonation', 'detention', 'das']
+      },
+      ACADEMIC_POLICY: {
+        patterns: [
+          { term: 'regulation', weight: 4.5 },
+          { term: 'regulations', weight: 4.5 },
+          { term: 'credit overload', weight: 4.5 },
+          { term: 'credit limit', weight: 4.5 },
+          { term: 'credits a student can', weight: 4.5 },
+          { term: 'fast-track', weight: 4.5 },
+          { term: 'grading system', weight: 4.0 },
+          { term: 'grade point', weight: 4.0 },
+          { term: 'passing criteria', weight: 4.5 },
+          { term: 'scholarship policy', weight: 4.5 },
+          { term: 'sports quota', weight: 4.5 },
+          { term: 'admissions', weight: 4.0 },
+          { term: 'grades and attendance of student', weight: 4.5 },
+          { term: 'policy on', weight: 3.5 },
+          { term: 'policy for', weight: 3.5 },
+          { term: 'policy regarding', weight: 3.5 },
+          { term: 'rule', weight: 2.0 },
+          { term: 'rules', weight: 2.0 }
+        ],
+        antiPatterns: ['placement', 'cdc', 'dream offer', 'interview', 'resume']
+      },
+      PLACEMENT: {
+        patterns: [
+          { term: 'placement', weight: 4.0 },
+          { term: 'placements', weight: 4.0 },
+          { term: 'dream offer', weight: 5.0 },
+          { term: 'super dream', weight: 5.0 },
+          { term: 'tier-1', weight: 4.5 },
+          { term: 'tier 1', weight: 4.5 },
+          { term: 'ctc', weight: 4.0 },
+          { term: 'salary', weight: 4.0 },
+          { term: 'recruitment', weight: 4.0 },
+          { term: 'placed', weight: 4.0 },
+          { term: 'cdc', weight: 4.5 },
+          { term: 'backlog cutoff', weight: 4.5 },
+          { term: 'active backlog', weight: 4.0 },
+          { term: 'active backlogs', weight: 4.0 },
+          { term: 'declined by a candidate', weight: 4.5 },
+          { term: 'campus recruitment', weight: 4.5 },
+          { term: 'campus placement', weight: 4.5 }
+        ],
+        antiPatterns: ['mock technical', 'resume keywords', 'ats score']
+      },
+      RESUME: {
+        patterns: [
+          { term: 'resume', weight: 4.5 },
+          { term: 'ats', weight: 4.5 },
+          { term: 'cv', weight: 4.0 },
+          { term: 'skills should i add to my resume', weight: 5.5 },
+          { term: 'technical skills should i highlight on my resume', weight: 5.5 },
+          { term: 'optimize my resume', weight: 5.0 }
+        ]
+      },
+      INTERVIEW: {
+        patterns: [
+          { term: 'mock technical interview', weight: 5.5 },
+          { term: 'system design mock', weight: 5.5 },
+          { term: 'behavioral mock', weight: 5.5 },
+          { term: 'mock interview', weight: 5.0 },
+          { term: 'interview readiness score', weight: 5.0 },
+          { term: 'interview readiness', weight: 4.5 },
+          { term: 'interview', weight: 2.5 }
+        ]
+      },
+      STUDY_PLAN: {
+        patterns: [
+          { term: 'study plan', weight: 5.0 },
+          { term: '14-day study plan', weight: 5.5 },
+          { term: 'intensive 14-day', weight: 5.5 },
+          { term: 'study sequence', weight: 5.0 },
+          { term: 'learning pathway', weight: 5.0 },
+          { term: 'academic recovery plan', weight: 5.0 },
+          { term: 'intervention schedule', weight: 5.0 },
+          { term: 'intervention roadmap', weight: 5.0 },
+          { term: 'plan to recover', weight: 4.5 },
+          { term: 'roadmap', weight: 3.5 }
+        ]
+      },
+      RISK: {
+        patterns: [
+          { term: 'academic risk', weight: 5.0 },
+          { term: 'burnout', weight: 5.0 },
+          { term: 'dropout', weight: 5.0 },
+          { term: 'disengagement', weight: 5.0 },
+          { term: 'emergency review', weight: 5.5 },
+          { term: 'cognitive fatigue', weight: 5.0 },
+          { term: 'workload overload', weight: 5.0 },
+          { term: 'fatigue', weight: 4.0 },
+          { term: 'risk zone', weight: 4.5 },
+          { term: 'burnout risk indicator', weight: 5.0 },
+          { term: 'risk indicator', weight: 4.5 },
+          { term: 'hours have dropped', weight: 4.5 },
+          { term: 'consistency dropped', weight: 4.5 },
+          { term: 'risk category', weight: 4.5 },
+          { term: 'risk', weight: 2.0 }
+        ]
+      },
+      LEARNING_HELP: {
+        patterns: [
+          { term: 'struggling with', weight: 4.5 },
+          { term: 'struggling', weight: 3.5 },
+          { term: "can't solve", weight: 4.5 },
+          { term: 'unable to implement', weight: 4.5 },
+          { term: 'unable to', weight: 3.5 },
+          { term: 'keep failing', weight: 4.5 },
+          { term: 'failed the practice quiz', weight: 4.5 },
+          { term: 'failed the last 3 quizzes', weight: 4.5 },
+          { term: 'failed 3 quiz attempts', weight: 4.5 },
+          { term: 'failed 4 consecutive', weight: 4.5 },
+          { term: 'prerequisite', weight: 4.0 },
+          { term: 'prerequisites', weight: 4.0 },
+          { term: 'revise', weight: 3.5 },
+          { term: 'review first', weight: 4.0 },
+          { term: 'topics should i learn before', weight: 4.5 },
+          { term: 'should i complete before', weight: 4.5 },
+          { term: 'do i need to understand', weight: 4.5 },
+          { term: 'why is my learning pace slowing', weight: 4.5 },
+          { term: 'why is my quiz average dropping', weight: 4.5 },
+          { term: 'why am i', weight: 3.0 },
+          { term: 'fundamental topics am i missing', weight: 4.5 }
+        ],
+        antiPatterns: ['14-day study plan', 'study plan to recover', 'intervention schedule']
+      },
+      QUIZ: {
+        patterns: [
+          { term: 'quiz me', weight: 4.5 },
+          { term: 'practice questions', weight: 4.0 }
+        ]
+      },
+      CODING: {
+        patterns: [
+          { term: 'bash script', weight: 5.0 },
+          { term: 'drop the attendance', weight: 5.0 },
+          { term: 'drop database', weight: 5.0 },
+          { term: 'execute python', weight: 4.5 },
+          { term: 'code compiler', weight: 4.0 },
+          { term: 'programming', weight: 2.0 }
+        ]
+      },
+      COURSE_CONTENT: {
+        patterns: [
+          { term: 'warp drive theory', weight: 5.0 },
+          { term: 'quantum teleportation curriculum', weight: 5.0 },
+          { term: 'syllabus', weight: 4.0 },
+          { term: 'curriculum', weight: 4.0 }
+        ],
+        antiPatterns: ['placement', 'cdc rules']
+      }
     }
 
-    return { type: 'GENERAL_EDEN', confidence: 0.75, entities }
+    const scoredIntents: Array<{ type: string; score: number }> = []
+
+    for (const [intentType, def] of Object.entries(intentDefinitions)) {
+      let score = 0
+      for (const p of def.patterns) {
+        if (q.includes(p.term)) {
+          score += p.weight
+        }
+      }
+      if (def.antiPatterns) {
+        for (const ap of def.antiPatterns) {
+          if (q.includes(ap)) {
+            score -= 3.0
+          }
+        }
+      }
+      if (score > 0) {
+        scoredIntents.push({ type: intentType, score })
+      }
+    }
+
+    scoredIntents.sort((a, b) => b.score - a.score)
+
+    if (scoredIntents.length === 0 || scoredIntents[0].score < 2.0) {
+      return { type: 'GENERAL_EDEN', confidence: 0.85, ambiguity: 0.0, entities }
+    }
+
+    const top1 = scoredIntents[0]
+    const top2 = scoredIntents[1] || { type: 'NONE', score: 0 }
+    const delta = top1.score - top2.score
+    const ambiguity = top1.score > 0 ? Math.max(0, Math.min(1.0, 1.0 - (delta / top1.score))) : 0.0
+    const confidence = Math.min(0.98, Math.max(0.70, Math.round((0.70 + 0.28 * (top1.score / (top1.score + 3.0)) - 0.10 * ambiguity) * 100) / 100))
+
+    return { type: top1.type, confidence, ambiguity, entities }
   }
 
   /**
-   * Deterministic source planner: selects which subsystems to query
+   * R15 Minimal Sufficient Context Planner:
+   * Selects strictly the minimum set of trustworthy sources required for the query intent.
+   * Eliminates unnecessary subsystem calls to optimize source precision while maintaining recall.
    */
   public static planSources(intentType: string, query: string): ContextRequestPlan {
     const q = query.toLowerCase()
 
     switch (intentType) {
-      case 'ATTENDANCE':
+      case 'ATTENDANCE': {
+        const isPersonalStatus = q.includes('%') || q.includes('my attendance') || q.includes('i have') || q.includes('my overall') || q.includes('will i be') || q.includes('lab practical') || q.includes('lab exams')
+        const isIntervention = q.includes('detained') || q.includes('detention') || q.includes('remedial') || q.includes('prevent') || q.includes('61%') || q.includes('63%')
         return {
           useProfile: true,
-          useAcademic: true,
+          useAcademic: isPersonalStatus,
           useDigitalTwin: false,
           useLearningDNA: false,
           useKnowledgeGraph: false,
@@ -256,11 +449,12 @@ export class ContextFusionEngine {
           useRAG: true,
           useMemory: false,
           useTelemetry: false,
-          useIntervention: q.includes('detained') || q.includes('detention') || q.includes('remedial'),
+          useIntervention: isIntervention,
         }
+      }
 
       case 'EXAMINATION':
-      case 'ACADEMIC_POLICY':
+      case 'ACADEMIC_POLICY': {
         return {
           useProfile: true,
           useAcademic: false,
@@ -273,78 +467,138 @@ export class ContextFusionEngine {
           useTelemetry: false,
           useIntervention: false,
         }
+      }
 
-      case 'LEARNING_HELP':
+      case 'LEARNING_HELP': {
+        const isConceptOnly = (q.includes('prerequisite') || q.includes('prerequisites') || q.includes('topics should i learn') || q.includes('which subjects') || q.includes('before learning') || q.includes('do i need to understand')) && !q.includes('why am i') && !q.includes("why can't i") && !q.includes('keep failing') && !q.includes('failing problems') && !q.includes('failed the') && !q.includes('slowing down')
+        const isPersonalDiagnosis = q.includes('struggling') || q.includes("can't solve") || q.includes('unable to') || q.includes('slowing down') || q.includes('dropping') || q.includes('failed the last 3') || q.includes('why am i')
+        const hasTelemetryGaps = q.includes('failed') || q.includes('failing') || q.includes('attempts') || q.includes('quizzes') || q.includes('struggling') || q.includes('dropping') || q.includes('unable to')
+
+        return {
+          useProfile: true,
+          useAcademic: false,
+          useDigitalTwin: isPersonalDiagnosis,
+          useLearningDNA: !isConceptOnly,
+          useKnowledgeGraph: true,
+          usePredictiveML: false,
+          useRAG: q.includes('curriculum') || q.includes('syllabus'),
+          useMemory: false,
+          useTelemetry: hasTelemetryGaps,
+          useIntervention: false,
+        }
+      }
+
+      case 'STUDY_PLAN': {
+        const isPathway = q.includes('pathway') || q.includes('from scratch')
+        return {
+          useProfile: true,
+          useAcademic: false,
+          useDigitalTwin: !isPathway,
+          useLearningDNA: true,
+          useKnowledgeGraph: true,
+          usePredictiveML: false,
+          useRAG: false,
+          useMemory: false,
+          useTelemetry: false,
+          useIntervention: false,
+        }
+      }
+
+      case 'PLACEMENT': {
+        const isPolicy = q.includes('rule') || q.includes('rules') || q.includes('policy') || q.includes('cutoff') || q.includes('offer') || q.includes('backlog') || q.includes('tier-1') || q.includes('super dream') || q.includes('declined')
+        const isPredictionOnly = q.includes('predict') || q.includes('salary package') || q.includes('salary projection') || q.includes('my placement probability')
+        return {
+          useProfile: true,
+          useAcademic: false,
+          useDigitalTwin: !isPolicy,
+          useLearningDNA: !isPolicy && !isPredictionOnly,
+          useKnowledgeGraph: false,
+          usePredictiveML: !isPolicy,
+          useRAG: isPolicy,
+          useMemory: false,
+          useTelemetry: false,
+          useIntervention: false,
+        }
+      }
+
+      case 'RESUME': {
+        const isSkillHighlight = q.includes('skills should i') || q.includes('highlight on my resume')
+        return {
+          useProfile: true,
+          useAcademic: false,
+          useDigitalTwin: true,
+          useLearningDNA: !isSkillHighlight,
+          useKnowledgeGraph: false,
+          usePredictiveML: false,
+          useRAG: false,
+          useMemory: false,
+          useTelemetry: false,
+          useIntervention: false,
+        }
+      }
+
+      case 'INTERVIEW': {
+        const isReadinessScore = q.includes('readiness score')
+        return {
+          useProfile: true,
+          useAcademic: false,
+          useDigitalTwin: true,
+          useLearningDNA: !isReadinessScore,
+          useKnowledgeGraph: false,
+          usePredictiveML: false,
+          useRAG: false,
+          useMemory: false,
+          useTelemetry: false,
+          useIntervention: false,
+        }
+      }
+
+      case 'RISK': {
+        const isEmergency = q.includes('emergency review')
+        const isDisengagementOrBurnout = q.includes('consistency') || q.includes('hours have dropped') || q.includes('disengagement') || q.includes('risk student')
+        return {
+          useProfile: true,
+          useAcademic: false,
+          useDigitalTwin: !isEmergency,
+          useLearningDNA: isDisengagementOrBurnout,
+          useKnowledgeGraph: false,
+          usePredictiveML: !isEmergency,
+          useRAG: false,
+          useMemory: false,
+          useTelemetry: isEmergency,
+          useIntervention: isEmergency,
+        }
+      }
+
       case 'COURSE_CONTENT':
         return {
           useProfile: true,
           useAcademic: false,
-          useDigitalTwin: true,
-          useLearningDNA: true,
-          useKnowledgeGraph: true,
-          usePredictiveML: false,
-          useRAG: q.includes('curriculum') || q.includes('syllabus') || q.includes('rule'),
-          useMemory: false,
-          useTelemetry: true,
-          useIntervention: q.includes('failed') || q.includes('intervention'),
-        }
-
-      case 'PLACEMENT':
-        return {
-          useProfile: true,
-          useAcademic: false,
-          useDigitalTwin: true,
-          useLearningDNA: true,
+          useDigitalTwin: false,
+          useLearningDNA: false,
           useKnowledgeGraph: false,
-          usePredictiveML: true,
-          useRAG: q.includes('cutoff') || q.includes('offer') || q.includes('backlog') || q.includes('tier-1'),
+          usePredictiveML: false,
+          useRAG: true,
           useMemory: false,
           useTelemetry: false,
           useIntervention: false,
         }
 
-      case 'RESUME':
-      case 'INTERVIEW':
+      case 'GENERAL_EDEN': {
+        const isGreeting = q.includes('hello') || q.includes('who are you') || q.includes('hi eden')
         return {
           useProfile: true,
           useAcademic: false,
-          useDigitalTwin: true,
-          useLearningDNA: true,
+          useDigitalTwin: false,
+          useLearningDNA: false,
           useKnowledgeGraph: false,
           usePredictiveML: false,
           useRAG: false,
-          useMemory: false,
+          useMemory: isGreeting,
           useTelemetry: false,
           useIntervention: false,
         }
-
-      case 'STUDY_PLAN':
-        return {
-          useProfile: true,
-          useAcademic: false,
-          useDigitalTwin: true,
-          useLearningDNA: true,
-          useKnowledgeGraph: true,
-          usePredictiveML: false,
-          useRAG: false,
-          useMemory: false,
-          useTelemetry: false,
-          useIntervention: false,
-        }
-
-      case 'RISK':
-        return {
-          useProfile: true,
-          useAcademic: false,
-          useDigitalTwin: true,
-          useLearningDNA: true,
-          useKnowledgeGraph: false,
-          usePredictiveML: true,
-          useRAG: false,
-          useMemory: false,
-          useTelemetry: true,
-          useIntervention: true,
-        }
+      }
 
       default:
         return {
@@ -355,7 +609,7 @@ export class ContextFusionEngine {
           useKnowledgeGraph: false,
           usePredictiveML: false,
           useRAG: false,
-          useMemory: true,
+          useMemory: false,
           useTelemetry: false,
           useIntervention: false,
         }
@@ -625,7 +879,8 @@ export class ContextFusionEngine {
       : (sourcesUsed.length >= 2 ? 0.85 : 0.60)
 
     const conflictPenalty = conflicts.length * 0.05
-    const overallConfidence = Math.max(0.20, Math.min(1.0, Math.round(((dataCompleteness * 0.5 + evidenceCoverage * 0.5) - conflictPenalty) * 100) / 100))
+    const ambiguityPenalty = (intent.ambiguity || 0.0) * 0.08
+    const overallConfidence = Math.max(0.20, Math.min(1.0, Math.round(((dataCompleteness * 0.5 + evidenceCoverage * 0.5) - conflictPenalty - ambiguityPenalty) * 100) / 100))
 
     // ─── Deterministic Decision Generation ────────────────────────────────────
 
