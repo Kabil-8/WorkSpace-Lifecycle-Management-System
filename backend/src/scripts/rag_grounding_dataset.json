@@ -1,0 +1,544 @@
+[
+  {
+    "id": "GROUND-001",
+    "category": "attendance",
+    "question": "What is the minimum attendance requirement to appear for end-semester exams?",
+    "expectedClaims": [
+      {
+        "claim": "minimum attendance of 75% in each registered course",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Mandatory Attendance Requirement"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-002",
+    "category": "attendance",
+    "question": "What percentage range is considered the safe zone for automatic hall ticket issuance?",
+    "expectedClaims": [
+      {
+        "claim": "Safe Zone is between 75.0% and 100%",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Mandatory Attendance Requirement"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-003",
+    "category": "attendance",
+    "question": "What are the rules and deadline for medical condonation if attendance is between 65% and 75%?",
+    "expectedClaims": [
+      {
+        "claim": "condonation allowed for attendance between 65.0% and 74.9%",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Medical Condonation & Exemption Policy"
+      },
+      {
+        "claim": "submission deadline within three working days of returning to campus",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Medical Condonation & Exemption Policy"
+      },
+      {
+        "claim": "non-refundable fee of 1500 per subject",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Medical Condonation & Exemption Policy"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-004",
+    "category": "attendance",
+    "question": "What happens if a student has below 65% attendance in a course?",
+    "expectedClaims": [
+      {
+        "claim": "declared Detained due to Attendance Shortage (DAS)",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Attendance Shortage & Detention Regulations"
+      },
+      {
+        "claim": "awarded grade SA and prohibited from End-Semester Examination",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Attendance Shortage & Detention Regulations"
+      },
+      {
+        "claim": "must re-register in subsequent supplementary summer semester",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Attendance Shortage & Detention Regulations"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-005",
+    "category": "attendance",
+    "question": "How many days of On-Duty (OD) attendance are allowed per semester for competitions?",
+    "expectedClaims": [
+      {
+        "claim": "maximum of 10 working days per semester",
+        "supportedBy": "attendance_policy_2026",
+        "section": "On-Duty (OD) Attendance Tracking"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-006",
+    "category": "examination",
+    "question": "What is the assessment weightage between Continuous Internal Assessment and End-Semester Examination?",
+    "expectedClaims": [
+      {
+        "claim": "Continuous Internal Assessment (CIA) carries 40% weightage (40 marks)",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Assessment Structure & Weightage"
+      },
+      {
+        "claim": "End-Semester Examination (ESE) carries 60% weightage (60 marks)",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Assessment Structure & Weightage"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-007",
+    "category": "examination",
+    "question": "What is the minimum mark required to pass the End-Semester Examination and overall course?",
+    "expectedClaims": [
+      {
+        "claim": "minimum 45% marks in End-Semester Examination (27 out of 60)",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Assessment Structure & Weightage"
+      },
+      {
+        "claim": "aggregate score of minimum 50% is mandatory",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Assessment Structure & Weightage"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-008",
+    "category": "examination",
+    "question": "When are exam hall tickets issued digitally and what can disqualify a student?",
+    "expectedClaims": [
+      {
+        "claim": "issued five days before commencement of examinations",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Examination Eligibility & Hall Ticket Issuance"
+      },
+      {
+        "claim": "disqualified if attendance less than 75% or tuition dues unresolved",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Examination Eligibility & Hall Ticket Issuance"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-009",
+    "category": "examination",
+    "question": "What are the penalties for Level 1 and Level 2 examination malpractice?",
+    "expectedClaims": [
+      {
+        "claim": "Level 1 unauthorized material leads to cancellation of examination and zero marks",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Malpractice Policy & Disciplinary Penalties"
+      },
+      {
+        "claim": "Level 2 copying leads to cancellation of all registered exams and debarment next semester",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Malpractice Policy & Disciplinary Penalties"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-010",
+    "category": "examination",
+    "question": "How much does answer script photocopy verification cost and when is revaluation fee refunded?",
+    "expectedClaims": [
+      {
+        "claim": "photocopy verification upon payment of 500 per paper within seven days",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Revaluation & Answer Script Transparency"
+      },
+      {
+        "claim": "fee refunded if revaluation mark exceeds original mark by 15% or more",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Revaluation & Answer Script Transparency"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-011",
+    "category": "academic",
+    "question": "What grade point and raw mark range correspond to an 'O' (Outstanding) grade?",
+    "expectedClaims": [
+      {
+        "claim": "Grade O corresponds to Grade Point 10 and mark range 90 to 100",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Letter Grades & Grade Points"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-012",
+    "category": "academic",
+    "question": "What is the lowest passing grade in a course according to the grading scale?",
+    "expectedClaims": [
+      {
+        "claim": "minimum passing grade is C with Grade Point 5",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Letter Grades & Grade Points"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-013",
+    "category": "academic",
+    "question": "What are the criteria to graduate with First Class with Distinction?",
+    "expectedClaims": [
+      {
+        "claim": "CGPA greater than or equal to 8.50 completed within four consecutive years",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Degree Classification & Honors"
+      },
+      {
+        "claim": "zero backlog history",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Degree Classification & Honors"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-014",
+    "category": "academic",
+    "question": "What is the maximum duration allowed to complete the B.Tech program?",
+    "expectedClaims": [
+      {
+        "claim": "maximum of six academic years (N + 2)",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Degree Classification & Honors"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-015",
+    "category": "academic",
+    "question": "Who is eligible for fast-track credit overload and how many extra credits are allowed?",
+    "expectedClaims": [
+      {
+        "claim": "students with CGPA 8.50 or higher starting from Semester 5",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Fast-Track & Remedial Academic Policies"
+      },
+      {
+        "claim": "register for up to 6 additional credits per semester",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Fast-Track & Remedial Academic Policies"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-016",
+    "category": "curriculum",
+    "question": "What is the prerequisite course for CS501 Design & Analysis of Algorithms?",
+    "expectedClaims": [
+      {
+        "claim": "Prerequisite for CS501 is Data Structures (CS301)",
+        "supportedBy": "cse_curriculum_2026",
+        "section": "Semester 5 Core Curriculum & Subject Credits"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-017",
+    "category": "curriculum",
+    "question": "What prerequisite must students master before studying Dynamic Programming in CS501?",
+    "expectedClaims": [
+      {
+        "claim": "students must master Recursion and Divide & Conquer before Dynamic Programming",
+        "supportedBy": "cse_curriculum_2026",
+        "section": "Algorithmic Prerequisites & Learning Pathways"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-018",
+    "category": "curriculum",
+    "question": "What courses are included in Track A for Artificial Intelligence & Data?",
+    "expectedClaims": [
+      {
+        "claim": "Machine Learning CS611, Deep Learning & NLP CS711, Big Data Analytics CS712",
+        "supportedBy": "cse_curriculum_2026",
+        "section": "Professional Electives Track (Semester 6 & 7)"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-019",
+    "category": "curriculum",
+    "question": "How many courses from a track must a student choose to qualify for department honors?",
+    "expectedClaims": [
+      {
+        "claim": "choose at least three courses from one designated specialization track",
+        "supportedBy": "cse_curriculum_2026",
+        "section": "Professional Electives Track (Semester 6 & 7)"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-020",
+    "category": "placement",
+    "question": "What are the basic CGPA, backlog, and ATS resume requirements for campus placements?",
+    "expectedClaims": [
+      {
+        "claim": "Minimum Cumulative CGPA of 6.50 without rounding off",
+        "supportedBy": "placement_policy_2026",
+        "section": "Standard Placement Eligibility Criteria"
+      },
+      {
+        "claim": "Zero active backlogs at time of registration",
+        "supportedBy": "placement_policy_2026",
+        "section": "Standard Placement Eligibility Criteria"
+      },
+      {
+        "claim": "approved ATS Resume Score of at least 75%",
+        "supportedBy": "placement_policy_2026",
+        "section": "Standard Placement Eligibility Criteria"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-021",
+    "category": "placement",
+    "question": "What is the CTC range defining Tier 1 Dream companies versus Tier 2 Core companies?",
+    "expectedClaims": [
+      {
+        "claim": "Tier 1 Dream & Super-Dream CTC is 10.0 LPA or greater",
+        "supportedBy": "placement_policy_2026",
+        "section": "Company Classification & Salary Tiers"
+      },
+      {
+        "claim": "Tier 2 Core Engineering CTC is between 6.0 LPA and 9.9 LPA",
+        "supportedBy": "placement_policy_2026",
+        "section": "Company Classification & Salary Tiers"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-022",
+    "category": "placement",
+    "question": "How does the One-Student One-Offer rule work and can a placed student contest for a Dream offer?",
+    "expectedClaims": [
+      {
+        "claim": "placed students in Tier 2 or 3 are de-registered from same or lower tier drives",
+        "supportedBy": "placement_policy_2026",
+        "section": "One-Student One-Offer & Dream Offer Rules"
+      },
+      {
+        "claim": "entitled to contest for one Dream or Super-Dream Offer in Tier 1 (CTC >= 10 LPA)",
+        "supportedBy": "placement_policy_2026",
+        "section": "One-Student One-Offer & Dream Offer Rules"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-023",
+    "category": "placement",
+    "question": "What is the penalty for failing to attend an interview without 24 hours notice?",
+    "expectedClaims": [
+      {
+        "claim": "two-week suspension from all ongoing campus recruitment drives",
+        "supportedBy": "placement_policy_2026",
+        "section": "Code of Conduct & Offer Reneging Penalties"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-024",
+    "category": "multi_document",
+    "question": "If a student is detained for attendance shortage, what grade is awarded and how does it impact academic credits?",
+    "expectedClaims": [
+      {
+        "claim": "awarded grade SA for shortage of attendance below 65%",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Attendance Shortage & Detention Regulations"
+      },
+      {
+        "claim": "grade SA earns 0 grade points and requires re-registration to earn credits",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Letter Grades & Grade Points"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": true
+  },
+  {
+    "id": "GROUND-025",
+    "category": "multi_document",
+    "question": "What are the combined attendance requirements for both end-semester exam eligibility and campus placement registration?",
+    "expectedClaims": [
+      {
+        "claim": "75% subject attendance required for end-semester exam eligibility",
+        "supportedBy": "attendance_policy_2026",
+        "section": "Mandatory Attendance Requirement"
+      },
+      {
+        "claim": "75% aggregate attendance in pre-placement training modules",
+        "supportedBy": "placement_policy_2026",
+        "section": "Standard Placement Eligibility Criteria"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": true
+  },
+  {
+    "id": "GROUND-026",
+    "category": "multi_document",
+    "question": "Can a student with a GPA of 8.6 register for additional fast-track credits and also contest for a Tier 1 Dream placement offer?",
+    "expectedClaims": [
+      {
+        "claim": "CGPA 8.50 or higher allows up to 6 additional overload credits",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Fast-Track & Remedial Academic Policies"
+      },
+      {
+        "claim": "placed students can contest for one Tier 1 Dream Offer with CTC 10 LPA or higher",
+        "supportedBy": "placement_policy_2026",
+        "section": "One-Student One-Offer & Dream Offer Rules"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": true
+  },
+  {
+    "id": "GROUND-027",
+    "category": "multi_document",
+    "question": "What passing marks and grade points are required to clear CS501 Algorithms and earn its 4 credits?",
+    "expectedClaims": [
+      {
+        "claim": "CS501 carries 4 credits in Semester 5",
+        "supportedBy": "cse_curriculum_2026",
+        "section": "Semester 5 Core Curriculum & Subject Credits"
+      },
+      {
+        "claim": "minimum 45% in ESE and 50% aggregate required to pass",
+        "supportedBy": "examination_conduct_rules",
+        "section": "Assessment Structure & Weightage"
+      },
+      {
+        "claim": "minimum passing grade is C with Grade Point 5",
+        "supportedBy": "academic_regulations_2026",
+        "section": "Letter Grades & Grade Points"
+      }
+    ],
+    "answerable": true,
+    "requiresMultiDoc": true
+  },
+  {
+    "id": "GROUND-028",
+    "category": "out_of_domain",
+    "question": "What is the official university policy regarding drone racing on campus rooftops?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-029",
+    "category": "out_of_domain",
+    "question": "What are the opening hours and lane booking rules for the campus Olympic swimming pool?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-030",
+    "category": "out_of_domain",
+    "question": "How do students apply for university electricity and water subsidies on off-campus private rental apartments?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-031",
+    "category": "out_of_domain",
+    "question": "What is the secret recipe and spice mixture for the cafeteria's spicy vegetable curry?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-032",
+    "category": "out_of_domain",
+    "question": "Are students permitted to mine Bitcoin in the engineering computer laboratories?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-033",
+    "category": "out_of_domain",
+    "question": "What are the regulations for housing pet falcons in student residence dormitories?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-034",
+    "category": "out_of_domain",
+    "question": "How can an undergraduate book the university helicopter shuttle to the international airport?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  },
+  {
+    "id": "GROUND-035",
+    "category": "out_of_domain",
+    "question": "How do undergraduate students obtain a commercial brewery license for beer crafted in the chemistry lab?",
+    "expectedClaims": [],
+    "answerable": false,
+    "requiresMultiDoc": false
+  }
+]

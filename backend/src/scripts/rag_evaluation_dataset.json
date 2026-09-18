@@ -3,401 +3,751 @@
     "id": "ATT-001",
     "category": "attendance",
     "question": "What is the minimum attendance required in each course to appear for end-semester exams?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Mandatory Attendance Requirement", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Mandatory Attendance Requirement",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-002",
     "category": "attendance",
     "question": "What percentage range is classified as the Safe Zone for automatic hall ticket issuance?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Mandatory Attendance Requirement", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Mandatory Attendance Requirement",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-003",
     "category": "attendance",
     "question": "What attendance range qualifies a student to apply for medical condonation?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Medical Condonation & Exemption Policy", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Medical Condonation & Exemption Policy",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-004",
     "category": "attendance",
     "question": "What is the deadline for submitting a medical leave application to the HoD?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Medical Condonation & Exemption Policy", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Medical Condonation & Exemption Policy",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-005",
     "category": "attendance",
     "question": "How much is the non-refundable condonation processing fee per subject?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Medical Condonation & Exemption Policy", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Medical Condonation & Exemption Policy",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-006",
     "category": "attendance",
     "question": "What happens if a student's subject attendance falls below 65%?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Attendance Shortage & Detention Regulations", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Attendance Shortage & Detention Regulations",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-007",
     "category": "attendance",
     "question": "What official grade is awarded when a student is detained due to attendance shortage?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Attendance Shortage & Detention Regulations", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Attendance Shortage & Detention Regulations",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-008",
     "category": "attendance",
     "question": "How can a student remediate a course after being detained for attendance shortage?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Attendance Shortage & Detention Regulations", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Attendance Shortage & Detention Regulations",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-009",
     "category": "attendance",
     "question": "How many days of On-Duty (OD) attendance are students allowed per semester for competitions and hackathons?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["On-Duty (OD) Attendance Tracking", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "On-Duty (OD) Attendance Tracking",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ATT-010",
     "category": "attendance",
     "question": "What is the official mathematical formula used to compute aggregate attendance percentage?",
-    "expectedDocuments": ["attendance_policy_2026", "univ-reg-att-2026"],
-    "expectedSections": ["Mandatory Attendance Requirement", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "attendance_policy_2026",
+      "univ-reg-att-2026"
+    ],
+    "expectedSections": [
+      "Mandatory Attendance Requirement",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-001",
     "category": "examination",
     "question": "What is the evaluation weightage breakdown between Continuous Internal Assessment (CIA) and End-Semester Examination (ESE)?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Assessment Structure & Weightage", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Assessment Structure & Weightage",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-002",
     "category": "examination",
     "question": "How are the 40 marks distributed across internal assessment tests, quizzes, and assignments?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Assessment Structure & Weightage", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Assessment Structure & Weightage",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-003",
     "category": "examination",
     "question": "What is the minimum passing percentage required specifically in the End-Semester Examination?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Assessment Structure & Weightage", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Assessment Structure & Weightage",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-004",
     "category": "examination",
     "question": "What minimum aggregate score combining CIA and ESE is mandatory to pass a course?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Assessment Structure & Weightage", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Assessment Structure & Weightage",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-005",
     "category": "examination",
     "question": "How many days before the exam start date are hall tickets issued on the student portal?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Examination Eligibility & Hall Ticket Issuance", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Examination Eligibility & Hall Ticket Issuance",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-006",
     "category": "examination",
     "question": "What conditions lead to disqualification from downloading an examination hall ticket?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Examination Eligibility & Hall Ticket Issuance", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Examination Eligibility & Hall Ticket Issuance",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-007",
     "category": "examination",
     "question": "What disciplinary penalty is imposed for Level 1 malpractice involving unauthorized digital media?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Malpractice Policy & Disciplinary Penalties", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Malpractice Policy & Disciplinary Penalties",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-008",
     "category": "examination",
     "question": "What punishment is given for Level 2 malpractice such as copying or exchanging answer sheets?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Malpractice Policy & Disciplinary Penalties", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Malpractice Policy & Disciplinary Penalties",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-009",
     "category": "examination",
     "question": "Within how many days must a student apply for digital photocopy verification and what is the fee?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Revaluation & Answer Script Transparency", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Revaluation & Answer Script Transparency",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "EXM-010",
     "category": "examination",
     "question": "Under what circumstance is the revaluation fee fully refunded after paper rechecking?",
-    "expectedDocuments": ["examination_conduct_rules", "univ-reg-exam-2026"],
-    "expectedSections": ["Revaluation & Answer Script Transparency", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "examination_conduct_rules",
+      "univ-reg-exam-2026"
+    ],
+    "expectedSections": [
+      "Revaluation & Answer Script Transparency",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-001",
     "category": "academic",
     "question": "What letter grade and raw mark range correspond to Outstanding performance with Grade Point 10?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Letter Grades & Grade Points", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Letter Grades & Grade Points",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-002",
     "category": "academic",
     "question": "What is the lowest passing letter grade and its corresponding grade point in the grading scale?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Letter Grades & Grade Points", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Letter Grades & Grade Points",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-003",
     "category": "academic",
     "question": "What is the formula for calculating Semester Grade Point Average (SGPA)?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["SGPA and CGPA Computation", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "SGPA and CGPA Computation",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-004",
     "category": "academic",
     "question": "How is Cumulative Grade Point Average (CGPA) computed across all completed credits?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["SGPA and CGPA Computation", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "SGPA and CGPA Computation",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-005",
     "category": "academic",
     "question": "What are the requirements regarding CGPA, graduation time, and backlog history for First Class with Distinction?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Degree Classification & Honors", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Degree Classification & Honors",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-006",
     "category": "academic",
     "question": "What is the CGPA cutoff required to obtain First Class classification upon degree completion?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Degree Classification & Honors", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Degree Classification & Honors",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-007",
     "category": "academic",
     "question": "What is the maximum permissible duration allowed to complete the four-year B.Tech programme?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Degree Classification & Honors", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Degree Classification & Honors",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-008",
     "category": "academic",
     "question": "What CGPA is required to be eligible for fast-track semester course overload?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Fast-Track & Remedial Academic Policies", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Fast-Track & Remedial Academic Policies",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-009",
     "category": "academic",
     "question": "How many additional credits can an eligible high-performing student register for in fast-track overload?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Fast-Track & Remedial Academic Policies", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Fast-Track & Remedial Academic Policies",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "ACD-010",
     "category": "academic",
     "question": "What is the maximum total credit registration cap per semester for students with active backlogs?",
-    "expectedDocuments": ["academic_regulations_2026", "univ-reg-acad-2026"],
-    "expectedSections": ["Fast-Track & Remedial Academic Policies", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "academic_regulations_2026",
+      "univ-reg-acad-2026"
+    ],
+    "expectedSections": [
+      "Fast-Track & Remedial Academic Policies",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-001",
     "category": "curriculum",
     "question": "What are the core theory and laboratory subjects and credits in Semester 5 for CSE?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Semester 5 Core Curriculum & Subject Credits", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Semester 5 Core Curriculum & Subject Credits",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-002",
     "category": "curriculum",
     "question": "What is the official prerequisite course required before enrolling in Design and Analysis of Algorithms (CS501)?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Semester 5 Core Curriculum & Subject Credits", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Semester 5 Core Curriculum & Subject Credits",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-003",
     "category": "curriculum",
     "question": "Which prerequisite course must be completed prior to Database Management Systems (CS502)?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Semester 5 Core Curriculum & Subject Credits", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Semester 5 Core Curriculum & Subject Credits",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-004",
     "category": "curriculum",
     "question": "What are the strict prerequisite topics that students must master before advancing to Dynamic Programming in CS501?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Algorithmic Prerequisites & Learning Pathways", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Algorithmic Prerequisites & Learning Pathways",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-005",
     "category": "curriculum",
     "question": "What remediation is recommended for students struggling with Dynamic Programming state memoization?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Algorithmic Prerequisites & Learning Pathways", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Algorithmic Prerequisites & Learning Pathways",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-006",
     "category": "curriculum",
     "question": "What algorithmic topics are covered in Module 4 of the CS501 algorithms syllabus?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Algorithmic Prerequisites & Learning Pathways", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Algorithmic Prerequisites & Learning Pathways",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-007",
     "category": "curriculum",
     "question": "Which elective courses are offered under Track A: Artificial Intelligence & Data?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Professional Electives Track (Semester 6 & 7)", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Professional Electives Track (Semester 6 & 7)",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-008",
     "category": "curriculum",
     "question": "What subjects make up Track B: Systems & Cloud in the professional electives basket?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Professional Electives Track (Semester 6 & 7)", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Professional Electives Track (Semester 6 & 7)",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-009",
     "category": "curriculum",
     "question": "What courses belong to Track C for cybersecurity specialization?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Professional Electives Track (Semester 6 & 7)", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Professional Electives Track (Semester 6 & 7)",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "CSE-010",
     "category": "curriculum",
     "question": "How many courses from a single specialization track must a student complete to earn department honors?",
-    "expectedDocuments": ["cse_curriculum_2026", "univ-curr-cse-2026"],
-    "expectedSections": ["Professional Electives Track (Semester 6 & 7)", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "cse_curriculum_2026",
+      "univ-curr-cse-2026"
+    ],
+    "expectedSections": [
+      "Professional Electives Track (Semester 6 & 7)",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-001",
     "category": "placement",
     "question": "What is the minimum cumulative CGPA required to be eligible for campus placement drives?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Standard Placement Eligibility Criteria", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Standard Placement Eligibility Criteria",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-002",
     "category": "placement",
     "question": "How many active backlogs are permitted for a student registering for placement recruitment?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Standard Placement Eligibility Criteria", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Standard Placement Eligibility Criteria",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-003",
     "category": "placement",
     "question": "What is the minimum ATS resume score needed through the Career Intelligence Engine to clear placement verification?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Standard Placement Eligibility Criteria", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Standard Placement Eligibility Criteria",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-004",
     "category": "placement",
     "question": "What attendance percentage is mandatory in pre-placement training modules and soft skills workshops?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Standard Placement Eligibility Criteria", "Section 1"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Standard Placement Eligibility Criteria",
+      "Section 1"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-005",
     "category": "placement",
     "question": "What is the salary CTC threshold for Tier 1 Dream and Super-Dream corporate classifications?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Company Classification & Salary Tiers", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Company Classification & Salary Tiers",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-006",
     "category": "placement",
     "question": "What is the CTC range that defines Tier 2 Core Engineering companies?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Company Classification & Salary Tiers", "Section 2"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Company Classification & Salary Tiers",
+      "Section 2"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-007",
     "category": "placement",
     "question": "How does the One-Student One-Offer policy restrict students after securing a Tier 3 or Tier 2 placement?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["One-Student One-Offer & Dream Offer Rules", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "One-Student One-Offer & Dream Offer Rules",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-008",
     "category": "placement",
     "question": "Can a student holding a Tier 2 offer apply for a Tier 1 Dream offer, and what is the rule?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["One-Student One-Offer & Dream Offer Rules", "Section 3"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "One-Student One-Offer & Dream Offer Rules",
+      "Section 3"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-009",
     "category": "placement",
     "question": "What is the penalty for failing to attend a scheduled placement interview without 24-hour advance written intimation?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Code of Conduct & Offer Reneging Penalties", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Code of Conduct & Offer Reneging Penalties",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "PLC-010",
     "category": "placement",
     "question": "What action is taken if a student is caught falsifying resume achievements during placement drives?",
-    "expectedDocuments": ["placement_policy_2026", "univ-pol-place-2026"],
-    "expectedSections": ["Code of Conduct & Offer Reneging Penalties", "Section 4"],
-    "answerable": true
+    "expectedDocuments": [
+      "placement_policy_2026",
+      "univ-pol-place-2026"
+    ],
+    "expectedSections": [
+      "Code of Conduct & Offer Reneging Penalties",
+      "Section 4"
+    ],
+    "answerable": true,
+    "relevanceGrade": 3
   },
   {
     "id": "OUT-001",
@@ -405,7 +755,8 @@
     "question": "What is the official university policy regarding drone racing on campus rooftops?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-002",
@@ -413,7 +764,8 @@
     "question": "What are the operational hours and lane reservation rules for the campus Olympic swimming pool?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-003",
@@ -421,7 +773,8 @@
     "question": "How can an engineering student apply for university utility subsidies on off-campus private rental apartments?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-004",
@@ -429,7 +782,8 @@
     "question": "What is the secret recipe and spice mixture used for the dining hall curry?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-005",
@@ -437,7 +791,8 @@
     "question": "How do I register a commercial drone package delivery company on the university runway?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-006",
@@ -445,7 +800,8 @@
     "question": "What lens calibration settings and focal lengths are required for the university rooftop telescope?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-007",
@@ -453,7 +809,8 @@
     "question": "Are students permitted to mine cryptocurrency in university computer labs using campus power?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-008",
@@ -461,7 +818,8 @@
     "question": "What are the housing regulations for keeping pet hunting falcons in engineering dormitory rooms?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-009",
@@ -469,7 +827,8 @@
     "question": "Where can a student book private university helicopter shuttles to the international airport?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   },
   {
     "id": "OUT-010",
@@ -477,6 +836,7 @@
     "question": "How do undergraduate students obtain a commercial brewery license for beer crafted in the chemical engineering lab?",
     "expectedDocuments": [],
     "expectedSections": [],
-    "answerable": false
+    "answerable": false,
+    "relevanceGrade": 0
   }
 ]

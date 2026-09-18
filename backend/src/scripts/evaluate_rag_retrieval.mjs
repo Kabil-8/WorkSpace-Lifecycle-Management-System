@@ -115,11 +115,11 @@ async function main() {
   let sumNDCG5 = 0;
 
   const categoryStats = {
-    attendance: { total: 0, sumNDCG: 0, sumRecall5: 0 },
-    examination: { total: 0, sumNDCG: 0, sumRecall5: 0 },
-    academic: { total: 0, sumNDCG: 0, sumRecall5: 0 },
-    curriculum: { total: 0, sumNDCG: 0, sumRecall5: 0 },
-    placement: { total: 0, sumNDCG: 0, sumRecall5: 0 },
+    attendance: { total: 0, sumRecall1: 0, sumRecall3: 0, sumRecall5: 0, sumPrec1: 0, sumPrec3: 0, sumPrec5: 0, sumMRR: 0, sumNDCG: 0 },
+    examination: { total: 0, sumRecall1: 0, sumRecall3: 0, sumRecall5: 0, sumPrec1: 0, sumPrec3: 0, sumPrec5: 0, sumMRR: 0, sumNDCG: 0 },
+    academic: { total: 0, sumRecall1: 0, sumRecall3: 0, sumRecall5: 0, sumPrec1: 0, sumPrec3: 0, sumPrec5: 0, sumMRR: 0, sumNDCG: 0 },
+    curriculum: { total: 0, sumRecall1: 0, sumRecall3: 0, sumRecall5: 0, sumPrec1: 0, sumPrec3: 0, sumPrec5: 0, sumMRR: 0, sumNDCG: 0 },
+    placement: { total: 0, sumRecall1: 0, sumRecall3: 0, sumRecall5: 0, sumPrec1: 0, sumPrec3: 0, sumPrec5: 0, sumMRR: 0, sumNDCG: 0 },
   };
 
   console.log('Running retrieval evaluation across all domain questions...');
@@ -164,18 +164,28 @@ async function main() {
     sumNDCG5 += ndcg5;
 
     if (categoryStats[item.category]) {
-      categoryStats[item.category].total += 1;
-      categoryStats[item.category].sumNDCG += ndcg5;
-      categoryStats[item.category].sumRecall5 += recall5;
+      const cStat = categoryStats[item.category];
+      cStat.total += 1;
+      cStat.sumRecall1 += recall1;
+      cStat.sumRecall3 += recall3;
+      cStat.sumRecall5 += recall5;
+      cStat.sumPrec1 += prec1;
+      cStat.sumPrec3 += prec3;
+      cStat.sumPrec5 += prec5;
+      cStat.sumMRR += reciprocalRank;
+      cStat.sumNDCG += ndcg5;
     }
 
     if (recall5 === 0) {
       failures.push({
         questionId: item.id,
         question: item.question,
-        expected: item.expectedDocuments,
-        retrieved: top5.map(c => `${c.docTitle} [${c.sectionTitle}] (Score: ${(c.finalScore || 0).toFixed(3)})`),
+        category: item.category,
+        expectedDocuments: item.expectedDocuments,
+        expectedSections: item.expectedSections,
+        retrievedResults: top5.map(c => `${c.docTitle} [${c.sectionTitle}]`),
         failureReason: 'Expected evidence not found in Top-5',
+        topScore: top5[0]?.finalScore || 0,
       });
     }
 
@@ -258,15 +268,24 @@ async function main() {
   console.log(`Precision          ${avgPrec1.toFixed(2)}     ${avgPrec3.toFixed(2)}     ${avgPrec5.toFixed(2)}\n`);
   console.log(`MRR                 ${mrr.toFixed(2)}`);
   console.log(`nDCG@5              ${avgNDCG5.toFixed(2)}\n`);
-  console.log('────────────────────────────────────');
-  console.log('CATEGORY PERFORMANCE (nDCG@5 / Recall@5)');
-  console.log('────────────────────────────────────\n');
+  console.log('─────────────────────────────────────────────────────────────────────────────');
+  console.log('CATEGORY PERFORMANCE BREAKDOWN');
+  console.log('─────────────────────────────────────────────────────────────────────────────');
+  console.log('Category            R@1    R@3    R@5    P@1    P@3    P@5    MRR    nDCG@5');
+  console.log('─────────────────────────────────────────────────────────────────────────────');
 
-  for (const [cat, stats] of Object.entries(categoryStats)) {
-    const catNDCG = stats.total > 0 ? (stats.sumNDCG / stats.total).toFixed(2) : '0.00';
-    const catRecall = stats.total > 0 ? (stats.sumRecall5 / stats.total).toFixed(2) : '0.00';
-    const catName = (cat.charAt(0).toUpperCase() + cat.slice(1)).padEnd(18, ' ');
-    console.log(`${catName}  ${catNDCG}  (Recall@5: ${catRecall})`);
+  for (const [cat, s] of Object.entries(categoryStats)) {
+    const tot = s.total || 1;
+    const catName = (cat.charAt(0).toUpperCase() + cat.slice(1)).padEnd(17, ' ');
+    const r1 = (s.sumRecall1 / tot).toFixed(2);
+    const r3 = (s.sumRecall3 / tot).toFixed(2);
+    const r5 = (s.sumRecall5 / tot).toFixed(2);
+    const p1 = (s.sumPrec1 / tot).toFixed(2);
+    const p3 = (s.sumPrec3 / tot).toFixed(2);
+    const p5 = (s.sumPrec5 / tot).toFixed(2);
+    const mrrCat = (s.sumMRR / tot).toFixed(2);
+    const ndcgCat = (s.sumNDCG / tot).toFixed(2);
+    console.log(`${catName} ${r1}   ${r3}   ${r5}   ${p1}   ${p3}   ${p5}   ${mrrCat}   ${ndcgCat}`);
   }
 
   console.log('\n────────────────────────────────────');

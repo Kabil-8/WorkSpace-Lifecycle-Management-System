@@ -1,0 +1,331 @@
+[
+  {
+    "claim": "minimum attendance of 75% in each registered course",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 1: Mandatory Attendance Requirement",
+    "citationPresent": true
+  },
+  {
+    "claim": "Safe Zone is between 75.0% and 100%",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 1: Mandatory Attendance Requirement",
+    "citationPresent": true
+  },
+  {
+    "claim": "condonation allowed for attendance between 65.0% and 74.9%",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 2: Medical Condonation & Exemption Policy",
+    "citationPresent": true
+  },
+  {
+    "claim": "submission deadline within three working days of returning to campus",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 2: Medical Condonation & Exemption Policy",
+    "citationPresent": true
+  },
+  {
+    "claim": "non-refundable fee of 1500 per subject",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 2: Medical Condonation & Exemption Policy",
+    "citationPresent": true
+  },
+  {
+    "claim": "declared Detained due to Attendance Shortage (DAS)",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 3: Attendance Shortage & Detention Regulations",
+    "citationPresent": true
+  },
+  {
+    "claim": "awarded grade SA and prohibited from End-Semester Examination",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 3: Attendance Shortage & Detention Regulations",
+    "citationPresent": true
+  },
+  {
+    "claim": "must re-register in subsequent supplementary summer semester",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 3: Attendance Shortage & Detention Regulations",
+    "citationPresent": true
+  },
+  {
+    "claim": "maximum of 10 working days per semester",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 4: On-Duty (OD) Attendance Tracking",
+    "citationPresent": true
+  },
+  {
+    "claim": "Continuous Internal Assessment (CIA) carries 40% weightage (40 marks)",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 1: Assessment Structure & Weightage",
+    "citationPresent": true
+  },
+  {
+    "claim": "End-Semester Examination (ESE) carries 60% weightage (60 marks)",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 1: Assessment Structure & Weightage",
+    "citationPresent": true
+  },
+  {
+    "claim": "minimum 45% marks in End-Semester Examination (27 out of 60)",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 1: Assessment Structure & Weightage",
+    "citationPresent": true
+  },
+  {
+    "claim": "aggregate score of minimum 50% is mandatory",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 1: Assessment Structure & Weightage",
+    "citationPresent": true
+  },
+  {
+    "claim": "issued five days before commencement of examinations",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 2: Examination Eligibility & Hall Ticket Issuance",
+    "citationPresent": true
+  },
+  {
+    "claim": "disqualified if attendance less than 75% or tuition dues unresolved",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 2: Examination Eligibility & Hall Ticket Issuance",
+    "citationPresent": true
+  },
+  {
+    "claim": "Level 1 unauthorized material leads to cancellation of examination and zero marks",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 3: Malpractice Policy & Disciplinary Penalties",
+    "citationPresent": true
+  },
+  {
+    "claim": "Level 2 copying leads to cancellation of all registered exams and debarment next semester",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 3: Malpractice Policy & Disciplinary Penalties",
+    "citationPresent": true
+  },
+  {
+    "claim": "photocopy verification upon payment of 500 per paper within seven days",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 4: Revaluation & Answer Script Transparency",
+    "citationPresent": true
+  },
+  {
+    "claim": "fee refunded if revaluation mark exceeds original mark by 15% or more",
+    "supported": true,
+    "sourceDocument": "EduSphere University Examination Conduct & Assessment Rules 2026",
+    "sourceSection": "Section 4: Revaluation & Answer Script Transparency",
+    "citationPresent": true
+  },
+  {
+    "claim": "Grade O corresponds to Grade Point 10 and mark range 90 to 100",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 1: Letter Grades & Grade Points",
+    "citationPresent": true
+  },
+  {
+    "claim": "minimum passing grade is C with Grade Point 5",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 1: Letter Grades & Grade Points",
+    "citationPresent": true
+  },
+  {
+    "claim": "CGPA greater than or equal to 8.50 completed within four consecutive years",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 3: Degree Classification & Honors",
+    "citationPresent": true
+  },
+  {
+    "claim": "zero backlog history",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 3: Degree Classification & Honors",
+    "citationPresent": true
+  },
+  {
+    "claim": "maximum of six academic years (N + 2)",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 3: Degree Classification & Honors",
+    "citationPresent": true
+  },
+  {
+    "claim": "students with CGPA 8.50 or higher starting from Semester 5",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 4: Fast-Track & Remedial Academic Policies",
+    "citationPresent": true
+  },
+  {
+    "claim": "register for up to 6 additional credits per semester",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 4: Fast-Track & Remedial Academic Policies",
+    "citationPresent": true
+  },
+  {
+    "claim": "Prerequisite for CS501 is Data Structures (CS301)",
+    "supported": true,
+    "sourceDocument": "Computer Science & Engineering Undergraduate Curriculum 2026",
+    "sourceSection": "Section 1: Semester 5 Core Curriculum & Subject Credits",
+    "citationPresent": true
+  },
+  {
+    "claim": "students must master Recursion and Divide & Conquer before Dynamic Programming",
+    "supported": true,
+    "sourceDocument": "Computer Science & Engineering Undergraduate Curriculum 2026",
+    "sourceSection": "Section 2: Algorithmic Prerequisites & Learning Pathways",
+    "citationPresent": true
+  },
+  {
+    "claim": "Machine Learning CS611, Deep Learning & NLP CS711, Big Data Analytics CS712",
+    "supported": true,
+    "sourceDocument": "Computer Science & Engineering Undergraduate Curriculum 2026",
+    "sourceSection": "Section 3: Professional Electives Track (Semester 6 & 7)",
+    "citationPresent": true
+  },
+  {
+    "claim": "choose at least three courses from one designated specialization track",
+    "supported": true,
+    "sourceDocument": "Computer Science & Engineering Undergraduate Curriculum 2026",
+    "sourceSection": "Section 3: Professional Electives Track (Semester 6 & 7)",
+    "citationPresent": true
+  },
+  {
+    "claim": "Minimum Cumulative CGPA of 6.50 without rounding off",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 1: Standard Placement Eligibility Criteria",
+    "citationPresent": true
+  },
+  {
+    "claim": "Zero active backlogs at time of registration",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 1: Standard Placement Eligibility Criteria",
+    "citationPresent": true
+  },
+  {
+    "claim": "approved ATS Resume Score of at least 75%",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 1: Standard Placement Eligibility Criteria",
+    "citationPresent": true
+  },
+  {
+    "claim": "Tier 1 Dream & Super-Dream CTC is 10.0 LPA or greater",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 3: One-Student One-Offer & Dream Offer Rules",
+    "citationPresent": true
+  },
+  {
+    "claim": "Tier 2 Core Engineering CTC is between 6.0 LPA and 9.9 LPA",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 3: One-Student One-Offer & Dream Offer Rules",
+    "citationPresent": true
+  },
+  {
+    "claim": "placed students in Tier 2 or 3 are de-registered from same or lower tier drives",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 3: One-Student One-Offer & Dream Offer Rules",
+    "citationPresent": true
+  },
+  {
+    "claim": "entitled to contest for one Dream or Super-Dream Offer in Tier 1 (CTC >= 10 LPA)",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 3: One-Student One-Offer & Dream Offer Rules",
+    "citationPresent": true
+  },
+  {
+    "claim": "two-week suspension from all ongoing campus recruitment drives",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 4: Code of Conduct & Offer Reneging Penalties",
+    "citationPresent": true
+  },
+  {
+    "claim": "awarded grade SA for shortage of attendance below 65%",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 3: Attendance Shortage & Detention Regulations",
+    "citationPresent": true
+  },
+  {
+    "claim": "grade SA earns 0 grade points and requires re-registration to earn credits",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 1: Letter Grades & Grade Points",
+    "citationPresent": true
+  },
+  {
+    "claim": "75% subject attendance required for end-semester exam eligibility",
+    "supported": true,
+    "sourceDocument": "EduSphere University Attendance Regulations 2026",
+    "sourceSection": "Section 1: Mandatory Attendance Requirement",
+    "citationPresent": true
+  },
+  {
+    "claim": "75% aggregate attendance in pre-placement training modules",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 1: Standard Placement Eligibility Criteria",
+    "citationPresent": true
+  },
+  {
+    "claim": "CGPA 8.50 or higher allows up to 6 additional overload credits",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 4: Fast-Track & Remedial Academic Policies",
+    "citationPresent": true
+  },
+  {
+    "claim": "placed students can contest for one Tier 1 Dream Offer with CTC 10 LPA or higher",
+    "supported": true,
+    "sourceDocument": "EduSphere Campus Placement & Career Internship Policy 2026",
+    "sourceSection": "Section 3: One-Student One-Offer & Dream Offer Rules",
+    "citationPresent": true
+  },
+  {
+    "claim": "CS501 carries 4 credits in Semester 5",
+    "supported": true,
+    "sourceDocument": "Computer Science & Engineering Undergraduate Curriculum 2026",
+    "sourceSection": "Section 1: Semester 5 Core Curriculum & Subject Credits",
+    "citationPresent": true
+  },
+  {
+    "claim": "minimum 45% in ESE and 50% aggregate required to pass",
+    "supported": false,
+    "sourceDocument": "NONE",
+    "sourceSection": "NONE",
+    "citationPresent": false
+  },
+  {
+    "claim": "minimum passing grade is C with Grade Point 5",
+    "supported": true,
+    "sourceDocument": "EduSphere Academic Regulations & Grading System 2026",
+    "sourceSection": "Section 2: SGPA and CGPA Computation",
+    "citationPresent": true
+  }
+]
