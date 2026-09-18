@@ -41,6 +41,15 @@ export class EdenController {
 
       const activeKey = (req.headers['x-gemini-key'] as string) || (req.headers['x-openai-key'] as string) || req.body.apiKey
 
+      // 1. Fetch user's previous conversation history for full multi-turn conversational context
+      const conversationHistory = await MemoryService.getHistory(uId, uRole)
+      const formattedHistory = (req.body.history && Array.isArray(req.body.history) && req.body.history.length > 0)
+        ? req.body.history
+        : conversationHistory.map((m: any) => ({
+            role: m.sender === 'user' ? 'user' : 'model',
+            parts: [{ text: m.text || (m as any).content || '' }]
+          }))
+
       const resData = await OpenDomainAIEngine.resolveQuery(
         cleanQuery,
         {
@@ -53,6 +62,8 @@ export class EdenController {
         {
           activeKey,
           provider: process.env.LLM_PROVIDER,
+          history: formattedHistory,
+          conversationId: req.body.conversationId || uId,
         },
       )
 
@@ -84,6 +95,8 @@ export class EdenController {
         action: resData.action || null,
         target: resData.target || null,
         toolCalls: resData.toolCalls || [],
+        sources: resData.sources || [],
+        ragSourcesCount: resData.sources?.length || 0,
         conversationId: uId,
         metrics: { latencyMs },
       })
@@ -130,6 +143,15 @@ export class EdenController {
     try {
       const activeKey = (req.headers['x-gemini-key'] as string) || (req.headers['x-openai-key'] as string) || req.body.apiKey
 
+      // 1. Fetch user's previous conversation history for streaming multi-turn context
+      const conversationHistory = await MemoryService.getHistory(uId, uRole)
+      const formattedHistory = (req.body.history && Array.isArray(req.body.history) && req.body.history.length > 0)
+        ? req.body.history
+        : conversationHistory.map((m: any) => ({
+            role: m.sender === 'user' ? 'user' : 'model',
+            parts: [{ text: m.text || (m as any).content || '' }]
+          }))
+
       const resData = await OpenDomainAIEngine.resolveQuery(
         cleanQuery,
         {
@@ -142,6 +164,8 @@ export class EdenController {
         {
           activeKey,
           provider: process.env.LLM_PROVIDER,
+          history: formattedHistory,
+          conversationId: req.body.conversationId || uId,
         },
       )
 
@@ -150,6 +174,8 @@ export class EdenController {
         intent: resData.intent,
         action: resData.action,
         target: resData.target,
+        ragSourcesCount: resData.sources?.length || 0,
+        sources: resData.sources || [],
       })
 
       // Stream output content in small natural chunks

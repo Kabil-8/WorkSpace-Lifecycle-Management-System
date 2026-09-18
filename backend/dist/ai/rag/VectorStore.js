@@ -3,7 +3,7 @@ export class VectorStore {
     static store = [];
     static addChunks(chunks) {
         for (const chunk of chunks) {
-            const vector = EmbeddingService.generateEmbedding(chunk.text);
+            const vector = EmbeddingService.generateTfIdfVector(chunk.text);
             this.store.push({ ...chunk, vector });
         }
     }

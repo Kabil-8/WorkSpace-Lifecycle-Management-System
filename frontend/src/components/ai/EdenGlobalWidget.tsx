@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Send, Minimize2, Maximize2, X, ArrowUpRight, Mic, MicOff, RefreshCw } from 'lucide-react'
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
-import { addMessage, setTyping, ChatMessage } from '../../store/edenSlice'
+import { addMessage, setTyping, initializeMessages, ChatMessage } from '../../store/edenSlice'
 
 function getToken() {
   return localStorage.getItem('edusphere_token') || localStorage.getItem('token') || ''
@@ -49,6 +49,32 @@ export default function EdenGlobalWidget() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isTyping])
+
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      const fetchHistory = async () => {
+        try {
+          const res = await fetch('http://localhost:5000/api/eden/memory', {
+            headers: { Authorization: `Bearer ${getToken()}` },
+          })
+          if (res.ok) {
+            const data = await res.json()
+            if (data?.data?.history && Array.isArray(data.data.history) && data.data.history.length > 0) {
+              const loaded: ChatMessage[] = data.data.history.map((m: any, idx: number) => ({
+                id: m._id || `hist-${idx}-${Date.now()}`,
+                role: m.sender === 'user' ? 'user' : 'eden',
+                content: m.text || m.content || '',
+                timestamp: m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+                agentRole: m.agentRole || 'academic',
+              }))
+              dispatch(initializeMessages(loaded))
+            }
+          }
+        } catch {}
+      }
+      fetchHistory()
+    }
+  }, [isOpen, messages.length, dispatch])
 
   const handleSend = async (customText?: string) => {
     const text = (customText || input).trim()

@@ -27,6 +27,14 @@ export class EdenController {
             const uName = user.name;
             const uRole = user.role || 'student';
             const activeKey = req.headers['x-gemini-key'] || req.headers['x-openai-key'] || req.body.apiKey;
+            // 1. Fetch user's previous conversation history for full multi-turn conversational context
+            const conversationHistory = await MemoryService.getHistory(uId, uRole);
+            const formattedHistory = (req.body.history && Array.isArray(req.body.history) && req.body.history.length > 0)
+                ? req.body.history
+                : conversationHistory.map((m) => ({
+                    role: m.sender === 'user' ? 'user' : 'model',
+                    parts: [{ text: m.text || m.content || '' }]
+                }));
             const resData = await OpenDomainAIEngine.resolveQuery(cleanQuery, {
                 userId: uId,
                 userName: uName,
@@ -36,6 +44,8 @@ export class EdenController {
             }, {
                 activeKey,
                 provider: process.env.LLM_PROVIDER,
+                history: formattedHistory,
+                conversationId: req.body.conversationId || uId,
             });
             if (resData.content) {
                 await MemoryService.addMessage(uId, 'user', cleanQuery, uRole);
@@ -62,6 +72,8 @@ export class EdenController {
                 action: resData.action || null,
                 target: resData.target || null,
                 toolCalls: resData.toolCalls || [],
+                sources: resData.sources || [],
+                ragSourcesCount: resData.sources?.length || 0,
                 conversationId: uId,
                 metrics: { latencyMs },
             });
@@ -100,6 +112,14 @@ export class EdenController {
         };
         try {
             const activeKey = req.headers['x-gemini-key'] || req.headers['x-openai-key'] || req.body.apiKey;
+            // 1. Fetch user's previous conversation history for streaming multi-turn context
+            const conversationHistory = await MemoryService.getHistory(uId, uRole);
+            const formattedHistory = (req.body.history && Array.isArray(req.body.history) && req.body.history.length > 0)
+                ? req.body.history
+                : conversationHistory.map((m) => ({
+                    role: m.sender === 'user' ? 'user' : 'model',
+                    parts: [{ text: m.text || m.content || '' }]
+                }));
             const resData = await OpenDomainAIEngine.resolveQuery(cleanQuery, {
                 userId: uId,
                 userName: uName,
@@ -109,12 +129,16 @@ export class EdenController {
             }, {
                 activeKey,
                 provider: process.env.LLM_PROVIDER,
+                history: formattedHistory,
+                conversationId: req.body.conversationId || uId,
             });
             sendEvent('meta', {
                 agentRole: resData.agentRole,
                 intent: resData.intent,
                 action: resData.action,
                 target: resData.target,
+                ragSourcesCount: resData.sources?.length || 0,
+                sources: resData.sources || [],
             });
             // Stream output content in small natural chunks
             const words = (resData.content || '').split(' ');

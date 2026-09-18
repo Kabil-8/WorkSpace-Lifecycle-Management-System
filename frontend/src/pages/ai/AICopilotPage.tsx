@@ -16,7 +16,7 @@ import {
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore'
 import {
   addMessage, startStreaming, appendStreamChunk, finishStreaming,
-  clearMessages, setSessions, setRagInfo, setAgentRole,
+  clearMessages, setSessions, setRagInfo, setAgentRole, initializeMessages,
   ChatMessage, ChatSession,
 } from '../../store/edenSlice'
 import { api } from '../../services/api'
@@ -431,6 +431,16 @@ export default function AICopilotPage() {
       const res: any = await api.get('/eden/memory')
       if (res?.data) {
         if (res.data.sessions) dispatch(setSessions(res.data.sessions))
+        if (res.data.history && Array.isArray(res.data.history) && res.data.history.length > 0) {
+          const loaded: ChatMessage[] = res.data.history.map((m: any, idx: number) => ({
+            id: m._id || `hist-${idx}-${Date.now()}`,
+            role: m.sender === 'user' ? 'user' : 'eden',
+            content: m.text || m.content || '',
+            timestamp: m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+            agentRole: m.agentRole || 'academic',
+          }))
+          dispatch(initializeMessages(loaded))
+        }
       }
     } catch (err) {
       console.error('Failed to fetch memory:', err)
@@ -537,7 +547,12 @@ export default function AICopilotPage() {
   }
 
   // Clear session handler
-  const handleClearSession = () => {
+  const handleClearSession = async () => {
+    try {
+      await api.delete('/eden/memory')
+    } catch (e) {
+      console.error('Failed to clear server memory', e)
+    }
     dispatch(clearMessages())
   }
 
