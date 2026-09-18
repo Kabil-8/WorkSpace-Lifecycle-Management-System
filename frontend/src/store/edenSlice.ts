@@ -14,6 +14,21 @@ export interface ChatMessage {
   agentRole?: string
   ragCount?: number
   plan?: any
+  fusion?: {
+    intent?: string
+    sourcesUsed?: string[]
+    decision?: {
+      type: string
+      priority: string
+      reason: string
+    }
+    confidence?: {
+      overall: number
+      dataCompleteness: number
+      evidenceCoverage: number
+    }
+    conflicts?: any[]
+  }
 }
 
 export interface ChatSession {
@@ -87,7 +102,7 @@ const edenSlice = createSlice({
 
     finishStreaming: (
       state,
-      action: PayloadAction<{ executedTool?: string; agentRole?: string; ragCount?: number; plan?: any } | undefined>,
+      action: PayloadAction<{ executedTool?: string; agentRole?: string; ragCount?: number; plan?: any; fusion?: any } | undefined>,
     ) => {
       if (state.streamingMessageId) {
         const msg = state.messages.find((m) => m.id === state.streamingMessageId)
@@ -97,6 +112,7 @@ const edenSlice = createSlice({
           if (action.payload?.agentRole) msg.agentRole = action.payload.agentRole
           if (action.payload?.ragCount !== undefined) msg.ragCount = action.payload.ragCount
           if (action.payload?.plan) msg.plan = action.payload.plan
+          if (action.payload?.fusion) msg.fusion = action.payload.fusion
         }
       }
       state.isStreaming = false

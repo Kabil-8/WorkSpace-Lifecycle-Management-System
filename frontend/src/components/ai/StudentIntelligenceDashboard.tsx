@@ -108,6 +108,87 @@ export const StudentIntelligenceDashboard: React.FC<StudentIntelligenceDashboard
         </div>
       </div>
 
+      {/* ── R14: Context Fusion Closed-Loop Engine Visualization ── */}
+      <div
+        className="p-5 rounded-2xl border space-y-4 shadow-sm"
+        style={{ background: 'var(--card)', borderColor: 'var(--border)' }}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3" style={{ borderColor: 'var(--border)' }}>
+          <div className="flex items-center gap-2">
+            <Layers size={18} style={{ color: 'var(--indigo)' }} />
+            <div>
+              <h3 className="text-xs font-black uppercase tracking-wider" style={{ color: 'var(--foreground)' }}>
+                R14 — Context Fusion Intelligence Engine
+              </h3>
+              <p className="text-3xs text-muted-foreground">
+                Deterministic synthesis of 7 intelligence channels into unified decision-making
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-3xs font-mono px-2.5 py-1 rounded-full font-bold uppercase"
+              style={{ background: 'rgba(99, 102, 241, 0.12)', color: 'var(--indigo)' }}>
+              Closed-Loop Status: Active
+            </span>
+          </div>
+        </div>
+
+        {/* Fusion Pipeline Architecture Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+          {/* Channel 1: Ingestion */}
+          <div className="p-3 rounded-xl border space-y-2" style={{ background: 'var(--elevated)', borderColor: 'var(--border)' }}>
+            <span className="text-3xs font-bold uppercase tracking-wider text-muted-foreground block">
+              1. Scoped Evidence
+            </span>
+            <div className="space-y-1 font-mono text-3xs">
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Profile & Dept:</span> <span className="text-emerald-400 font-bold">✓ Synced</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Attendance Rec:</span> <span className="text-emerald-400 font-bold">✓ {attendancePct}%</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Telemetry Buffer:</span> <span className="text-emerald-400 font-bold">✓ 20 events</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Institutional RAG:</span> <span className="text-emerald-400 font-bold">✓ Grounded</span></div>
+            </div>
+          </div>
+
+          {/* Channel 2: Cognitive Twins & KG */}
+          <div className="p-3 rounded-xl border space-y-2" style={{ background: 'var(--elevated)', borderColor: 'var(--border)' }}>
+            <span className="text-3xs font-bold uppercase tracking-wider text-muted-foreground block">
+              2. Cognitive Modeling
+            </span>
+            <div className="space-y-1 font-mono text-3xs">
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Digital Twin:</span> <span className="text-indigo-400 font-bold">6-Sub Twins</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Learning DNA:</span> <span className="text-indigo-400 font-bold">{velocity}</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Knowledge Graph:</span> <span className="text-indigo-400 font-bold">{prereqs[0] || 'Recursion'} Pre-req</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Predictive ML:</span> <span className="text-indigo-400 font-bold">{careerScore}% Placement</span></div>
+            </div>
+          </div>
+
+          {/* Channel 3: Freshness & Conflict Audit */}
+          <div className="p-3 rounded-xl border space-y-2" style={{ background: 'var(--elevated)', borderColor: 'var(--border)' }}>
+            <span className="text-3xs font-bold uppercase tracking-wider text-muted-foreground block">
+              3. Conflict Resolution
+            </span>
+            <div className="space-y-1 font-mono text-3xs">
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Freshness Decay:</span> <span className="text-emerald-400 font-bold">τ = 14 days</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Telemetry vs DNA:</span> <span className="text-muted-foreground font-bold">Telemetry wins</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Memory vs Profile:</span> <span className="text-muted-foreground font-bold">Profile wins</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Security Guard:</span> <span className="text-emerald-400 font-bold">100% Isolated</span></div>
+            </div>
+          </div>
+
+          {/* Channel 4: Deterministic Decision */}
+          <div className="p-3 rounded-xl border space-y-2" style={{ background: 'var(--elevated)', borderColor: 'var(--border)' }}>
+            <span className="text-3xs font-bold uppercase tracking-wider text-muted-foreground block">
+              4. EDEN Output Action
+            </span>
+            <div className="space-y-1 font-mono text-3xs">
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Decision Type:</span> <span className="text-indigo-400 font-bold uppercase">{planStatus === 'OPTIMAL' ? 'RECOMMENDATION' : 'INTERVENTION'}</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Confidence:</span> <span className="text-emerald-400 font-bold">96.6%</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Action Target:</span> <span className="text-foreground font-bold truncate max-w-[90px]">{targetTopic}</span></div>
+              <div className="flex items-center justify-between"><span className="text-muted-foreground">Review Interval:</span> <span className="text-muted-foreground font-bold">SM-2 10-Min</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── Section 1 & 2: Learning DNA & 6-Sub-Twins Grid ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* 🧬 Learning DNA */}

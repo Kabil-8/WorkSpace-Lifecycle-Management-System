@@ -28,6 +28,7 @@ export class OpenDomainAIEngine {
             sources: orchestratorRes.sources,
             toolCalls: orchestratorRes.toolsUsed,
             toolsUsed: orchestratorRes.toolsUsed,
+            fusion: orchestratorRes.fusion,
             conversationId: orchestratorRes.conversationId,
         };
     }

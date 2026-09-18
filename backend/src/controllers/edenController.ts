@@ -97,6 +97,7 @@ export class EdenController {
         toolCalls: resData.toolCalls || [],
         sources: resData.sources || [],
         ragSourcesCount: resData.sources?.length || 0,
+        fusion: (resData as any).fusion || null,
         conversationId: uId,
         metrics: { latencyMs },
       })

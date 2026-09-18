@@ -198,6 +198,95 @@ function CodeBlock({ language, value }: { language: string; value: string }) {
   )
 }
 
+// ─── Compact Context Fusion Audit Component ("Why EDEN gave this answer") ───
+function ContextFusionBadge({ fusion }: { fusion: any }) {
+  const [expanded, setExpanded] = useState(false)
+  if (!fusion || !fusion.decision) return null
+
+  const sources: string[] = fusion.sourcesUsed || []
+  const decision = fusion.decision
+  const confidence = fusion.confidence
+
+  return (
+    <div className="mt-2.5 rounded-xl border overflow-hidden text-3xs font-sans transition-all"
+      style={{ background: 'var(--card)', borderColor: 'var(--border)' }}>
+      <button
+        type="button"
+        onClick={() => setExpanded(!expanded)}
+        className="w-full p-2 px-3 flex items-center justify-between cursor-pointer hover:opacity-90 transition-opacity text-left"
+        style={{ background: 'rgba(99, 102, 241, 0.05)' }}
+      >
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-indigo-400 flex items-center gap-1">
+            🧠 Context Fusion
+          </span>
+          <span className="px-1.5 py-0.5 rounded font-mono font-bold uppercase text-3xs"
+            style={{
+              background: decision.priority === 'CRITICAL' ? 'rgba(239,68,68,0.15)' : 'rgba(99,102,241,0.15)',
+              color: decision.priority === 'CRITICAL' ? '#EF4444' : 'var(--indigo)'
+            }}>
+            {decision.type}
+          </span>
+          {confidence?.overall !== undefined && (
+            <span className="text-muted-foreground font-mono">
+              {Math.round(confidence.overall * 100)}% conf
+            </span>
+          )}
+        </div>
+        <span className="text-muted-foreground flex items-center gap-1 font-medium">
+          {expanded ? '▲ Hide context' : '▼ Why this answer?'}
+        </span>
+      </button>
+
+      {expanded && (
+        <div className="p-3 border-t space-y-2" style={{ borderColor: 'var(--border)' }}>
+          {/* Sources consulted */}
+          <div>
+            <span className="font-bold uppercase tracking-wider block mb-1 text-3xs" style={{ color: 'var(--muted-foreground)' }}>
+              Active Intelligence Sources:
+            </span>
+            <div className="flex flex-wrap gap-1">
+              {sources.map((src: string) => (
+                <span key={src} className="px-2 py-0.5 rounded-md font-mono text-3xs border flex items-center gap-1"
+                  style={{ background: 'var(--elevated)', borderColor: 'var(--border)' }}>
+                  <span className="text-emerald-400 font-bold">✓</span> {src}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Reasoning summary */}
+          {decision.reason && (
+            <div>
+              <span className="font-bold uppercase tracking-wider block mb-0.5 text-3xs" style={{ color: 'var(--muted-foreground)' }}>
+                Grounding & Decision Reason:
+              </span>
+              <p className="leading-relaxed" style={{ color: 'var(--foreground)' }}>
+                {decision.reason}
+              </p>
+            </div>
+          )}
+
+          {/* Conflict resolution if any */}
+          {fusion.conflicts && fusion.conflicts.length > 0 && (
+            <div className="p-2 rounded-lg border text-3xs space-y-1"
+              style={{ background: 'rgba(245, 158, 11, 0.05)', borderColor: 'rgba(245, 158, 11, 0.2)' }}>
+              <span className="font-bold text-amber-500 uppercase tracking-wider block">
+                Conflict Resolved:
+              </span>
+              {fusion.conflicts.map((c: any, i: number) => (
+                <p key={i} className="text-muted-foreground">
+                  <strong style={{ color: 'var(--foreground)' }}>{c.topic}:</strong> {c.description} → <em>{c.resolution}</em>
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ─── Message Bubble ──────────────────────────────────────────────────────────
 function MessageBubble({
   message,
@@ -306,6 +395,11 @@ function MessageBubble({
             </div>
           )}
         </div>
+
+        {/* R14 Context Fusion Evidence Audit */}
+        {!isUser && message.fusion && (
+          <ContextFusionBadge fusion={message.fusion} />
+        )}
 
         {/* Action icons */}
         {!isUser && (

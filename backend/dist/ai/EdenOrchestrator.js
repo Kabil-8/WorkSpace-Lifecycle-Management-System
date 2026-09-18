@@ -8,6 +8,7 @@ import { RAGEngine } from './RAGEngine.js';
 import { LLMProviderFactory } from './providers/LLMProviderFactory.js';
 import { ResponseValidator } from './ResponseValidator.js';
 import { RAGResponseValidator } from './rag/RAGResponseValidator.js';
+import { ContextFusionEngine } from './ContextFusionEngine.js';
 import EdenConversation from '../models/EdenConversation.js';
 import { logger } from '../config/logger.js';
 export class EdenOrchestrator {
@@ -42,6 +43,31 @@ export class EdenOrchestrator {
                 webEvidence = researchRes.evidenceText;
                 toolsUsed.push({ tool: 'web_research_auto', query: cleanQuery, sources: researchRes.sources.length });
             }
+        }
+        // 3.5 R14 Context Fusion Engine — Intent Classification, Source Planning, Multi-Source Synthesis & Conflict Resolution
+        let fusedContext = null;
+        let fusionPrompt = '';
+        try {
+            fusedContext = await ContextFusionEngine.fuseContext(req.userId, cleanQuery, {
+                activeKey: req.options?.activeKey,
+                provider: req.options?.provider,
+                history: req.options?.history,
+                conversationId
+            });
+            if (fusedContext) {
+                fusionPrompt = ContextFusionEngine.formatForLLM(fusedContext);
+                toolsUsed.push({
+                    tool: 'context_fusion',
+                    intent: fusedContext.intent.type,
+                    sources: fusedContext.provenance.sources,
+                    decisionType: fusedContext.decision.type,
+                    confidence: fusedContext.confidence.overall,
+                    conflictsDetected: fusedContext.conflicts.length
+                });
+            }
+        }
+        catch (fuseErr) {
+            logger.warn({ err: fuseErr.message }, '[EdenOrchestrator] Context Fusion skipped');
         }
         // 4. Grounded Context-Aware Institutional RAG Retrieval
         let ragContext = '';
@@ -80,8 +106,10 @@ export class EdenOrchestrator {
         const availableTools = ToolRegistry.getDeclarations(role);
         const provider = LLMProviderFactory.getProvider(req.options?.provider, req.options?.activeKey);
         try {
-            // 6. First LLM Turn — Prompt + Web/RAG Evidence + Full Tool Arsenal
+            // 6. First LLM Turn — Prompt + Context Fusion + Web/RAG Evidence + Full Tool Arsenal
             let promptWithEvidence = cleanQuery;
+            if (fusionPrompt)
+                promptWithEvidence += `\n\n${fusionPrompt}`;
             if (webEvidence)
                 promptWithEvidence += `\n\n${webEvidence}`;
             if (ragContext)
@@ -94,8 +122,8 @@ export class EdenOrchestrator {
                 activeKey: req.options?.activeKey,
             });
             let finalContent = llmRes.content || '';
-            let lastAction = null;
-            let lastTarget = null;
+            let lastAction = fusedContext?.decision?.action?.type || null;
+            let lastTarget = fusedContext?.decision?.action?.target || null;
             // 7. Detect and Execute ALL Tool Calls (Structured + Text Code Blocks)
             const toolCallsToExecute = [...(llmRes.toolCalls || [])];
             // If no structured toolCalls, scan finalContent for markdown tool blocks (e.g. ```tool_code\nget_my_attendance\n```)
@@ -209,6 +237,17 @@ export class EdenOrchestrator {
                 target: lastTarget,
                 sources: sourceManager.getSources(),
                 toolsUsed,
+                fusion: fusedContext ? {
+                    intent: fusedContext.intent.type,
+                    sourcesUsed: fusedContext.provenance.sources,
+                    decision: {
+                        type: fusedContext.decision.type,
+                        priority: fusedContext.decision.priority,
+                        reason: fusedContext.decision.reason,
+                    },
+                    confidence: fusedContext.confidence,
+                    conflicts: fusedContext.conflicts,
+                } : undefined,
                 metadata: { latencyMs, provider: provider.name, ragChunks: toolsUsed.find(t => t.tool === 'rag_retrieval')?.chunks || 0 },
             };
         }

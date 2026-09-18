@@ -114,6 +114,7 @@ export default function EdenGlobalWidget() {
             role: 'eden',
             content: data.reply || 'I encountered an issue. Please try again.',
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            fusion: data.fusion || undefined,
           }),
         )
 
@@ -279,6 +280,22 @@ export default function EdenGlobalWidget() {
                             </div>
                           )}
                         </div>
+
+                        {m.role !== 'user' && m.fusion && (
+                          <div
+                            className="mt-1.5 p-2 rounded-lg border text-[9px] font-sans"
+                            style={{ background: 'rgba(99,102,241,0.06)', borderColor: 'rgba(99,102,241,0.2)' }}
+                          >
+                            <div className="flex items-center justify-between text-indigo-400 font-bold mb-0.5">
+                              <span>🧠 Fused ({m.fusion.sourcesUsed?.length || 0} sources)</span>
+                              <span className="uppercase text-[8px] px-1 py-0.2 rounded bg-indigo-500/20">{m.fusion.decision?.type}</span>
+                            </div>
+                            <p className="text-slate-400 leading-tight">
+                              {m.fusion.decision?.reason}
+                            </p>
+                          </div>
+                        )}
+
                         <p className="text-[9px] text-slate-700 mt-0.5 px-1">{m.timestamp}</p>
                       </div>
                     </div>

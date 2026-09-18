@@ -8,6 +8,7 @@ import { RAGEngine } from './RAGEngine.js'
 import { LLMProviderFactory } from './providers/LLMProviderFactory.js'
 import { ResponseValidator } from './ResponseValidator.js'
 import { RAGResponseValidator } from './rag/RAGResponseValidator.js'
+import { ContextFusionEngine, FusedStudentContext } from './ContextFusionEngine.js'
 import EdenConversation from '../models/EdenConversation.js'
 import { logger } from '../config/logger.js'
 
@@ -39,6 +40,21 @@ export interface EdenOrchestratorResponse {
   target?: string | null
   sources: any[]
   toolsUsed: any[]
+  fusion?: {
+    intent: string
+    sourcesUsed: string[]
+    decision: {
+      type: string
+      priority: string
+      reason: string
+    }
+    confidence: {
+      overall: number
+      dataCompleteness: number
+      evidenceCoverage: number
+    }
+    conflicts: any[]
+  }
   metadata?: Record<string, any>
 }
 
@@ -87,6 +103,31 @@ export class EdenOrchestrator {
       }
     }
 
+    // 3.5 R14 Context Fusion Engine — Intent Classification, Source Planning, Multi-Source Synthesis & Conflict Resolution
+    let fusedContext: FusedStudentContext | null = null
+    let fusionPrompt = ''
+    try {
+      fusedContext = await ContextFusionEngine.fuseContext(req.userId, cleanQuery, {
+        activeKey: req.options?.activeKey,
+        provider: req.options?.provider,
+        history: req.options?.history,
+        conversationId
+      })
+      if (fusedContext) {
+        fusionPrompt = ContextFusionEngine.formatForLLM(fusedContext)
+        toolsUsed.push({
+          tool: 'context_fusion',
+          intent: fusedContext.intent.type,
+          sources: fusedContext.provenance.sources,
+          decisionType: fusedContext.decision.type,
+          confidence: fusedContext.confidence.overall,
+          conflictsDetected: fusedContext.conflicts.length
+        })
+      }
+    } catch (fuseErr: any) {
+      logger.warn({ err: fuseErr.message }, '[EdenOrchestrator] Context Fusion skipped')
+    }
+
     // 4. Grounded Context-Aware Institutional RAG Retrieval
     let ragContext = ''
     let groundedContextPayload: any = null
@@ -125,8 +166,9 @@ export class EdenOrchestrator {
     const provider = LLMProviderFactory.getProvider(req.options?.provider, req.options?.activeKey)
 
     try {
-      // 6. First LLM Turn — Prompt + Web/RAG Evidence + Full Tool Arsenal
+      // 6. First LLM Turn — Prompt + Context Fusion + Web/RAG Evidence + Full Tool Arsenal
       let promptWithEvidence = cleanQuery
+      if (fusionPrompt) promptWithEvidence += `\n\n${fusionPrompt}`
       if (webEvidence) promptWithEvidence += `\n\n${webEvidence}`
       if (ragContext) promptWithEvidence += `\n\n${ragContext}`
 
@@ -139,8 +181,8 @@ export class EdenOrchestrator {
       })
 
       let finalContent = llmRes.content || ''
-      let lastAction: string | null = null
-      let lastTarget: string | null = null
+      let lastAction: string | null = fusedContext?.decision?.action?.type || null
+      let lastTarget: string | null = fusedContext?.decision?.action?.target || null
 
       // 7. Detect and Execute ALL Tool Calls (Structured + Text Code Blocks)
       const toolCallsToExecute: any[] = [...(llmRes.toolCalls || [])]
@@ -273,6 +315,17 @@ export class EdenOrchestrator {
         target: lastTarget,
         sources: sourceManager.getSources(),
         toolsUsed,
+        fusion: fusedContext ? {
+          intent: fusedContext.intent.type,
+          sourcesUsed: fusedContext.provenance.sources,
+          decision: {
+            type: fusedContext.decision.type,
+            priority: fusedContext.decision.priority,
+            reason: fusedContext.decision.reason,
+          },
+          confidence: fusedContext.confidence,
+          conflicts: fusedContext.conflicts,
+        } : undefined,
         metadata: { latencyMs, provider: provider.name, ragChunks: toolsUsed.find(t => t.tool === 'rag_retrieval')?.chunks || 0 },
       }
     } catch (err: any) {
